@@ -2793,7 +2793,7 @@ function loadStudentsTable(search = '', status = '') {
         alert('Error loading students table');
     });
 }
-//
+
 function showConfirmation(action, source = 'dashboard') {
     const isDecrypt = action === 'decrypt_all';
     const title = isDecrypt ? 'Decrypt All Students?' : 'Encrypt All Students?';
