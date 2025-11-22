@@ -1,0 +1,584 @@
+<!-- CAR HTML Template for PDF Generation -->
+<!-- This template is designed for html2canvas + jsPDF conversion -->
+<!-- Include this in generate_car_html.php output -->
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: white;
+        padding: 0;
+        margin: 0;
+    }
+
+    .car-document {
+        width: 100%;
+        background: white;
+        color: #000;
+    }
+
+    .car-page {
+        width: 1400px;
+        min-height: 900px;
+        padding: 40px;
+        page-break-after: always;
+        background: white;
+        margin: 0 auto 20px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        position: relative;
+    }
+
+    /* HEADER SECTION */
+    .car-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #000;
+    }
+
+    .car-header-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .car-header-logo {
+        width: 50px;
+        height: 50px;
+        object-fit: contain;
+    }
+
+    .car-header-title {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .car-header-title-main {
+        font-size: 14px;
+        font-weight: bold;
+        color: #003082;
+        letter-spacing: 0.5px;
+    }
+
+    .car-header-title-sub {
+        font-size: 10px;
+        color: #666;
+    }
+
+    .car-header-right {
+        text-align: right;
+        font-size: 9px;
+        line-height: 1.4;
+    }
+
+    .car-header-right-title {
+        font-weight: bold;
+        font-size: 10px;
+        margin-bottom: 3px;
+    }
+
+    .car-header-right-form {
+        font-size: 8px;
+        color: #666;
+    }
+
+    /* TABLES */
+    .car-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 15px;
+        font-size: 9px;
+    }
+
+    .car-table th {
+        background-color: #D9D9D9;
+        border: 1px solid #000;
+        padding: 6px 8px;
+        font-weight: bold;
+        text-align: center;
+        color: #000;
+    }
+
+    .car-table td {
+        border: 1px solid #000;
+        padding: 5px 8px;
+        vertical-align: top;
+    }
+
+    .car-table tr:nth-child(even) {
+        background-color: #fafafa;
+    }
+
+    .car-table-header-gray {
+        background-color: #C0C0C0;
+        font-weight: bold;
+        color: #000;
+    }
+
+    .car-table-header-dark {
+        background-color: #BFBFBF;
+        font-weight: bold;
+        color: #000;
+        text-align: center;
+    }
+
+    /* COURSE INFO SECTION */
+    .car-course-info {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .car-course-info-row {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 8px;
+    }
+
+    .car-course-info-item {
+        flex: 1;
+        border: 1px solid #999;
+        padding: 8px;
+    }
+
+    .car-course-info-label {
+        font-weight: bold;
+        font-size: 8px;
+        background-color: #E8E8E8;
+        padding: 4px 6px;
+        margin-bottom: 4px;
+    }
+
+    .car-course-info-value {
+        font-size: 10px;
+        font-weight: bold;
+        padding: 2px 0;
+    }
+
+    /* SECTION TITLES */
+    .car-section-title {
+        background-color: #2c5aa0;
+        color: white;
+        padding: 8px 12px;
+        font-weight: bold;
+        font-size: 11px;
+        margin-bottom: 10px;
+        margin-top: 15px;
+    }
+
+    .car-subsection-title {
+        background-color: #D9D9D9;
+        font-weight: bold;
+        padding: 6px 8px;
+        font-size: 9px;
+        margin-bottom: 8px;
+        color: #000;
+    }
+
+    /* CONTENT SECTIONS */
+    .car-grade-distribution {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 15px;
+    }
+
+    .car-grade-distribution-table {
+        flex: 1;
+    }
+
+    .car-cosmap {
+        flex: 2;
+    }
+
+    .car-grade-distribution-title,
+    .car-cosmap-title {
+        background-color: #D9D9D9;
+        font-weight: bold;
+        padding: 6px 8px;
+        font-size: 9px;
+        margin-bottom: 8px;
+        color: #000;
+    }
+
+    /* OUTCOMES SECTION */
+    .car-outcomes {
+        margin-bottom: 15px;
+        font-size: 9px;
+        line-height: 1.4;
+    }
+
+    .car-outcomes-item {
+        margin-bottom: 4px;
+        padding-left: 0;
+    }
+
+    .car-outcomes-item strong {
+        font-weight: bold;
+    }
+
+    /* STUDENTS TABLE */
+    .car-students-table {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .car-students-table th {
+        background-color: #D9D9D9;
+        border: 1px solid #000;
+        padding: 6px;
+        font-weight: bold;
+        text-align: center;
+        font-size: 9px;
+    }
+
+    .car-students-table td {
+        border: 1px solid #000;
+        padding: 5px 6px;
+        font-size: 9px;
+    }
+
+    .car-students-table .student-id {
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .car-students-table .student-name {
+        font-weight: bold;
+    }
+
+    .car-students-table .grade-value {
+        text-align: center;
+    }
+
+    /* TEXT AREAS */
+    .car-text-box {
+        border: 1px solid #999;
+        padding: 8px;
+        min-height: 40px;
+        font-size: 9px;
+        line-height: 1.3;
+        margin-bottom: 10px;
+        background-color: #fafafa;
+    }
+
+    /* SIGNATURE SECTION */
+    .car-signature-section {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .car-signature-block {
+        flex: 1;
+        text-align: center;
+    }
+
+    .car-signature-line {
+        border-top: 1px solid #000;
+        width: 100%;
+        margin-bottom: 2px;
+        min-height: 40px;
+    }
+
+    .car-signature-label {
+        font-size: 8px;
+        font-weight: bold;
+        margin-top: 5px;
+    }
+
+    /* PAGE FOOTER */
+    .car-page-footer {
+        text-align: center;
+        font-size: 8px;
+        color: #666;
+        margin-top: 15px;
+        padding-top: 10px;
+        border-top: 1px solid #ccc;
+    }
+
+    /* PRINTING */
+    @media print {
+        .car-page {
+            page-break-after: always;
+            box-shadow: none;
+            margin: 0;
+            padding: 20px;
+        }
+    }
+
+    /* UTILITY CLASSES */
+    .text-center {
+        text-align: center;
+    }
+
+    .text-bold {
+        font-weight: bold;
+    }
+
+    .no-bottom-margin {
+        margin-bottom: 0;
+    }
+
+    .small-text {
+        font-size: 8px;
+    }
+
+    .medium-text {
+        font-size: 10px;
+    }
+
+    /* Hide elements from PDF */
+    .no-pdf {
+        display: none;
+    }
+</style>
+
+<!-- SAMPLE PAGE 1 STRUCTURE -->
+<div class="car-document">
+    <div class="car-page">
+        <!-- HEADER -->
+        <div class="car-header">
+            <div class="car-header-left">
+                <img src="/assets/images/nu_logo.png" alt="NU Logo" class="car-header-logo">
+                <div class="car-header-title">
+                    <div class="car-header-title-main">NU LIPA</div>
+                    <div class="car-header-title-sub">National University</div>
+                </div>
+            </div>
+            <div class="car-header-right">
+                <div class="car-header-right-title">COURSE ASSESSMENT REPORT</div>
+                <div class="car-header-right-form">Form: AD-FO-01</div>
+                <div class="car-header-right-form">Date: OCT 2022</div>
+            </div>
+        </div>
+
+        <!-- COURSE INFORMATION TABLE -->
+        <table class="car-table">
+            <tr>
+                <td colspan="2" class="car-table-header-gray" style="width: 20%;">ACADEMIC TERM/<br>SCHOOL YEAR:</td>
+                <td colspan="2" class="car-table-header-gray" style="width: 40%;">COURSE CODE:</td>
+                <td rowspan="4" class="car-table-header-gray" style="width: 15%; text-align: center;">COPIES<br>ISSUED<br>TO:<br><br>☐ PROGRAM<br>CHAIR<br>☐ ACADEMIC<br>DIRECTOR</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="text-center text-bold">2024-2, AY 2024-2025</td>
+                <td colspan="2" class="text-center text-bold">CCPRGG1L</td>
+            </tr>
+            <tr>
+                <td class="car-table-header-gray" style="width: 10%;">SECTION</td>
+                <td class="car-table-header-gray" style="width: 10%;">CLASS SIZE</td>
+                <td colspan="2" class="car-table-header-gray">COURSE TITLE:</td>
+            </tr>
+            <tr>
+                <td class="text-center text-bold">INF221</td>
+                <td class="text-center text-bold">45</td>
+                <td colspan="2" class="text-center text-bold">Web Development</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="car-table-header-gray">INSTRUCTOR:</td>
+                <td colspan="3" class="text-center text-bold">Dr. Juan Dela Cruz</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="car-table-header-gray">SIGNATURE:</td>
+                <td colspan="3" style="height: 30px; vertical-align: middle;"></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="car-table-header-gray">COURSE DESCRIPTION:</td>
+                <td colspan="3" style="padding: 6px; line-height: 1.3;">Introduction to web development including HTML, CSS, and JavaScript...</td>
+            </tr>
+        </table>
+
+        <!-- GRADE DISTRIBUTION & CO-SO MAP -->
+        <div class="car-grade-distribution">
+            <div class="car-grade-distribution-table">
+                <div class="car-grade-distribution-title">GRADE DISTRIBUTION</div>
+                <table class="car-table" style="font-size: 8px;">
+                    <tr>
+                        <th style="width: 60%;">GRADE</th>
+                        <th style="width: 40%; text-align: center;">NO. OF STU.</th>
+                    </tr>
+                    <tr><td>4.00</td><td class="text-center">5</td></tr>
+                    <tr><td>3.50</td><td class="text-center">8</td></tr>
+                    <tr><td>3.00</td><td class="text-center">12</td></tr>
+                    <tr><td>2.50</td><td class="text-center">10</td></tr>
+                    <tr><td>2.00</td><td class="text-center">6</td></tr>
+                    <tr><td>1.50</td><td class="text-center">2</td></tr>
+                    <tr><td>1.00</td><td class="text-center">1</td></tr>
+                    <tr><td>INC</td><td class="text-center">1</td></tr>
+                </table>
+            </div>
+
+            <div class="car-cosmap">
+                <div class="car-cosmap-title">CO-SO MAP</div>
+                <table class="car-table" style="font-size: 8px;">
+                    <tr>
+                        <th>CO</th>
+                        <th>SO1</th>
+                        <th>SO2</th>
+                        <th>SO3</th>
+                        <th>SO4</th>
+                        <th>SO5</th>
+                        <th>SO6</th>
+                    </tr>
+                    <tr>
+                        <td class="text-center text-bold">CO1</td>
+                        <td class="text-center">✓</td>
+                        <td class="text-center">✓</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center text-bold">CO2</td>
+                        <td class="text-center">✓</td>
+                        <td></td>
+                        <td class="text-center">✓</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+
+                <div style="font-size: 8px; margin-top: 8px; line-height: 1.3;">
+                    <strong>Student Outcomes (SO):</strong><br>
+                    1. Analyze complex computing problems...<br>
+                    2. Design, implement, and evaluate...<br>
+                    3. Communicate effectively...<br>
+                </div>
+            </div>
+        </div>
+
+        <!-- COURSE OUTCOMES -->
+        <div style="margin-top: 10px; font-size: 8px;">
+            <strong>Course Outcomes (CO):</strong><br>
+            <div class="car-outcomes-item">CO1: Students will master HTML5 markup...</div>
+            <div class="car-outcomes-item">CO2: Students will understand CSS styling...</div>
+        </div>
+
+        <div class="car-page-footer">Page 1 of 3</div>
+    </div>
+
+    <!-- PAGE 2 -->
+    <div class="car-page">
+        <!-- PAGE 2 HEADER -->
+        <div class="car-header">
+            <div class="car-header-left">
+                <img src="/assets/images/nu_logo.png" alt="NU Logo" class="car-header-logo">
+                <div class="car-header-title">
+                    <div class="car-header-title-main">NU LIPA</div>
+                </div>
+            </div>
+            <div class="car-header-right">
+                <div class="car-header-right-title">COURSE ASSESSMENT REPORT</div>
+                <div class="car-header-right-form">Form: AD-FO-01</div>
+            </div>
+        </div>
+
+        <!-- LEARNING OUTCOMES ASSESSMENT -->
+        <div class="car-section-title">COURSE LEARNING OUTCOMES ASSESSMENT</div>
+
+        <table class="car-table">
+            <tr>
+                <th style="width: 15%;">COURSE<br>OUTCOME</th>
+                <th style="width: 30%;">SUMMATIVE ASSESSMENT</th>
+                <th style="width: 20%;">PERFORMANCE<br>TARGET</th>
+                <th style="width: 35%;">SUCCESS RATE<br>(in % and enclose in [ ])</th>
+            </tr>
+            <tr>
+                <td class="text-center text-bold">CO1</td>
+                <td>Midterm Exam</td>
+                <td class="text-center">75%</td>
+                <td class="text-center">82% [37]</td>
+            </tr>
+            <tr>
+                <td class="text-center text-bold">CO2</td>
+                <td>Final Project</td>
+                <td class="text-center">75%</td>
+                <td class="text-center">78% [35]</td>
+            </tr>
+        </table>
+
+        <!-- INC STUDENTS -->
+        <div class="car-subsection-title">List of Students with INC</div>
+        <table class="car-table">
+            <tr>
+                <th style="width: 50%; text-align: center;">NAME</th>
+                <th style="width: 50%; text-align: center;">LACKING REQUIREMENTS</th>
+            </tr>
+            <tr>
+                <td class="text-bold">Mayo Suwail</td>
+                <td>Final Project Submission</td>
+            </tr>
+        </table>
+
+        <!-- TEACHING STRATEGIES -->
+        <div class="car-subsection-title">Teaching Strategies Employed</div>
+        <div class="car-text-box">
+            1. <strong>Lecture Method</strong> – Interactive lectures with real-world examples<br>
+            2. <strong>Hands-on Labs</strong> – Practical coding sessions<br>
+            3. <strong>Group Projects</strong> – Collaborative team assignments<br>
+            4. <strong>Online Resources</strong> – Supplementary video tutorials
+        </div>
+
+        <div class="car-page-footer">Page 2 of 3</div>
+    </div>
+
+    <!-- PAGE 3 -->
+    <div class="car-page">
+        <!-- PAGE 3 HEADER -->
+        <div class="car-header">
+            <div class="car-header-left">
+                <img src="/assets/images/nu_logo.png" alt="NU Logo" class="car-header-logo">
+            </div>
+            <div class="car-header-right">
+                <div class="car-header-right-title">COURSE ASSESSMENT REPORT</div>
+            </div>
+        </div>
+
+        <div class="car-section-title">STUDENT GRADES</div>
+
+        <table class="car-table" style="font-size: 8px;">
+            <tr>
+                <th style="width: 12%; text-align: center;">STUDENT ID</th>
+                <th style="width: 25%;">STUDENT NAME</th>
+                <th style="width: 12%; text-align: center;">MIDTERM %</th>
+                <th style="width: 12%; text-align: center;">FINALS %</th>
+                <th style="width: 12%; text-align: center;">TERM %</th>
+                <th style="width: 10%; text-align: center;">GRADE</th>
+                <th style="width: 17%; text-align: center;">STATUS</th>
+            </tr>
+            <tr>
+                <td class="text-center">2022-118764</td>
+                <td class="text-bold">Mayo Suwail</td>
+                <td class="text-center">74</td>
+                <td class="text-center">78</td>
+                <td class="text-center">76.4</td>
+                <td class="text-center">2.5</td>
+                <td class="text-center">INC</td>
+            </tr>
+        </table>
+
+        <!-- SIGNATURE SECTION -->
+        <div class="car-signature-section">
+            <div class="car-signature-block">
+                <div class="car-signature-line"></div>
+                <div class="car-signature-label">Instructor Signature</div>
+                <div class="small-text">Over Printed Name</div>
+            </div>
+            <div class="car-signature-block">
+                <div class="car-signature-line"></div>
+                <div class="car-signature-label">Department Chair</div>
+                <div class="small-text">Over Printed Name</div>
+            </div>
+        </div>
+
+        <div class="car-page-footer">Page 3 of 3 | Generated: Nov 21, 2024</div>
+    </div>
+</div>

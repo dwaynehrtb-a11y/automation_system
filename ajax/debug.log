@@ -1,0 +1,92 @@
+PHP script started: 2025-08-09 15:50:04
+PHP script started: 2025-08-09 15:55:19
+PHP script started: 2025-08-09 16:04:25
+PHP script started: 2025-08-09 16:12:08
+PHP script started: 2025-08-09 16:17:43
+PHP script started: 2025-08-09 16:17:54
+PHP script started: 2025-08-09 16:18:11
+PHP script started: 2025-08-09 16:18:14
+PHP script started: 2025-08-09 16:36:39
+PHP script started: 2025-08-09 16:36:42
+PHP script started: 2025-08-10 06:07:00
+PHP script started: 2025-08-10 06:07:03
+PHP script started: 2025-08-10 06:07:08
+PHP script started: 2025-08-10 06:33:52
+PHP script started: 2025-08-10 06:34:29
+PHP script started: 2025-08-10 06:38:08
+PHP script started: 2025-08-10 06:47:44
+PHP script started: 2025-08-10 06:48:03
+PHP script started: 2025-08-10 06:53:59
+[11-Nov-2025 15:05:51 Europe/Berlin] Database connected successfully to: automation_system
+[11-Nov-2025 15:05:51 Europe/Berlin] Delete request - GET code: CTAPROJ1, POST code: not set
+[11-Nov-2025 15:05:51 Europe/Berlin] Full GET data: Array
+(
+    [action] => delete
+    [code] => CTAPROJ1
+)
+
+[11-Nov-2025 15:05:51 Europe/Berlin] Full POST data: Array
+(
+)
+
+[11-Nov-2025 15:06:34 Europe/Berlin] Database connected successfully to: automation_system
+[11-Nov-2025 15:06:34 Europe/Berlin] === ADD SUBJECT REQUEST ===
+[11-Nov-2025 15:06:34 Europe/Berlin] Course Code: CTAPROJ1
+[11-Nov-2025 15:06:34 Europe/Berlin] Course Outcomes JSON: []
+[11-Nov-2025 15:06:34 Europe/Berlin] Decoded Outcomes: Array
+(
+)
+
+[11-Nov-2025 15:06:34 Europe/Berlin] Step 1: Inserting subject...
+[11-Nov-2025 15:06:34 Europe/Berlin] ✅ Subject inserted successfully
+[11-Nov-2025 15:06:34 Europe/Berlin] ℹ️ No course outcomes to insert
+[11-Nov-2025 15:06:34 Europe/Berlin] ✅ Transaction committed successfully
+[11-Nov-2025 15:08:56 Europe/Berlin] Database connected successfully to: automation_system
+[11-Nov-2025 15:08:56 Europe/Berlin] Delete request - GET code: CTAPROJ1, POST code: not set
+[11-Nov-2025 15:08:56 Europe/Berlin] Full GET data: Array
+(
+    [action] => delete
+    [code] => CTAPROJ1
+)
+
+[11-Nov-2025 15:08:56 Europe/Berlin] Full POST data: Array
+(
+)
+
+[11-Nov-2025 15:11:10 Europe/Berlin] Database connected successfully to: automation_system
+[11-Nov-2025 15:11:10 Europe/Berlin] === ADD SUBJECT REQUEST ===
+[11-Nov-2025 15:11:10 Europe/Berlin] Course Code: CTAPROJ1
+[11-Nov-2025 15:11:10 Europe/Berlin] Course Outcomes JSON: [{"number":1,"description":"1.\tRecognize modular programming."},{"number":2,"description":"2.\tApply different control structures."},{"number":3,"description":"3.\tImplement array data structure and file manipulation."}]
+[11-Nov-2025 15:11:10 Europe/Berlin] Decoded Outcomes: Array
+(
+    [0] => Array
+        (
+            [number] => 1
+            [description] => 1.	Recognize modular programming.
+        )
+
+    [1] => Array
+        (
+            [number] => 2
+            [description] => 2.	Apply different control structures.
+        )
+
+    [2] => Array
+        (
+            [number] => 3
+            [description] => 3.	Implement array data structure and file manipulation.
+        )
+
+)
+
+[11-Nov-2025 15:11:10 Europe/Berlin] Step 1: Inserting subject...
+[11-Nov-2025 15:11:10 Europe/Berlin] ✅ Subject inserted successfully
+[11-Nov-2025 15:11:10 Europe/Berlin] Step 2: Inserting 3 course outcomes...
+[11-Nov-2025 15:11:10 Europe/Berlin]   Processing outcome #1: CO1
+[11-Nov-2025 15:11:10 Europe/Berlin]   ✅ CO1 inserted (ID: 1)
+[11-Nov-2025 15:11:10 Europe/Berlin]   Processing outcome #2: CO2
+[11-Nov-2025 15:11:10 Europe/Berlin]   ✅ CO2 inserted (ID: 2)
+[11-Nov-2025 15:11:10 Europe/Berlin]   Processing outcome #3: CO3
+[11-Nov-2025 15:11:10 Europe/Berlin]   ✅ CO3 inserted (ID: 3)
+[11-Nov-2025 15:11:10 Europe/Berlin] ✅ All course outcomes inserted
+[11-Nov-2025 15:11:10 Europe/Berlin] ✅ Transaction committed successfully
