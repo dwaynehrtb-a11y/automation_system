@@ -1189,6 +1189,7 @@ $error = $_GET['error'] ?? '';
         $apiPath = $isLocalhost ? '/automation_system/faculty/ajax/' : '/faculty/ajax/';
 
         // Debug information (remove after testing)
+        echo "<!-- UPLOAD_TEST: If you see this message, the file is uploaded correctly! API Path will be: $apiPath -->";
         echo "<!-- DEBUG: HTTP_HOST='$host', isLocalhost=" . ($isLocalhost ? 'true' : 'false') . ", apiPath='$apiPath' -->";
         ?>
 
