@@ -1187,7 +1187,7 @@ $error = $_GET['error'] ?? '';
             facultyId: <?= $faculty_id ?>,
             facultyName: "<?= htmlspecialchars($faculty_name) ?>",
             csrfToken: '<?= $csrf_token ?>',
-            apiPath: '/automation_system/faculty/ajax/'
+            apiPath: '../faculty/ajax/'
         };
         
         // Backward compatibility

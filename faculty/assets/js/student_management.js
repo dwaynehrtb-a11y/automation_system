@@ -84,7 +84,7 @@ async function loadClassMasterlist(classCode) {
     formData.append('csrf_token', window.csrfToken || window.APP.csrfToken);
     
     try {
-        const response = await fetch('/automation_system/faculty/ajax/student_management.php', {
+        const response = await fetch((window.APP?.apiPath || '../faculty/ajax/') + 'student_management.php', {
             method: 'POST',
             body: formData
         });
@@ -201,7 +201,7 @@ async function searchStudentsForEnrollment() {
         formData.append('csrf_token', window.csrfToken || window.APP.csrfToken);
         
         try {
-            const response = await fetch('/automation_system/faculty/ajax/student_management.php', {
+            const response = await fetch((window.APP?.apiPath || '../faculty/ajax/') + 'student_management.php', {
                 method: 'POST',
                 body: formData
             });
@@ -285,7 +285,7 @@ async function enrollStudentToClass(studentId) {
     formData.append('csrf_token', window.csrfToken || window.APP.csrfToken);
     
     try {
-        const response = await fetch('/automation_system/faculty/ajax/student_management.php', {
+        const response = await fetch((window.APP?.apiPath || '../faculty/ajax/') + 'student_management.php', {
             method: 'POST',
             body: formData
         });
@@ -374,7 +374,7 @@ async function removeStudentFromClass(studentId, classCode) {
     formData.append('csrf_token', window.csrfToken || window.APP.csrfToken);
     
     try {
-        const response = await fetch('/automation_system/faculty/ajax/student_management.php', {
+        const response = await fetch((window.APP?.apiPath || '../faculty/ajax/') + 'student_management.php', {
             method: 'POST',
             body: formData
         });
