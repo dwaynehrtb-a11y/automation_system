@@ -1185,8 +1185,11 @@ $error = $_GET['error'] ?? '';
         <?php
         // Determine API path based on environment
         $host = $_SERVER['HTTP_HOST'] ?? '';
-        $isHostinger = strpos($host, 'hostinger') !== false || strpos($host, 'hostingersite.com') !== false;
-        $apiPath = $isHostinger ? '/faculty/ajax/' : '/automation_system/faculty/ajax/';
+        $isLocalhost = strpos($host, 'localhost') !== false || strpos($host, '127.0.0.1') !== false;
+        $apiPath = $isLocalhost ? '/automation_system/faculty/ajax/' : '/faculty/ajax/';
+
+        // Debug information (remove after testing)
+        echo "<!-- DEBUG: HTTP_HOST='$host', isLocalhost=" . ($isLocalhost ? 'true' : 'false') . ", apiPath='$apiPath' -->";
         ?>
 
         // Global Configuration
