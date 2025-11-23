@@ -60,7 +60,7 @@ const CARManager = {
      */
     async checkCARDataExists() {
         try {
-            const response = await fetch(`/automation_system/faculty/ajax/car_handler.php?action=check&class_code=${this.currentClassCode}`);
+            const response = await fetch(`/faculty/ajax/car_handler.php?action=check&class_code=${this.currentClassCode}`);
             const data = await response.json();
             
             if (data.success && data.exists) {
@@ -549,7 +549,7 @@ if (step === this.totalSteps) {
     });
     
     try {
-        const response = await fetch('/automation_system/faculty/ajax/car_handler.php', {
+        const response = await fetch('/faculty/ajax/car_handler.php', {
             method: 'POST',
             body: fd
         });

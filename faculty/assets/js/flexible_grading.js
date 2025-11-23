@@ -3,7 +3,7 @@ console.log('✓ Flexible Grading System - FULLY FUNCTIONAL v2.0 POLISHED');
 // Initialize APP object with fallbacks
 window.APP = window.APP || {
     csrfToken: window.csrfToken || '',
-    apiPath: '../faculty/ajax/'
+    apiPath: '/faculty/ajax/'
 };
 
 const FGS = {
@@ -30,7 +30,7 @@ async function loadWeights(classCode) {
     fd.append('class_code', classCode);
     fd.append('csrf_token', window.csrfToken || (APP && APP.csrfToken) || '');
     try {
-        const res = await fetch((APP && APP.apiPath ? APP.apiPath : '/automation_system/faculty/ajax/') + 'manage_grading_components.php', { method:'POST', body: fd });
+        const res = await fetch((APP && APP.apiPath ? APP.apiPath : '/faculty/ajax/') + 'manage_grading_components.php', { method:'POST', body: fd });
         const data = await res.json();
         if (data.success) {
             FGS.midtermWeight = parseFloat(data.midterm_weight);
@@ -65,7 +65,7 @@ async function loadStudents(classCode) {
     fd.append('class_code', classCode);
     fd.append('csrf_token', window.csrfToken || (APP && APP.csrfToken) || '');
     try {
-        const res = await fetch((APP && APP.apiPath ? APP.apiPath : '/automation_system/faculty/ajax/') + 'process_grades.php', { method:'POST', body: fd });
+        const res = await fetch((APP && APP.apiPath ? APP.apiPath : '/faculty/ajax/') + 'process_grades.php', { method:'POST', body: fd });
         const data = await res.json();
         if (data.success) {
             FGS.students = data.students || [];
@@ -82,7 +82,7 @@ async function loadComponents(classCode, termType) {
     fd.append('term_type', termType);
     fd.append('csrf_token', window.csrfToken || (APP && APP.csrfToken) || '');
     try {
-        const res = await fetch((APP && APP.apiPath ? APP.apiPath : '/automation_system/faculty/ajax/') + 'manage_grading_components.php', { method:'POST', body: fd });
+        const res = await fetch((APP && APP.apiPath ? APP.apiPath : '/faculty/ajax/') + 'manage_grading_components.php', { method:'POST', body: fd });
         const data = await res.json();
         if (data.success) {
             FGS.components = data.components || [];
@@ -107,7 +107,7 @@ async function loadGrades(classCode, componentId) {
     fd.append('component_id', componentId);
     fd.append('csrf_token', window.csrfToken || (APP && APP.csrfToken) || '');
     try {
-        const res = await fetch((APP && APP.apiPath ? APP.apiPath : '/automation_system/faculty/ajax/') + 'process_grades.php', { method:'POST', body: fd });
+        const res = await fetch((APP && APP.apiPath ? APP.apiPath : '/faculty/ajax/') + 'process_grades.php', { method:'POST', body: fd });
         const data = await res.json();
         console.log('🔵 loadGrades response:', data);
         if (data.success) {
@@ -258,7 +258,7 @@ async function renderSummary() {
         const fd = new FormData();
         fd.append('class_code', FGS.currentClassCode);
         fd.append('csrf_token', window.csrfToken || (APP && APP.csrfToken) || '');
-        const res = await fetch((APP && APP.apiPath ? APP.apiPath : '/automation_system/faculty/ajax/') + 'compute_term_grades.php', { method: 'POST', body: fd });
+        const res = await fetch((APP && APP.apiPath ? APP.apiPath : '/faculty/ajax/') + 'compute_term_grades.php', { method: 'POST', body: fd });
         const data = await res.json();
         if (!data.success) throw new Error(data.message || 'Compute failed');
         const rowsByStudent = {};
@@ -1085,7 +1085,7 @@ async function addColumnModal(compId, compName) {
     let courseOutcomes = [];
     if (courseCode) {
         try {
-            const response = await fetch(`/automation_system/faculty/ajax/get_subject_outcomes.php?code=${courseCode}`);
+            const response = await fetch(`/faculty/ajax/get_subject_outcomes.php?code=${courseCode}`);
             const data = await response.json();
             if (data.success && data.outcomes) {
                 courseOutcomes = data.outcomes;
@@ -1190,7 +1190,7 @@ async function bulkAddColumnModal(compId, compName) {
     let courseOutcomes = [];
     if (courseCode) {
         try {
-            const response = await fetch(`/automation_system/faculty/ajax/get_subject_outcomes.php?code=${courseCode}`);
+            const response = await fetch(`/faculty/ajax/get_subject_outcomes.php?code=${courseCode}`);
             const data = await response.json();
             if (data.success && data.outcomes) {
                 courseOutcomes = data.outcomes;
@@ -1447,7 +1447,7 @@ async function editColumn(id, name, max) {
     let courseOutcomes = [];
     if (courseCode) {
         try {
-            const response = await fetch(`/automation_system/faculty/ajax/get_subject_outcomes.php?code=${courseCode}`);
+            const response = await fetch(`/faculty/ajax/get_subject_outcomes.php?code=${courseCode}`);
             const data = await response.json();
             if (data.success && data.outcomes) {
                 courseOutcomes = data.outcomes;
@@ -2671,7 +2671,7 @@ async function saveCARMetadata() {
     console.log(' Data to send:', data);
     
     try {
-        const response = await fetch('/automation_system/faculty/ajax/save_car_metadata.php', {
+        const response = await fetch('/faculty/ajax/save_car_metadata.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
@@ -2733,7 +2733,7 @@ async function generateCARDocument() {
         
         console.log('📤 Sending payload:', payload);
         
-       const response = await fetch('/automation_system/faculty/ajax/generate_car_document.php', {
+       const response = await fetch('/faculty/ajax/generate_car_document.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

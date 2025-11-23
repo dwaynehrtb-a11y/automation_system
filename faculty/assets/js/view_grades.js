@@ -48,7 +48,7 @@ const GradeAnalytics = {
         fd.append('csrf_token', window.csrfToken);
 
         try {
-            const res = await fetch((window.APP?.apiPath || '../faculty/ajax/') + 'process_grades.php', {
+            const res = await fetch((window.APP?.apiPath || '/faculty/ajax/') + 'process_grades.php', {
                 method: 'POST',
                 body: fd
             });
@@ -137,7 +137,7 @@ const GradeAnalytics = {
         studentsFd.append('class_code', classCode);
         studentsFd.append('csrf_token', window.csrfToken);
 
-        const studentsRes = await fetch((window.APP?.apiPath || '../faculty/ajax/') + 'process_grades.php', {
+        const studentsRes = await fetch((window.APP?.apiPath || '/faculty/ajax/') + 'process_grades.php', {
             method: 'POST',
             body: studentsFd
         });
@@ -159,7 +159,7 @@ const GradeAnalytics = {
         weightsFd.append('class_code', classCode);
         weightsFd.append('csrf_token', window.csrfToken);
 
-        const weightsRes = await fetch('/automation_system/faculty/ajax/manage_grading_components.php', {
+        const weightsRes = await fetch('/faculty/ajax/manage_grading_components.php', {
             method: 'POST',
             body: weightsFd
         });
@@ -201,7 +201,7 @@ const GradeAnalytics = {
         fd.append('term_type', termType);
         fd.append('csrf_token', window.csrfToken);
 
-        const res = await fetch('/automation_system/faculty/ajax/manage_grading_components.php', {
+        const res = await fetch('/faculty/ajax/manage_grading_components.php', {
             method: 'POST',
             body: fd
         });
@@ -229,7 +229,7 @@ const GradeAnalytics = {
         fd.append('component_id', componentId);
         fd.append('csrf_token', window.csrfToken);
 
-        const res = await fetch((window.APP?.apiPath || '../faculty/ajax/') + 'process_grades.php', {
+        const res = await fetch((window.APP?.apiPath || '/faculty/ajax/') + 'process_grades.php', {
             method: 'POST',
             body: fd
         });

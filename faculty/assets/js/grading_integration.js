@@ -21,7 +21,7 @@ async function loadFlexibleClassesForGrading(academicYear, term) {
     formData.append('csrf_token', window.csrfToken || window.APP.csrfToken);
 
     try {
-        const response = await fetch((window.APP?.apiPath || '/automation_system/faculty/ajax/') + 'process_grades.php', {
+        const response = await fetch((window.APP?.apiPath || '/faculty/ajax/') + 'process_grades.php', {
             method: 'POST',
             body: formData
         });
@@ -105,7 +105,7 @@ async function loadFlexibleStudents(classCode) {
     formData.append('csrf_token', window.csrfToken || window.APP.csrfToken);
 
     try {
-        const response = await fetch((window.APP?.apiPath || '/automation_system/faculty/ajax/') + 'process_grades.php', {
+        const response = await fetch((window.APP?.apiPath || '/faculty/ajax/') + 'process_grades.php', {
             method: 'POST',
             body: formData
         });
