@@ -3,7 +3,7 @@ console.log('✓ Flexible Grading System - FULLY FUNCTIONAL v2.0 POLISHED');
 // Initialize APP object with fallbacks
 window.APP = window.APP || {
     csrfToken: window.csrfToken || '',
-    apiPath: '/faculty/ajax/'
+    apiPath: window.location.hostname.includes('hostinger') ? '/faculty/ajax/' : '/automation_system/faculty/ajax/'
 };
 
 const FGS = {

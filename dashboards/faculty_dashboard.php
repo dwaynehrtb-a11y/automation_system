@@ -1187,7 +1187,7 @@ $error = $_GET['error'] ?? '';
             facultyId: <?= $faculty_id ?>,
             facultyName: "<?= htmlspecialchars($faculty_name) ?>",
             csrfToken: '<?= $csrf_token ?>',
-            apiPath: '/faculty/ajax/'
+            apiPath: (isset($_SERVER['HTTP_HOST']) && strpos($_SERVER['HTTP_HOST'], 'hostinger') !== false) ? '/faculty/ajax/' : '/automation_system/faculty/ajax/'
         };
         
         // Backward compatibility
