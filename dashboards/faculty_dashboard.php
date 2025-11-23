@@ -1201,6 +1201,9 @@ $error = $_GET['error'] ?? '';
             apiPath: '<?= $apiPath ?>'
         };
         
+        // Set global APP object
+        window.APP = APP;
+        
         // Backward compatibility
         window.csrfToken = APP.csrfToken;
         
