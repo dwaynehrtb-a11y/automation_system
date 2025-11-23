@@ -1,37 +1,59 @@
 RewriteEngine On
 
-# Handle PHP files
+# Handle PHP files properly
 <Files *.php>
     SetHandler application/x-httpd-php
 </Files>
 
-# Directory index
+# Set default index file
 DirectoryIndex index.php index.html
+
+# Allow access to main directory
+<RequireAll>
+    Require all granted
+</RequireAll>
 
 # Security headers
 <IfModule mod_headers.c>
     Header always set X-Content-Type-Options nosniff
     Header always set X-Frame-Options DENY
     Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
 </IfModule>
 
 # Prevent access to sensitive files
-<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|inc|bak)$">
-    Order Allow,Deny
-    Deny from all
+<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|inc|bak|env)$">
+    <RequireAll>
+        Require all denied
+    </RequireAll>
 </FilesMatch>
 
 # Allow access to assets
 <Directory "assets/">
-    AllowOverride None
-    Require all granted
+    <RequireAll>
+        Require all granted
+    </RequireAll>
 </Directory>
 
-# Allow access to admin assets
 <Directory "admin/assets/">
-    AllowOverride None
-    Require all granted
+    <RequireAll>
+        Require all granted
+    </RequireAll>
 </Directory>
+
+<Directory "auth/assets/">
+    <RequireAll>
+        Require all granted
+    </RequireAll>
+</Directory>
+
+# PHP settings for better compatibility
+<IfModule mod_php.c>
+    php_value upload_max_filesize 50M
+    php_value post_max_size 50M
+    php_value max_execution_time 300
+    php_value max_input_time 300
+</IfModule>
 
 # Error documents
 ErrorDocument 403 /403.html
