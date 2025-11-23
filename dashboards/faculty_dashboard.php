@@ -1182,12 +1182,19 @@ $error = $_GET['error'] ?? '';
             });
         }
 
+        <?php
+        // Determine API path based on environment
+        $apiPath = (isset($_SERVER['HTTP_HOST']) && strpos($_SERVER['HTTP_HOST'], 'hostinger') !== false) 
+            ? '/faculty/ajax/' 
+            : '/automation_system/faculty/ajax/';
+        ?>
+
         // Global Configuration
         const APP = {
             facultyId: <?= $faculty_id ?>,
             facultyName: "<?= htmlspecialchars($faculty_name) ?>",
             csrfToken: '<?= $csrf_token ?>',
-            apiPath: (isset($_SERVER['HTTP_HOST']) && strpos($_SERVER['HTTP_HOST'], 'hostinger') !== false) ? '/faculty/ajax/' : '/automation_system/faculty/ajax/'
+            apiPath: '<?= $apiPath ?>'
         };
         
         // Backward compatibility
