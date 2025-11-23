@@ -1,0 +1,39 @@
+RewriteEngine On
+
+# Handle PHP files
+<Files *.php>
+    SetHandler application/x-httpd-php
+</Files>
+
+# Directory index
+DirectoryIndex index.php index.html
+
+# Security headers
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options nosniff
+    Header always set X-Frame-Options DENY
+    Header always set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+# Prevent access to sensitive files
+<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|inc|bak)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Allow access to assets
+<Directory "assets/">
+    AllowOverride None
+    Require all granted
+</Directory>
+
+# Allow access to admin assets
+<Directory "admin/assets/">
+    AllowOverride None
+    Require all granted
+</Directory>
+
+# Error documents
+ErrorDocument 403 /403.html
+ErrorDocument 404 /404.html
+ErrorDocument 500 /500.html
