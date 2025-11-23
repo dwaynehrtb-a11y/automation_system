@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academic System</title>
+    <title>NU Academic System</title>
     <style>
         /* Embedded CSS to avoid path issues */
         :root {
@@ -136,9 +136,9 @@
     <div class="splash-wrapper" id="splashScreen">
         <div class="splash-container">
             <div class="splash-logo">
-                🎓
+                <img src="assets/images/nu_logo.png" alt="NU Logo" style="width: 100px; height: 100px; border-radius: 50%;">
             </div>
-            <h1 class="splash-title">Academic System</h1>
+            <h1 class="splash-title">NU Academic System</h1>
             <p class="splash-subtitle">National University Lipa</p>
             <div class="loading-bar">
                 <div class="loading-progress"></div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academic System - Redirecting...</title>
+    <title>NU Academic System - Redirecting...</title>
     <meta http-equiv="refresh" content="0; url=auth/login.php">
     <style>
         body {
@@ -26,7 +26,7 @@
 </head>
 <body>
     <div class="message">
-        <h1>Academic System</h1>
+        <h1>NU Academic System</h1>
         <p>Redirecting to login...</p>
         <p><a href="auth/login.php" style="color: white;">Click here if not redirected</a></p>
     </div>

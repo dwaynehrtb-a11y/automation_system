@@ -29,23 +29,23 @@ DirectoryIndex index.php index.html
 </FilesMatch>
 
 # Allow access to assets
-<Directory "assets/">
-    <RequireAll>
-        Require all granted
-    </RequireAll>
-</Directory>
+# <Directory "assets/">
+#     <RequireAll>
+#         Require all granted
+#     </RequireAll>
+# </Directory>
 
-<Directory "admin/assets/">
-    <RequireAll>
-        Require all granted
-    </RequireAll>
-</Directory>
+# <Directory "admin/assets/">
+#     <RequireAll>
+#         Require all granted
+#     </RequireAll>
+# </Directory>
 
-<Directory "auth/assets/">
-    <RequireAll>
-        Require all granted
-    </RequireAll>
-</Directory>
+# <Directory "auth/assets/">
+#     <RequireAll>
+#         Require all granted
+#     </RequireAll>
+# </Directory>
 
 # PHP settings for better compatibility
 <IfModule mod_php.c>

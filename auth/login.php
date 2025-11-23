@@ -198,7 +198,7 @@ if (!isset($_SESSION['csrf_token'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academic System - Login</title>
+    <title>NU Academic System - Login</title>
     <link rel="stylesheet" href="../admin/assets/css/login.css?v=<?= time() ?>">
 </head>
 <body>
@@ -206,8 +206,8 @@ if (!isset($_SESSION['csrf_token'])) {
         <div class="login-container">        
             <div class="login-right"> 
                 <div class="login-header"> 
-                    <div class="logo">🎓</div> 
-                    <h1>Academic System</h1> 
+                    <div class="logo"><img src="../assets/images/nu_logo.png" alt="NU Logo" style="max-width: 100px; height: auto;"></div> 
+                    <h1>NU Academic System</h1> 
                     <p class="subtitle">Sign in to your account</p> 
                 </div>  
 
