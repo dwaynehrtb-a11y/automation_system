@@ -1184,9 +1184,9 @@ $error = $_GET['error'] ?? '';
 
         <?php
         // Determine API path based on environment
-        $apiPath = (isset($_SERVER['HTTP_HOST']) && strpos($_SERVER['HTTP_HOST'], 'hostinger') !== false) 
-            ? '/faculty/ajax/' 
-            : '/automation_system/faculty/ajax/';
+        $host = $_SERVER['HTTP_HOST'] ?? '';
+        $isHostinger = strpos($host, 'hostinger') !== false || strpos($host, 'hostingersite.com') !== false;
+        $apiPath = $isHostinger ? '/faculty/ajax/' : '/automation_system/faculty/ajax/';
         ?>
 
         // Global Configuration
