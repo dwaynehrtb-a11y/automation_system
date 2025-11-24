@@ -357,12 +357,13 @@ function getStudentGradeSummary($conn, $student_id, $class_code) {
             $midterm_grade = percentageToGrade($calc_midterm_pct);
             $finals_grade = percentageToGrade($calc_finals_pct);
             
-            // RECALCULATE term grade from term percentage to match faculty calculation
-            $calc_term_grade = percentageToGrade($term_pct);
+            // Use the stored term_grade from database directly (already calculated by faculty system)
+            // Do NOT recalculate it - use the value stored by the grading system
+            $final_term_grade = $term_grade;
             
             error_log("Grade calculation: calc_midterm_pct=$calc_midterm_pct, midterm_grade=$midterm_grade");
             error_log("Finals calculation: calc_finals_pct=$calc_finals_pct, finals_grade=$finals_grade");
-            error_log("Term calculation: term_pct=$term_pct, calc_term_grade=$calc_term_grade");
+            error_log("Term calculation: term_pct=$term_pct, final_term_grade=$final_term_grade (from database)");
             
             return [
                 'success' => true,
@@ -371,7 +372,7 @@ function getStudentGradeSummary($conn, $student_id, $class_code) {
                 'finals_grade' => $finals_grade,
                 'finals_percentage' => $calc_finals_pct,
                 'term_percentage' => $term_pct,
-                'term_grade' => $calc_term_grade,
+                'term_grade' => $final_term_grade,
                 'grade_status' => $row['grade_status'] ?? 'pending',
                 'term_grade_hidden' => false,
                 'message' => 'Grades have been released'
@@ -556,6 +557,7 @@ function getStudentDetailedGrades($conn, $student_id, $class_code) {
             midterm_percentage,
             finals_percentage,
             term_percentage,
+            term_grade,
             grade_status
         FROM grade_term
         WHERE student_id = ? AND class_code = ?
@@ -579,6 +581,7 @@ function getStudentDetailedGrades($conn, $student_id, $class_code) {
         $midterm_pct = $row['midterm_percentage'] ?? null;
         $finals_pct = $row['finals_percentage'] ?? null;
         $term_pct = $row['term_percentage'] ?? null;
+        $stored_term_grade = $row['term_grade'] ?? null;
         $grade_status = $row['grade_status'] ?? 'pending';
         
         // Determine encryption strictly via is_encrypted flag (no heuristics)
@@ -608,11 +611,8 @@ function getStudentDetailedGrades($conn, $student_id, $class_code) {
         $finals_pct = floatval($finals_pct);
         $term_pct = floatval($term_pct);
         
-        // IMPORTANT: If term_pct is 0 or null, ALWAYS calculate it from midterm and finals
-        // Don't rely on stored term_percentage as it might be stale or incomplete
-        if ($term_pct == 0) {
-            $term_pct = ($midterm_pct * ($midterm_weight / 100)) + ($finals_pct * ($finals_weight / 100));
-        }
+        // Use stored term_grade from database (already calculated by faculty system)
+        $term_grade = ($stored_term_grade !== null && $stored_term_grade !== '') ? floatval($stored_term_grade) : 0;
         
         // If percentages are 0 or null, calculate from components instead
         if ($midterm_pct == 0 && $finals_pct == 0 && $term_pct == 0) {
@@ -646,7 +646,12 @@ function getStudentDetailedGrades($conn, $student_id, $class_code) {
                 'percentage' => $finals_pct
             ];
             
-            $term_grade = percentageToGrade($term_pct);
+            // Use the stored term_grade from database instead of recalculating
+            // This ensures consistency with the faculty grading system
+            if ($term_grade == 0 && $term_pct > 0) {
+                // Only recalculate if stored term_grade is 0 but term_pct is available
+                $term_grade = percentageToGrade($term_pct);
+            }
         }
     } else {
         // Fallback if no grade_term entry - calculate from flexible grades components
