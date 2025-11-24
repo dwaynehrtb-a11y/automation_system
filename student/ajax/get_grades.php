@@ -339,13 +339,10 @@ function getStudentGradeSummary($conn, $student_id, $class_code) {
             $term_pct = floatval($row['term_percentage'] ?? 0);
             $term_grade = ($row['term_grade'] !== null && $row['term_grade'] !== '') ? floatval($row['term_grade']) : 0;
             
-            // CALCULATE percentages from components to get accurate grades
-            $midterm_details = calculateTermGradePercentage($conn, $student_id, $class_code, 'midterm');
-            $finals_details = calculateTermGradePercentage($conn, $student_id, $class_code, 'finals');
-            
-            // Use calculated percentages if available, otherwise use stored percentages
-            $calc_midterm_pct = $midterm_details['percentage'] > 0 ? $midterm_details['percentage'] : $midterm_pct;
-            $calc_finals_pct = $finals_details['percentage'] > 0 ? $finals_details['percentage'] : $finals_pct;
+            // Use stored percentages directly from database (faculty system already calculated these)
+            // Do NOT recalculate from components as it may give different results
+            $calc_midterm_pct = $midterm_pct;
+            $calc_finals_pct = $finals_pct;
             
             // Convert percentages to grades
             $midterm_grade = percentageToGrade($calc_midterm_pct);
@@ -355,9 +352,9 @@ function getStudentGradeSummary($conn, $student_id, $class_code) {
             // Do NOT recalculate it - use the value stored by the grading system
             $final_term_grade = $term_grade;
             
-            error_log("Grade calculation: calc_midterm_pct=$calc_midterm_pct, midterm_grade=$midterm_grade");
-            error_log("Finals calculation: calc_finals_pct=$calc_finals_pct, finals_grade=$finals_grade");
-            error_log("Term calculation: term_pct=$term_pct, final_term_grade=$final_term_grade (from database)");
+            error_log("Grade display: midterm_pct=$calc_midterm_pct%, midterm_grade=$midterm_grade");
+            error_log("Grade display: finals_pct=$calc_finals_pct%, finals_grade=$finals_grade");
+            error_log("Grade display: term_pct=$term_pct%, term_grade=$final_term_grade");
             
             return [
                 'success' => true,
