@@ -108,7 +108,7 @@ if (!isset($_SESSION['csrf_token'])) {
             <!-- NU Branding -->
             <div class="nu-brand" style="display: flex; align-items: center; gap: 1rem; color: white; padding-left: 2rem;">
                 <div class="nu-logo-circle" style="width: 48px; height: 48px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                    <img src="/assets/images/nu_logo.png" alt="NU Logo" class="nu-logo-img" style="width: 40px; height: 40px;">
+                    <img src="/faculty/assets/images/nu_logo.png" alt="NU Logo" class="nu-logo-img" style="width: 40px; height: 40px;">
                 </div>
                 <div class="nu-brand-text" style="display: flex; flex-direction: column;">
                     <span class="nu-title-main" style="font-size: 16px; font-weight: 700; color: white;">NATIONAL UNIVERSITY</span>
