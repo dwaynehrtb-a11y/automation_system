@@ -463,7 +463,19 @@ function renderTable() {
         if (FGS.editMode) {
             headerHtml += `<div style="display:flex; gap:4px; width:100%; justify-content:center;"><input type="checkbox" class="fgs-col-checkbox" data-col-id="${col.id}" style="cursor:pointer; width:16px; height:16px;" onchange="updateBulkDeleteBtn()"><button class="fgs-col-edit-btn" title="Edit Item" onclick="event.stopPropagation(); editColumn(${col.id}, '${col.column_name.replace(/'/g, "\\'")}', '${col.max_score}')" style="width:24px; height:24px; padding:3px; background:#3b82f6; color:#fff; border:none; border-radius:4px; cursor:pointer; font-size:11px;"><i class="fas fa-edit"></i></button><button class="fgs-col-delete-btn" title="Delete Item" onclick="event.stopPropagation(); delColumn(${col.id}, '${col.column_name.replace(/'/g, "\\'")}' )" style="width:24px; height:24px; padding:3px; background:#ef4444; color:#fff; border:none; border-radius:4px; cursor:pointer; font-size:11px;"><i class="fas fa-trash"></i></button></div>`;
         }
-        headerHtml += `<div style="text-align:center;"><span style="font-size:13px; font-weight:700; letter-spacing:.5px; display:block;">${col.column_name}</span><small style="font-size:11px; color:#666; font-weight:500;">/${col.max_score}</small></div>`;
+        
+        // Add CO badges
+        let coBadges = '';
+        if (col.co_mappings && col.co_mappings.length > 0) {
+            coBadges = '<div style="display:flex; gap:2px; flex-wrap:wrap; justify-content:center;">';
+            col.co_mappings.forEach(coNum => {
+                const badgeColor = col.is_summative === 'yes' ? '#10b981' : '#6b7280';
+                coBadges += `<span style="background:${badgeColor}; color:white; padding:2px 6px; border-radius:10px; font-size:10px; font-weight:600;">CO${coNum}</span>`;
+            });
+            coBadges += '</div>';
+        }
+        
+        headerHtml += `<div style="text-align:center;"><span style="font-size:13px; font-weight:700; letter-spacing:.5px; display:block;">${col.column_name}</span><small style="font-size:11px; color:#666; font-weight:500;">/${col.max_score}</small>${coBadges}</div>`;
         headerHtml += `</div>`;
         html += `<th style="text-align:center; background:#e8eef9; color:#0b3b85; padding:8px 4px; vertical-align:middle;">${headerHtml}</th>`;
     });
