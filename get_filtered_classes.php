@@ -1,5 +1,14 @@
 <?php
-session_start();
+// Prevent duplicate session starts
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Enable error logging for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 0);
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__ . '/logs/get_filtered_classes_error.log');
 
 // Direct database connection to avoid config issues
 $servername = "localhost";
@@ -43,14 +52,14 @@ try {
             c.section,
             c.room,
             GROUP_CONCAT(DISTINCT CONCAT(c.day, ' ', COALESCE(c.time, '')) ORDER BY FIELD(c.day, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday') SEPARATOR ', ') as schedule,
-            s.course_title,
-            u.name as faculty_name
+            MIN(s.course_title) as course_title,
+            MIN(u.name) as faculty_name
         FROM class c
         LEFT JOIN subjects s ON c.course_code = s.course_code
         LEFT JOIN users u ON c.faculty_id = u.id
         WHERE c.academic_year = ? 
         AND c.term = ?
-        GROUP BY c.class_code, c.section, c.course_code, c.room, s.course_title, u.name
+        GROUP BY c.class_code, c.section, c.course_code, c.room
         ORDER BY c.course_code, c.section
     ";
     
@@ -59,8 +68,14 @@ try {
         throw new Exception('Prepare failed: ' . $conn->error);
     }
     
-    $stmt->bind_param("ss", $academic_year, $term);
-    $stmt->execute();
+    if (!$stmt->bind_param("ss", $academic_year, $term)) {
+        throw new Exception('Bind failed: ' . $stmt->error);
+    }
+    
+    if (!$stmt->execute()) {
+        throw new Exception('Execute failed: ' . $stmt->error);
+    }
+    
     $result = $stmt->get_result();
     
     $classes = [];
