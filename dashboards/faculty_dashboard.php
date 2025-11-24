@@ -177,7 +177,7 @@ $error = $_GET['error'] ?? '';
     <div class="nu-header-container">
         <div class="nu-brand">
             <div class="nu-logo-circle">
-   <img src="/auth/assets/images/nu_logo.png" alt="NU Logo" class="nu-logo-img">
+   <img src="/assets/images/nu_logo.png" alt="NU Logo" class="nu-logo-img">
 </div>
             <div class="nu-brand-text">
                 <div class="nu-title-main">NATIONAL UNIVERSITY</div>
