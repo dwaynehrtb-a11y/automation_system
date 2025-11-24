@@ -4,30 +4,14 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Enable error logging for debugging
-error_reporting(E_ALL);
-ini_set('display_errors', 0);
-ini_set('log_errors', 1);
-ini_set('error_log', __DIR__ . '/logs/get_filtered_classes_error.log');
-
-// Direct database connection to avoid config issues
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "automation_system";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    header('Content-Type: application/json');
-    echo json_encode(['success' => false, 'message' => 'Connection failed: ' . $conn->connect_error]);
-    exit;
-}
+// Load configuration
+require_once __DIR__ . '/config/db.php';
 
 header('Content-Type: application/json');
 
 // Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
+    http_response_code(401);
     echo json_encode(['success' => false, 'message' => 'Unauthorized']);
     exit;
 }
@@ -37,7 +21,8 @@ $academic_year = $_POST['academic_year'] ?? '';
 $term = $_POST['term'] ?? '';
 
 if (empty($academic_year) || empty($term)) {
-    echo json_encode(['success' => false, 'message' => 'Missing parameters', 'received' => $_POST]);
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'Missing parameters']);
     exit;
 }
 
@@ -99,14 +84,13 @@ try {
     ]);
     
     $stmt->close();
-    $conn->close();
     
 } catch (Exception $e) {
+    http_response_code(500);
+    error_log('get_filtered_classes error: ' . $e->getMessage());
     echo json_encode([
         'success' => false,
-        'message' => 'Database error: ' . $e->getMessage()
+        'message' => 'An error occurred while retrieving classes'
     ]);
-    if (isset($conn)) {
-        $conn->close();
-    }
 }
+?>
