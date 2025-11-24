@@ -216,6 +216,23 @@ $error = $_GET['error'] ?? '';
         </div>
 
             <div class="sidebar-nav">
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" onclick="toggleProfileDropdown(event)">
+                        <i class="fas fa-user-circle"></i>
+                        <span>Profile</span>
+                        <i class="fas fa-chevron-down dropdown-icon"></i>
+                    </a>
+                    <div class="dropdown-menu" id="profile-dropdown">
+                        <a href="#profile" class="dropdown-item" onclick="event.preventDefault(); showSection('profile');">
+                            <i class="fas fa-user"></i>
+                            <span>My Profile</span>
+                        </a>
+                        <a href="../auth/logout.php" class="dropdown-item" data-external="true">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </a>
+                    </div>
+                </div>
                 <div class="nav-item">
                     <a href="#dashboard" class="nav-link active" onclick="event.preventDefault(); showSection('dashboard');">
                         <i class="fas fa-chart-bar"></i>
@@ -227,19 +244,6 @@ $error = $_GET['error'] ?? '';
                         <i class="fas fa-calculator"></i>
                         <span>Grading System</span>
                     </a>
-                </div>
-                <div class="nav-item has-submenu">
-                    <a href="#profile" class="nav-link" onclick="event.preventDefault(); showSection('profile'); toggleSubmenu(this)">
-                        <i class="fas fa-user"></i>
-                        <span>Profile</span>
-                        <i class="fas fa-chevron-down submenu-arrow"></i>
-                    </a>
-                    <div class="submenu">
-                        <a href="../auth/logout.php" class="submenu-link" data-external="true">
-                            <i class="fas fa-sign-out-alt"></i>
-                            <span>Logout</span>
-                        </a>
-                    </div>
                 </div>
             </div>
         </nav>
@@ -953,13 +957,6 @@ $error = $_GET['error'] ?? '';
          * All functions have been moved to separate JS files for better organization
          * Ensure global APP object exists with apiPath fallback.
          */
-        
-        // Sidebar submenu toggle
-        function toggleSubmenu(element) {
-            const navItem = element.closest('.nav-item');
-            navItem.classList.toggle('active');
-        }
-
         window.APP = window.APP || {};
         if(!window.APP.apiPath){
             // Fallback relative to dashboards directory
@@ -1224,6 +1221,32 @@ $error = $_GET['error'] ?? '';
         
         // Backward compatibility
         window.csrfToken = APP.csrfToken;
+        
+        // Profile Dropdown Toggle
+        function toggleProfileDropdown(event) {
+            event.preventDefault();
+            const dropdown = document.getElementById('profile-dropdown');
+            const icon = event.currentTarget.querySelector('.dropdown-icon');
+            
+            if (dropdown.style.display === 'block') {
+                dropdown.style.display = 'none';
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                dropdown.style.display = 'block';
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.querySelector('.dropdown');
+            const dropdownMenu = document.getElementById('profile-dropdown');
+            if (dropdown && dropdownMenu && !dropdown.contains(event.target)) {
+                dropdownMenu.style.display = 'none';
+                const icon = dropdown.querySelector('.dropdown-icon');
+                if (icon) icon.style.transform = 'rotate(0deg)';
+            }
+        });
         
         // Toast Notification (used by all modules)
         const Toast = Swal.mixin({
