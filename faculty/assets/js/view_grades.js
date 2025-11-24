@@ -276,11 +276,11 @@ const GradeAnalytics = {
         if (isNaN(p) || p < 0) return 0.0;
 
         if (p >= 96) return 4.0;
-        if (p >= 91) return 3.5;
-        if (p >= 86) return 3.0;
-        if (p >= 81) return 2.5;
-        if (p >= 76) return 2.0;
-        if (p >= 71) return 1.5;
+        if (p >= 90) return 3.5;
+        if (p >= 84) return 3.0;
+        if (p >= 78) return 2.5;
+        if (p >= 72) return 2.0;
+        if (p >= 66) return 1.5;
         if (p >= 60) return 1.0;
         return 0.0;
     },
