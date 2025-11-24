@@ -44,7 +44,7 @@
   --line-height: 1.5;
   
   /* Layout */
-  --container-width: 400px;
+  --container-width: 500px;
   --spacing: 1.5rem;
 }
 
@@ -67,7 +67,8 @@ body {
   font-size: 0.875rem;
   line-height: var(--line-height);
   color: var(--gray-900);
-  background: linear-gradient(135deg, #1e40af 100%);
+  background: url('/automation_system/auth/assets/images/nu-lipa-background.jpg') no-repeat center center fixed;
+  background-size: cover;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -88,6 +89,7 @@ body {
   width: 100%;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: slideUp 0.3s ease-out;
 }
 
 .login-container::before {
@@ -101,7 +103,7 @@ body {
 }
 
 .login-right {
-  padding: 2rem;
+  padding: 2.5rem;
 }
 
 /* Header */
@@ -112,15 +114,15 @@ body {
 
 .logo {
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-  width: 56px;
-  height: 56px;
+  width: 64px;
+  height: 64px;
   border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto 1rem;
   color: var(--white);
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 600;
   box-shadow: var(--shadow-md);
 }
@@ -128,7 +130,7 @@ body {
 h1 {
   color: var(--gray-900);
   margin-bottom: 0.5rem;
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 600;
   letter-spacing: -0.025em;
 }
