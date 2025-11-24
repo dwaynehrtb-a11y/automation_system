@@ -245,14 +245,14 @@ try {
         . '<tr><td><strong>' . htmlspecialchars($faculty['name'] ?? '') . '</strong></td></tr>'
         . '<tr><td class="gray-header">SIGNATURE:</td></tr>'
         . '<tr><td style="padding:20px;vertical-align:top">&nbsp;</td></tr>'
-        . '</table>';
-
-    $html .= '<table style="margin-top:10px"><tr><td style="width:40%" class="gray-header">GRADE DISTRIBUTION:</td><td class="gray-header">CO-SO MAP</td></tr></table>';
-    $html .= '<table style="margin-top:0;border-top:none"><tr><td style="width:40%;vertical-align:top;border-top:none">';
-    $html .= '<table style="width:100%"><tr><td class="gray-header">GRADE</td><td class="gray-header">NO. OF STUDENTS</td></tr>' . $gradeRows . '</table>';
-    $html .= '</td><td style="vertical-align:top;border-top:none">';
-    $html .= '<table style="width:100%">' . $coMapHeader . $coMapRows . '</table>';
-    $html .= '<div style="margin-top:10px;font-size:9pt;line-height:1.3"><strong>Student Outcomes (SO)</strong><br>';
+        . '<tr><td colspan="5" class="gray-header">GRADE DISTRIBUTION AND CO-SO MAP</td></tr>'
+        . '<tr><td colspan="5">'
+        . '<table style="width:100%;border-collapse:collapse;margin-top:10px;">'
+        . '<tr><td style="width:40%;vertical-align:top;border:1px solid #000;padding:5px;">'
+        . '<table style="width:100%;border-collapse:collapse;"><tr><td class="gray-header" style="border:1px solid #000;">GRADE</td><td class="gray-header" style="border:1px solid #000;">NO. OF STUDENTS</td></tr>' . $gradeRows . '</table>'
+        . '</td><td style="width:60%;vertical-align:top;border:1px solid #000;padding:5px;">'
+        . '<table style="width:100%;border-collapse:collapse;">' . $coMapHeader . $coMapRows . '</table>'
+        . '<div style="margin-top:10px;font-size:9pt;line-height:1.3"><strong>Student Outcomes (SO)</strong><br>';
     foreach (range(1, 6) as $i) {
         $soDesc = '';
         if ($subject && isset($subject['student_outcomes'])) {
@@ -281,7 +281,7 @@ try {
         $desc = preg_replace('/^\d+\.\s*/', '', $desc);
         $html .= $co['co_number'] . '. ' . $desc . '<br>';
     }
-    $html .= '</div></td></tr></table>';
+    $html .= '</div></td></tr></table></td></tr></table>';
     $html .= '<div class="footer">Page 1 of 3</div></div>';
 
     // PAGE 2

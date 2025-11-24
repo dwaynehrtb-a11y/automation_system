@@ -1451,7 +1451,7 @@ body {
 }
 
 /* Table Column Widths */
-.col-course { width: 25%; }
+.col-course { width: 30%; }
 .col-section { width: 12%; }
 .col-schedule { width: 20%; }
 .col-room { width: 10%; }
@@ -1466,7 +1466,7 @@ body {
 }
 
 .table-course-code {
-    font-size: var(--font-size-xs);
+    font-size: var(--font-size-sm);
     color: var(--text-tertiary);
     font-family: 'JetBrains Mono', monospace;
 }
