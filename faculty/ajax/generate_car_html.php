@@ -61,9 +61,66 @@ try {
         if (isset($metadata['proposed_actions']) && !isset($metadata['proposed_improvements'])) { $metadata['proposed_improvements']=$metadata['proposed_actions']; }
     }
 
-    // Grade distribution
-    $gradeDistQuery = "SELECT CASE WHEN tg.grade_status='incomplete' THEN 'INC' WHEN tg.grade_status='dropped' THEN 'DRP' WHEN tg.grade_status='repeat' THEN 'R' WHEN tg.grade_status='failed' THEN 'FAILED' WHEN tg.grade_status='passed' AND CAST(tg.term_grade AS DECIMAL(10,1))=4.0 THEN '4.00' WHEN tg.grade_status='passed' AND CAST(tg.term_grade AS DECIMAL(10,1))=3.5 THEN '3.50' WHEN tg.grade_status='passed' AND CAST(tg.term_grade AS DECIMAL(10,1))=3.0 THEN '3.00' WHEN tg.grade_status='passed' AND CAST(tg.term_grade AS DECIMAL(10,1))=2.5 THEN '2.50' WHEN tg.grade_status='passed' AND CAST(tg.term_grade AS DECIMAL(10,1))=2.0 THEN '2.00' WHEN tg.grade_status='passed' AND CAST(tg.term_grade AS DECIMAL(10,1))=1.5 THEN '1.50' WHEN tg.grade_status='passed' AND CAST(tg.term_grade AS DECIMAL(10,1))=1.0 THEN '1.00' ELSE 'IP' END AS grade, COUNT(DISTINCT tg.student_id) AS count FROM grade_term tg WHERE tg.class_code=? GROUP BY grade ORDER BY FIELD(grade,'4.00','3.50','3.00','2.50','2.00','1.50','1.00','INC','DRP','R','FAILED','IP')";
-    $stmt = $conn->prepare($gradeDistQuery); $stmt->bind_param("s", $class_code); $stmt->execute(); $gradeDist=[]; $res=$stmt->get_result(); while($row=$res->fetch_assoc()){ $gradeDist[$row['grade']]=$row['count']; } $stmt->close();
+    // Grade distribution - calculate from grade_term and flexible grading
+    // Grade distribution - calculate from flexible grading components (same as Summary display)
+    // 40% Midterm + 60% Finals
+    // Grade conversion: 60-65.99=>1.0 | 66-71.99=>1.5 | 72-77.99=>2.0 | 78-83.99=>2.5 | 84-89.99=>3.0 | 90-95.99=>3.5 | 96-100=>4.0 | <60=>0.0
+    $gradeDistQuery = "
+    SELECT ce.student_id,
+        ROUND(
+            (
+                COALESCE(AVG(CASE WHEN gc.term_type='midterm' THEN (COALESCE(sfg.raw_score,0)/gcc.max_score*100) ELSE NULL END), 0)
+                * (40.0 / 100.0)
+            ) +
+            (
+                COALESCE(AVG(CASE WHEN gc.term_type='finals' THEN (COALESCE(sfg.raw_score,0)/gcc.max_score*100) ELSE NULL END), 0)
+                * (60.0 / 100.0)
+            )
+        , 2) as term_percentage
+    FROM class_enrollments ce
+    LEFT JOIN grading_components gc ON gc.class_code = ce.class_code
+    LEFT JOIN grading_component_columns gcc ON gc.id = gcc.component_id
+    LEFT JOIN student_flexible_grades sfg ON gcc.id = sfg.column_id AND ce.student_id = sfg.student_id
+    WHERE ce.class_code = ? AND ce.status = 'enrolled'
+    GROUP BY ce.student_id";
+    
+    $stmt = $conn->prepare($gradeDistQuery); 
+    if (!$stmt) {
+        error_log("Grade distribution query prepare error: " . $conn->error);
+        $gradeDist = ['4.00' => 0, '3.50' => 0, '3.00' => 0, '2.50' => 0, '2.00' => 0, '1.50' => 0, '1.00' => 0, 'INC' => 0, 'DRP' => 0, 'R' => 0, 'FAILED' => 0, 'IP' => 0];
+    } else {
+        $stmt->bind_param("s", $class_code); 
+        if (!$stmt->execute()) {
+            error_log("Grade distribution query execute error: " . $stmt->error);
+            $gradeDist = ['4.00' => 0, '3.50' => 0, '3.00' => 0, '2.50' => 0, '2.00' => 0, '1.50' => 0, '1.00' => 0, 'INC' => 0, 'DRP' => 0, 'R' => 0, 'FAILED' => 0, 'IP' => 0];
+        } else {
+            $gradeDist = ['4.00' => 0, '3.50' => 0, '3.00' => 0, '2.50' => 0, '2.00' => 0, '1.50' => 0, '1.00' => 0, 'INC' => 0, 'DRP' => 0, 'R' => 0, 'FAILED' => 0, 'IP' => 0];
+            $res = $stmt->get_result(); 
+            while($row = $res->fetch_assoc()) { 
+                $termPct = floatval($row['term_percentage']);
+                
+                // Use exact conversion ladder from toGrade() in flexible_grading.js
+                if ($termPct < 60) {
+                    $gradeDist['FAILED']++;
+                } elseif ($termPct < 66) {
+                    $gradeDist['1.00']++;
+                } elseif ($termPct < 72) {
+                    $gradeDist['1.50']++;
+                } elseif ($termPct < 78) {
+                    $gradeDist['2.00']++;
+                } elseif ($termPct < 84) {
+                    $gradeDist['2.50']++;
+                } elseif ($termPct < 90) {
+                    $gradeDist['3.00']++;
+                } elseif ($termPct < 96) {
+                    $gradeDist['3.50']++;
+                } else {
+                    $gradeDist['4.00']++;
+                }
+            }
+        }
+        $stmt->close();
+    }
 
     // CO Performance
     $coPerfQuery = "SELECT co.co_number, co.co_description, gc.component_name AS assessment_name, gcc.performance_target, COUNT(DISTINCT CASE WHEN (CAST(sfg.raw_score AS DECIMAL(10,2))/gcc.max_score*100)>=gcc.performance_target THEN ce.student_id END) AS students_met_target, COUNT(DISTINCT ce.student_id) AS total_students, IFNULL(ROUND((COUNT(DISTINCT CASE WHEN (CAST(sfg.raw_score AS DECIMAL(10,2))/gcc.max_score*100)>=gcc.performance_target THEN ce.student_id END)*100.0/NULLIF(COUNT(DISTINCT ce.student_id),0)),2),0) AS success_rate FROM grading_components gc JOIN grading_component_columns gcc ON gc.id=gcc.component_id JOIN class_enrollments ce ON gc.class_code=ce.class_code AND ce.status='enrolled' LEFT JOIN student_flexible_grades sfg ON gcc.id=sfg.column_id AND ce.student_id=sfg.student_id LEFT JOIN course_outcomes co ON (gcc.co_mappings IS NOT NULL AND JSON_CONTAINS(gcc.co_mappings, JSON_QUOTE(CAST(co.co_number AS CHAR)))) WHERE gc.class_code=? AND gcc.is_summative='yes' AND co.co_number IS NOT NULL GROUP BY co.co_id, co.co_number, co.co_description, gc.id, gc.component_name, gcc.performance_target ORDER BY co.co_number, gc.id";
@@ -140,9 +197,9 @@ try {
     $soColumns = ['SO1', 'SO2', 'SO3', 'SO4', 'SO5', 'SO6'];
     // Build header: CO | SO1 | SO2 | SO3 | SO4 | SO5 | SO6 (7 columns total)
     $coMapHeader = '<tr>';
-    $coMapHeader .= '<td style="border:1px solid #000;padding:4px;background:#ccc;text-align:center"><strong>CO</strong></td>';
+    $coMapHeader .= '<th style="border:1px solid #000;padding:4px;background:#ccc;text-align:center"><strong>CO</strong></th>';
     foreach ($soColumns as $so) {
-        $coMapHeader .= '<td style="border:1px solid #000;padding:4px;background:#ccc;text-align:center"><strong>' . $so . '</strong></td>';
+        $coMapHeader .= '<th style="border:1px solid #000;padding:4px;background:#ccc;text-align:center"><strong>' . $so . '</strong></th>';
     }
     $coMapHeader .= '</tr>';
     
@@ -150,7 +207,7 @@ try {
         $coId = $co['co_id'];
         $coNum = $co['co_number'];
         $coMapRows .= '<tr>';
-        $coMapRows .= '<td style="border:1px solid #000;padding:4px;text-align:center">' . $coNum . '</td>';
+        $coMapRows .= '<th style="border:1px solid #000;padding:4px;text-align:center">' . $coNum . '</th>';
         // Get mapped SOs for this CO from the co_so_mapping table
         $mappedSOs = isset($coSoMappings[$coId]) ? $coSoMappings[$coId] : [];
         foreach ($soColumns as $so) {
@@ -215,7 +272,7 @@ try {
         . '.logo-section{display:flex;align-items:center;gap:10px;}'
         . '.header-info{text-align:right;}'
         . '.header-title{font-weight:bold;font-size:11pt;}'
-        . 'table{border-collapse:collapse;width:100%;font-size:10pt;} '
+        . 'table{border-collapse:collapse;width:100%;font-size:10pt;margin-bottom:15px;} '
         . 'th,td{border:1px solid #000;padding:5px;vertical-align:top;}'
         . '.gray-header{background:#ccc;font-weight:bold;}'
         . '.footer{position:absolute;bottom:10px;right:10px;font-size:9pt;}'
@@ -232,6 +289,7 @@ try {
         . '<div class="header-title">COURSE ASSESSMENT REPORT</div>'
         . '<div>AD-FO-01</div>'
         . '<div>OCT 2022</div>'
+        . '<div style="font-size:9pt;margin-top:5px;">Page 1 of 3</div>'
         . '</div></div>';
 
     $html .= '<table>'
@@ -247,7 +305,7 @@ try {
         . '<tr><td style="padding:20px;vertical-align:top">&nbsp;</td></tr>'
         . '<tr><td colspan="5" class="gray-header">GRADE DISTRIBUTION AND CO-SO MAP</td></tr>'
         . '<tr><td colspan="5">'
-        . '<table style="width:100%;border-collapse:collapse;margin-top:10px;">'
+        . '<table style="width:100%;border-collapse:collapse;margin-top:15px;">'
         . '<tr><td style="width:40%;vertical-align:top;border:1px solid #000;padding:5px;">'
         . '<table style="width:100%;border-collapse:collapse;"><tr><td class="gray-header" style="border:1px solid #000;">GRADE</td><td class="gray-header" style="border:1px solid #000;">NO. OF STUDENTS</td></tr>' . $gradeRows . '</table>'
         . '</td><td style="width:60%;vertical-align:top;border:1px solid #000;padding:5px;">'
@@ -295,25 +353,24 @@ try {
         . '<div class="header-title">COURSE ASSESSMENT REPORT</div>'
         . '<div>AD-FO-01</div>'
         . '<div>OCT 2022</div>'
+        . '<div style="font-size:9pt;margin-top:5px;">Page 2 of 3</div>'
         . '</div></div>';
 
     $html .= '<table><tr><td class="gray-header" colspan="4">COURSE LEARNING OUTCOMES ASSESSMENT</td></tr>'
         . '<tr><td class="gray-header">COURSE<br>OUTCOME</td><td class="gray-header">SUMMATIVE ASSESSMENT</td><td class="gray-header">PERFORMANCE TARGET</td><td class="gray-header">SUCCESS RATE<br>(in % and enclose the number in ( ))</td></tr>'
-        . $coPerfRows . '</table>';
-
-    $html .= '<table style="margin-top:10px"><tr><td class="gray-header" colspan="2">List of Students with INC</td></tr>'
-        . '<tr><td class="gray-header">Name</td><td class="gray-header">Lacking Requirements</td></tr>'
-        . ($incStudentRows ? $incStudentRows : '<tr><td colspan="2" style="text-align:center">None</td></tr>')
+        . $coPerfRows 
+        . '<tr><td class="gray-header" colspan="4">List of Students with INC</td></tr>'
+        . '<tr><td class="gray-header">Name</td><td class="gray-header" colspan="3">Lacking Requirements</td></tr>'
+        . ($incStudentRows ? $incStudentRows : '<tr><td colspan="4" style="text-align:center">None</td></tr>')
+        . '<tr><td class="gray-header" colspan="4">Teaching Strategies Employed <span style="font-weight:normal">(List and give a brief description of each teaching strategy employed in class)</span></td></tr>'
+        . '<tr><td colspan="4" style="padding:10px;min-height:80px">' . nl2br(htmlspecialchars($metadata['teaching_strategies'] ?? '')) . '</td></tr>'
+        . '<tr><td class="gray-header" colspan="2">Intervention or Enrichment Activities Conducted</td><td class="gray-header" colspan="2">No. of Students Involved</td></tr>'
+        . '<tr><td colspan="2" style="padding:10px;min-height:60px">' . nl2br(htmlspecialchars($metadata['interventions'] ?? '')) . '</td><td colspan="2" style="text-align:center;vertical-align:top">' . $interventionCount . '</td></tr>'
+        . '<tr><td class="gray-header" colspan="2">Problems Encountered <span style="font-weight:normal">(Brief Description)</span></td><td class="gray-header" colspan="2">Action Taken</td></tr>'
+        . '<tr><td colspan="2" style="padding:10px;min-height:80px;vertical-align:top">' . nl2br(htmlspecialchars($metadata['problems_encountered'] ?? '')) . '</td><td colspan="2" style="padding:10px;vertical-align:top">' . nl2br(htmlspecialchars($metadata['actions_taken'] ?? '')) . '</td></tr>'
+        . '<tr><td class="gray-header" colspan="4">PROPOSED ACTIONS FOR COURSE IMPROVEMENT</td></tr>'
+        . '<tr><td colspan="4" style="padding:20px;min-height:500px;vertical-align:top">' . nl2br(htmlspecialchars($metadata['proposed_improvements'] ?? '––')) . '</td></tr>'
         . '</table>';
-
-    $html .= '<table style="margin-top:10px"><tr><td class="gray-header" colspan="2">Teaching Strategies Employed <span style="font-weight:normal">(List and give a brief description of each teaching strategy employed in class)</span></td></tr>'
-        . '<tr><td colspan="2" style="padding:10px;min-height:80px">' . nl2br(htmlspecialchars($metadata['teaching_strategies'] ?? '')) . '</td></tr></table>';
-
-    $html .= '<table style="margin-top:10px"><tr><td class="gray-header" colspan="2">Intervention or Enrichment Activities Conducted</td><td class="gray-header">No. of Students Involved</td></tr>'
-        . '<tr><td colspan="2" style="padding:10px;min-height:60px">' . nl2br(htmlspecialchars($metadata['interventions'] ?? '')) . '</td><td style="text-align:center;vertical-align:top">' . $interventionCount . '</td></tr></table>';
-
-    $html .= '<table style="margin-top:10px"><tr><td class="gray-header" style="width:50%">Problems Encountered <span style="font-weight:normal">(Brief Description)</span></td><td class="gray-header" style="width:50%">Action Taken</td></tr>'
-        . '<tr><td style="padding:10px;min-height:80px;vertical-align:top">' . nl2br(htmlspecialchars($metadata['problems_encountered'] ?? '')) . '</td><td style="padding:10px;vertical-align:top">' . nl2br(htmlspecialchars($metadata['actions_taken'] ?? '')) . '</td></tr></table>';
 
     $html .= '<div class="footer">Page 2 of 3</div></div>';
 
@@ -328,7 +385,14 @@ try {
         . '<div class="header-title">COURSE ASSESSMENT REPORT</div>'
         . '<div>AD-FO-01</div>'
         . '<div>OCT 2022</div>'
+        . '<div style="font-size:9pt;margin-top:5px;">Page 3 of 3</div>'
         . '</div></div>';
+
+    // Add course info table on Page 3
+    $html .= '<table style="margin-bottom:15px;">'
+        . '<tr><td class="gray-header" style="width:25%">ACADEMIC TERM/ SCHOOL YEAR:</td><td class="gray-header" style="width:25%">COURSE CODE:</td><td class="gray-header" style="width:25%">COURSE TITLE:</td><td class="gray-header" style="width:25%">CLASS SIZE:</td></tr>'
+        . '<tr><td style="text-align:center"><strong>' . strtoupper($class['term'] ?? '') . ', AY ' . htmlspecialchars($class['academic_year'] ?? '') . '</strong></td><td style="text-align:center"><strong>' . htmlspecialchars($subject['course_code'] ?? '') . '</strong></td><td style="text-align:center"><strong>' . htmlspecialchars($subject['course_title'] ?? '') . '</strong></td><td style="text-align:center"><strong>' . $studentCount . '</strong></td></tr>'
+        . '</table>';
 
     $html .= '<table><tr><td class="gray-header">PROPOSED ACTIONS FOR COURSE IMPROVEMENT</td></tr>'
         . '<tr><td style="padding:20px;min-height:500px;vertical-align:top">' . nl2br(htmlspecialchars($metadata['proposed_improvements'] ?? '––')) . '</td></tr></table>';

@@ -131,11 +131,13 @@ try {
                         2
                     ), 0) AS success_rate
                    FROM course_outcomes co
-                   LEFT JOIN grading_component_columns gcc ON JSON_CONTAINS(gcc.co_mappings, JSON_QUOTE(CAST(co.co_number AS CHAR)))
-                   LEFT JOIN grading_components gc ON gc.id = gcc.component_id
+                   INNER JOIN class c ON c.course_code = co.course_code
+                   INNER JOIN grading_components gc ON gc.class_code = c.class_code
+                   INNER JOIN grading_component_columns gcc ON gcc.component_id = gc.id AND JSON_CONTAINS(gcc.co_mappings, CAST(co.co_number AS CHAR))
                    INNER JOIN student_flexible_grades sfg ON sfg.column_id = gcc.id
                    INNER JOIN class_enrollments ce ON ce.class_code = ? AND ce.student_id = sfg.student_id
                    WHERE co.course_code = ?
+                        AND c.class_code = ?
                         AND ce.status = 'enrolled'
                    GROUP BY co.co_number, co.co_description, gc.id, gcc.id, gcc.performance_target, gcc.max_score
                    ORDER BY co.co_number, gc.id";
@@ -147,7 +149,7 @@ try {
         throw new Exception("Perf query prepare failed");
     }
     
-    $stmt->bind_param("ss", $class_code, $class['course_code']);
+    $stmt->bind_param("sss", $class_code, $class['course_code'], $class_code);
     if (!$stmt->execute()) {
         log_debug("Perf query execute failed: " . $stmt->error);
         throw new Exception("Perf query execute failed");
