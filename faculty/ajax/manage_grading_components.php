@@ -92,6 +92,8 @@ try {
             $is_summative = $_POST['is_summative'] ?? 'no';
             $performance_target = $_POST['performance_target'] ?? '60';
             
+            error_log("DEBUG: Received update_component POST: component_id=$component_id, apply_co_mappings=$apply_co_mappings, co_mappings=$co_mappings");
+            
             if (empty($component_id) || empty($component_name) || $percentage === '') {
                 throw new Exception('All fields required');
             }
@@ -589,6 +591,7 @@ function addComponent($conn, $class_code, $term_type, $component_name, $percenta
  * Update a component
  */
 function updateComponent($conn, $component_id, $component_name, $percentage, $faculty_id, $apply_co_mappings = 'no', $co_mappings_json = '[]', $apply_summative = 'no', $is_summative = 'no', $performance_target = '60') {
+    error_log("DEBUG: updateComponent called with component_id=$component_id, apply_co_mappings=$apply_co_mappings, co_mappings_json=$co_mappings_json");
     // Verify faculty owns this component's class
     $verify = $conn->prepare("
         SELECT gc.id 
@@ -639,11 +642,17 @@ function updateComponent($conn, $component_id, $component_name, $percentage, $fa
     
     // Apply CO mappings to all items if requested
     if ($apply_co_mappings === 'yes') {
+        error_log("DEBUG: Applying CO mappings to component $component_id");
+        error_log("DEBUG: co_mappings_json = $co_mappings_json");
         $co_array = json_decode($co_mappings_json, true);
         if ($co_array === null) {
             $co_array = [];
+            error_log("DEBUG: JSON decode failed, using empty array");
+        } else {
+            error_log("DEBUG: Decoded co_array: " . json_encode($co_array));
         }
         $co_json = !empty($co_array) ? json_encode($co_array) : NULL;
+        error_log("DEBUG: Final co_json = $co_json");
         
         $update_items = $conn->prepare("
             UPDATE grading_component_columns 
@@ -653,8 +662,14 @@ function updateComponent($conn, $component_id, $component_name, $percentage, $fa
         
         if ($update_items) {
             $update_items->bind_param("si", $co_json, $component_id);
-            $update_items->execute();
+            $result = $update_items->execute();
+            error_log("DEBUG: Update query executed: " . ($result ? 'success' : 'failed'));
+            if (!$result) {
+                error_log("DEBUG: Update error: " . $update_items->error);
+            }
             $update_items->close();
+        } else {
+            error_log("DEBUG: Prepare failed: " . $conn->error);
         }
     }
     
