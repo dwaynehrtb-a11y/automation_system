@@ -101,7 +101,7 @@
     <!-- NU Brand (Left Side) -->
     <div class="nu-brand">
     <div class="nu-logo-circle">
-    <img src="/automation_system/admin/assets/nu_logo.png" alt="NU Logo" class="nu-logo-img">
+    <img src="../faculty/assets/images/nu_logo.png" alt="NU Logo">
     </div>
     <div class="nu-brand-text">
     <span class="nu-title-main">NATIONAL UNIVERSITY</span>
