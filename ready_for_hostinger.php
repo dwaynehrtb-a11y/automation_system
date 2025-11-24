@@ -83,6 +83,13 @@ try {
             break;
             
         case 'update_component':
+            // Create debug file immediately
+            $debug_file = __DIR__ . '/../../../debug_co_log.txt';
+            $debug_content = "=== UPDATE COMPONENT START ===\n";
+            $debug_content .= "Time: " . date('Y-m-d H:i:s') . "\n";
+            $debug_content .= "Action: update_component\n";
+            file_put_contents($debug_file, $debug_content, FILE_APPEND);
+            
             $component_id = $_POST['component_id'] ?? '';
             $component_name = $_POST['component_name'] ?? '';
             $percentage = $_POST['percentage'] ?? '';
@@ -91,6 +98,13 @@ try {
             $apply_summative = $_POST['apply_summative'] ?? 'no';
             $is_summative = $_POST['is_summative'] ?? 'no';
             $performance_target = $_POST['performance_target'] ?? '60';
+            
+            $debug_content = "POST data received:\n";
+            $debug_content .= "component_id: $component_id\n";
+            $debug_content .= "apply_co_mappings: $apply_co_mappings\n";
+            $debug_content .= "co_mappings: $co_mappings\n";
+            $debug_content .= "=== END POST DATA ===\n";
+            file_put_contents($debug_file, $debug_content, FILE_APPEND);
             
             error_log("DEBUG: Received update_component POST: component_id=$component_id, apply_co_mappings=$apply_co_mappings, co_mappings=$co_mappings");
             
@@ -691,6 +705,16 @@ function updateComponent($conn, $component_id, $component_name, $percentage, $fa
         }
         
         $debug_content .= "=== END DEBUG ===\n\n";
+        file_put_contents($debug_file, $debug_content, FILE_APPEND);
+    } else {
+        // Debug when CO mappings are not being applied
+        $debug_file = __DIR__ . '/../../../debug_co_log.txt';
+        $debug_content = "=== CO NOT APPLIED ===\n";
+        $debug_content .= "Time: " . date('Y-m-d H:i:s') . "\n";
+        $debug_content .= "apply_co_mappings: '$apply_co_mappings'\n";
+        $debug_content .= "co_mappings: '$co_mappings'\n";
+        $debug_content .= "File: " . __FILE__ . "\n";
+        $debug_content .= "=== END ===\n\n";
         file_put_contents($debug_file, $debug_content, FILE_APPEND);
     }
     
