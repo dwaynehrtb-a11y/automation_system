@@ -37,24 +37,19 @@ try {
     exit;
 }
 
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'faculty') {
-    log_debug('Auth check failed. user_id=' . ($_SESSION['user_id'] ?? 'null') . ', role=' . ($_SESSION['role'] ?? 'null'));
-    http_response_code(403);
-    echo json_encode(['success' => false, 'message' => 'Unauthorized']);
-    exit;
-}
-
-log_debug('Auth passed. user_id=' . $_SESSION['user_id'] . ', role=' . $_SESSION['role']);
-
-$faculty_id = $_SESSION['user_id'];
-$class_code = $_GET['class_code'] ?? '';
-if (empty($class_code)) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'Class code required']);
-    exit;
-}
-
 try {
+    if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'faculty') {
+        log_debug('Auth check failed. user_id=' . ($_SESSION['user_id'] ?? 'null') . ', role=' . ($_SESSION['role'] ?? 'null'));
+        throw new Exception('Unauthorized');
+    }
+
+    log_debug('Auth passed. user_id=' . $_SESSION['user_id'] . ', role=' . $_SESSION['role']);
+
+    $faculty_id = $_SESSION['user_id'];
+    $class_code = $_GET['class_code'] ?? '';
+    if (empty($class_code)) {
+        throw new Exception('Class code required');
+    }
     // Get class info from class_code
     $class_parts = explode('_', $class_code);
     
@@ -133,7 +128,7 @@ try {
                    FROM course_outcomes co
                    INNER JOIN class c ON c.course_code = co.course_code
                    INNER JOIN grading_components gc ON gc.class_code = c.class_code
-                   INNER JOIN grading_component_columns gcc ON gcc.component_id = gc.id AND JSON_CONTAINS(gcc.co_mappings, CAST(co.co_number AS CHAR))
+                   INNER JOIN grading_component_columns gcc ON gcc.component_id = gc.id AND (JSON_CONTAINS(gcc.co_mappings, CAST(co.co_number AS CHAR)) OR JSON_CONTAINS(gcc.co_mappings, JSON_QUOTE(CAST(co.co_number AS CHAR))))
                    INNER JOIN student_flexible_grades sfg ON sfg.column_id = gcc.id
                    INNER JOIN class_enrollments ce ON ce.class_code = ? AND ce.student_id = sfg.student_id
                    WHERE co.course_code = ?
@@ -428,11 +423,21 @@ html, body {
 
     if (ob_get_level()) { ob_end_clean(); }
     echo json_encode(['success' => true, 'html' => $html, 'class_code' => $class_code], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-    exit;
+    if (!isset($_GET['for_pdf_generation']) || $_GET['for_pdf_generation'] !== '1') {
+        exit;
+    }
 
 } catch (Exception $e) {
     log_debug('Exception caught: ' . $e->getMessage());
     if (ob_get_level()) { ob_end_clean(); }
+    
+    // When generating for PDF, throw the exception to be caught by the PDF generator
+    if (isset($_GET['for_pdf_generation']) && $_GET['for_pdf_generation'] === '1') {
+        http_response_code(500);
+        throw $e;
+    }
+    
+    // For normal operation, return JSON error
     http_response_code(500);
     echo json_encode(['success' => false, 'message' => $e->getMessage()], JSON_UNESCAPED_UNICODE);
     exit;

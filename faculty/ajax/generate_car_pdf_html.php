@@ -173,7 +173,7 @@ try {
     LEFT JOIN student_flexible_grades sfg ON gcc.id = sfg.column_id AND ce.student_id = sfg.student_id
     LEFT JOIN course_outcomes co ON (
     gcc.co_mappings IS NOT NULL 
-    AND JSON_CONTAINS(gcc.co_mappings, JSON_QUOTE(CAST(co.co_number AS CHAR)))
+    AND (JSON_CONTAINS(gcc.co_mappings, JSON_QUOTE(CAST(co.co_number AS CHAR))) OR JSON_CONTAINS(gcc.co_mappings, CAST(co.co_number AS CHAR)))
     )
     WHERE gc.class_code = ? 
     AND gcc.is_summative = 'yes' 

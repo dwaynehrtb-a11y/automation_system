@@ -1,45 +1,54 @@
 <?php
 error_reporting(E_ALL);
-ini_set('display_errors', 1);
+ini_set('display_errors', 0);
 ini_set('log_errors', 1);
 /**
  * Generate CAR as HTML (clean rebuild)
  */
 
+error_log("=== generate_car_html.php START ===");
+
 if (session_status() === PHP_SESSION_NONE) { session_start(); }
+error_log("Session started");
 require_once '../../config/db.php';
 require_once '../../config/encryption.php';
-
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'faculty') {
-    http_response_code(403);
-    echo json_encode(['success' => false, 'message' => 'Unauthorized']);
-    exit;
-}
-
-$faculty_id = $_SESSION['user_id'];
-$class_code = $_GET['class_code'] ?? '';
-if (empty($class_code)) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'Class code required']);
-    exit;
-}
+error_log("Config files loaded");
 
 try {
+    if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'faculty') {
+        error_log("AUTH FAILED - user_id: " . ($_SESSION['user_id'] ?? 'null') . ", role: " . ($_SESSION['role'] ?? 'null'));
+        throw new Exception('Unauthorized');
+    }
+
+    error_log("AUTH PASSED");
+    
+    $faculty_id = $_SESSION['user_id'];
+    $class_code = $_GET['class_code'] ?? '';
+    if (empty($class_code)) {
+        error_log("CLASS CODE EMPTY");
+        throw new Exception('Class code required');
+    }
+    
+    error_log("CLASS CODE: $class_code");
+    error_log("Starting try block for class_code=$class_code");
     // Class ownership
     $stmt = $conn->prepare("SELECT * FROM class WHERE class_code = ? AND faculty_id = ? LIMIT 1");
     $stmt->bind_param("si", $class_code, $faculty_id);
     $stmt->execute(); $class = $stmt->get_result()->fetch_assoc(); $stmt->close();
     if (!$class) { throw new Exception('Class not found'); }
+    error_log("Class query OK - class_id: " . $class['id']);
 
     // Subject
     $stmt = $conn->prepare("SELECT * FROM subjects WHERE course_code = ? LIMIT 1");
     $stmt->bind_param("s", $class['course_code']);
     $stmt->execute(); $subject = $stmt->get_result()->fetch_assoc(); $stmt->close();
+    error_log("Subject query OK");
 
     // Faculty
     $stmt = $conn->prepare("SELECT name FROM users WHERE id = ? LIMIT 1");
     $stmt->bind_param("i", $faculty_id);
     $stmt->execute(); $faculty = $stmt->get_result()->fetch_assoc(); $stmt->close();
+    error_log("Faculty query OK");
 
     // Class size
     $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM class_enrollments WHERE class_code = ? AND status='enrolled'");
@@ -123,7 +132,7 @@ try {
     }
 
     // CO Performance
-    $coPerfQuery = "SELECT co.co_number, co.co_description, gc.component_name AS assessment_name, gcc.performance_target, COUNT(DISTINCT CASE WHEN (CAST(sfg.raw_score AS DECIMAL(10,2))/gcc.max_score*100)>=gcc.performance_target THEN ce.student_id END) AS students_met_target, COUNT(DISTINCT ce.student_id) AS total_students, IFNULL(ROUND((COUNT(DISTINCT CASE WHEN (CAST(sfg.raw_score AS DECIMAL(10,2))/gcc.max_score*100)>=gcc.performance_target THEN ce.student_id END)*100.0/NULLIF(COUNT(DISTINCT ce.student_id),0)),2),0) AS success_rate FROM grading_components gc JOIN grading_component_columns gcc ON gc.id=gcc.component_id JOIN class_enrollments ce ON gc.class_code=ce.class_code AND ce.status='enrolled' LEFT JOIN student_flexible_grades sfg ON gcc.id=sfg.column_id AND ce.student_id=sfg.student_id LEFT JOIN course_outcomes co ON (gcc.co_mappings IS NOT NULL AND JSON_CONTAINS(gcc.co_mappings, JSON_QUOTE(CAST(co.co_number AS CHAR)))) WHERE gc.class_code=? AND gcc.is_summative='yes' AND co.co_number IS NOT NULL GROUP BY co.co_id, co.co_number, co.co_description, gc.id, gc.component_name, gcc.performance_target ORDER BY co.co_number, gc.id";
+    $coPerfQuery = "SELECT co.co_number, co.co_description, gc.component_name AS assessment_name, gcc.performance_target, COUNT(DISTINCT CASE WHEN (CAST(sfg.raw_score AS DECIMAL(10,2))/gcc.max_score*100)>=gcc.performance_target THEN ce.student_id END) AS students_met_target, COUNT(DISTINCT ce.student_id) AS total_students, IFNULL(ROUND((COUNT(DISTINCT CASE WHEN (CAST(sfg.raw_score AS DECIMAL(10,2))/gcc.max_score*100)>=gcc.performance_target THEN ce.student_id END)*100.0/NULLIF(COUNT(DISTINCT ce.student_id),0)),2),0) AS success_rate FROM grading_components gc JOIN grading_component_columns gcc ON gc.id=gcc.component_id JOIN class_enrollments ce ON gc.class_code=ce.class_code AND ce.status='enrolled' LEFT JOIN student_flexible_grades sfg ON gcc.id=sfg.column_id AND ce.student_id=sfg.student_id LEFT JOIN course_outcomes co ON (gcc.co_mappings IS NOT NULL AND (JSON_CONTAINS(gcc.co_mappings, JSON_QUOTE(CAST(co.co_number AS CHAR))) OR JSON_CONTAINS(gcc.co_mappings, CAST(co.co_number AS CHAR)))) WHERE gc.class_code=? AND gcc.is_summative='yes' AND co.co_number IS NOT NULL GROUP BY co.co_id, co.co_number, co.co_description, gc.id, gc.component_name, gcc.performance_target ORDER BY co.co_number, gc.id";
     $stmt = $conn->prepare($coPerfQuery); $stmt->bind_param("s", $class_code); $stmt->execute(); $coPerf=[]; $res=$stmt->get_result(); while($row=$res->fetch_assoc()){ $coPerf[]=$row; } $stmt->close();
 
     // Course Outcomes
@@ -402,10 +411,22 @@ try {
     $html .= '</body></html>';
     if (ob_get_level()) { ob_end_clean(); }
     echo json_encode(['success'=>true,'html'=>$html,'class_code'=>$class_code], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-    exit;
+    if (!isset($_GET['for_pdf_generation']) || $_GET['for_pdf_generation'] !== '1') {
+        exit;
+    }
 
 } catch (Exception $e) {
+    error_log("EXCEPTION in generate_car_html.php: " . $e->getMessage());
+    error_log("Exception trace: " . $e->getTraceAsString());
     if (ob_get_level()) { ob_end_clean(); }
+    
+    // When generating for PDF, throw the exception to be caught by the PDF generator
+    if (isset($_GET['for_pdf_generation']) && $_GET['for_pdf_generation'] === '1') {
+        http_response_code(500);
+        throw $e;
+    }
+    
+    // For normal operation, return JSON error
     http_response_code(500);
     echo json_encode(['success'=>false,'message'=>$e->getMessage()], JSON_UNESCAPED_UNICODE);
     exit;
