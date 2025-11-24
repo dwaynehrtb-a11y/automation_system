@@ -1033,6 +1033,29 @@ async function editComponent(id, name, pct) {
         }
     }
 
+    // Fetch current component details to get existing CO mappings
+    let existingCoMappings = [];
+    let isSummative = false;
+    let performanceTarget = 60;
+    try {
+        const fd = new FormData();
+        fd.append('action', 'get_component_details');
+        fd.append('component_id', id);
+        fd.append('csrf_token', window.csrfToken || APP.csrfToken);
+        
+        const response = await fetch(APP.apiPath + 'manage_grading_components.php', { method: 'POST', body: fd });
+        const data = await response.json();
+        
+        if (data.success && data.component && data.component.columns && data.component.columns.length > 0) {
+            // Get CO mappings from the first column (they should all be the same)
+            existingCoMappings = data.component.columns[0].co_mappings || [];
+            isSummative = data.component.columns[0].is_summative === 'yes';
+            performanceTarget = data.component.columns[0].performance_target || 60;
+        }
+    } catch (error) {
+        console.error('Error loading component details:', error);
+    }
+
     // Build CO checkboxes HTML
     let coCheckboxesHtml = '';
     if (courseOutcomes.length > 0) {
@@ -1049,6 +1072,7 @@ async function editComponent(id, name, pct) {
         `;
         
         courseOutcomes.forEach(co => {
+            const isChecked = existingCoMappings.includes(parseInt(co.number)) ? 'checked' : '';
             coCheckboxesHtml += `
                 <label style="display: flex; align-items: start; gap: 10px; padding: 8px; cursor: pointer; border-radius: 6px; transition: background 0.2s;" 
                        onmouseover="this.style.background='#f3f4f6'" 
@@ -1056,6 +1080,7 @@ async function editComponent(id, name, pct) {
                     <input type="checkbox" 
                            name="co_mapping_edit_comp[]" 
                            value="${co.number}" 
+                           ${isChecked}
                            style="margin-top: 2px; cursor: pointer;">
                     <span style="flex: 1; font-size: 14px; line-height: 1.5;">
                         <strong style="color: #1f2937;">CO${co.number}:</strong> 
@@ -1073,15 +1098,15 @@ async function editComponent(id, name, pct) {
         coCheckboxesHtml += `
             <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #e5e7eb;">
                 <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; cursor: pointer;">
-                    <input type="checkbox" id="is-summative-checkbox-edit-comp" style="cursor: pointer;" onchange="togglePerformanceTargetEditComp()">
+                    <input type="checkbox" id="is-summative-checkbox-edit-comp" ${isSummative ? 'checked' : ''} style="cursor: pointer;" onchange="togglePerformanceTargetEditComp()">
                     <span style="font-weight: 600; color: #1f2937;">
                         <i class="fas fa-graduation-cap" style="color: #3b82f6;"></i>
                         Mark ALL Items as Summative Assessment
                     </span>
                 </label>
-                <div id="performance-target-section-edit-comp" style="display: none; margin-left: 24px;">
+                <div id="performance-target-section-edit-comp" style="${isSummative ? 'block' : 'none'}; margin-left: 24px;">
                     <label class="fgs-form-label" style="font-size: 13px;">Performance Target (%)</label>
-                    <input type="number" id="performance-target-input-edit-comp" class="fgs-form-input" min="0" max="100" value="60" step="0.01" style="width: 120px;">
+                    <input type="number" id="performance-target-input-edit-comp" class="fgs-form-input" min="0" max="100" value="${performanceTarget}" step="0.01" style="width: 120px;">
                     <small class="fgs-form-hint">Minimum percentage to be considered successful</small>
                 </div>
             </div>
