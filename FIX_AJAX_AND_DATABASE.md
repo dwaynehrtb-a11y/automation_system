@@ -11,9 +11,9 @@ Created the following missing files in `/ajax/` directory:
 
 These files are used for real-time validation when adding/editing students and subjects.
 
-### 2. Database Error: Field 'co_id' doesn't have a default value
+### 2. Database Error: Field 'co_id' doesn't have a default value / Field 'mapping_id' doesn't have a default value
 
-**Problem:** The `course_outcomes` table's `co_id` field is not set to AUTO_INCREMENT on Hostinger.
+**Problem:** The `course_outcomes` and `co_so_mapping` tables have ID fields not set to AUTO_INCREMENT on Hostinger.
 
 **Solution:** Run the SQL migration file `fix_co_id_auto_increment.sql` on your Hostinger database.
 
@@ -33,8 +33,13 @@ Upload these 3 new files to your Hostinger `/ajax/` directory:
 5. Copy and paste this SQL command:
 
 ```sql
+-- Fix course_outcomes table
 ALTER TABLE `course_outcomes` 
-MODIFY COLUMN `co_id` INT NOT NULL AUTO_INCREMENT;
+MODIFY COLUMN `co_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY;
+
+-- Fix co_so_mapping table
+ALTER TABLE `co_so_mapping` 
+MODIFY COLUMN `mapping_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY;
 ```
 
 6. Click "Go" to execute
@@ -56,6 +61,7 @@ After uploading and running SQL:
 3. **Test Subject Creation:**
    - Try creating a new subject with course outcomes
    - Should no longer show "Field 'co_id' doesn't have a default value" error
+   - Should no longer show "Field 'mapping_id' doesn't have a default value" error
 
 ## What Each File Does
 

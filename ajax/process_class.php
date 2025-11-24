@@ -700,6 +700,8 @@ try {
     error_log("Class processing error: " . $e->getMessage());
     error_log("Stack trace: " . $e->getTraceAsString());
     
-    outputJSON(["success" => false, "message" => "Database error occurred. Please try again."]);
+    // Show detailed error message (remove this in production after fixing)
+    $error_message = "Database error: " . $e->getMessage();
+    outputJSON(["success" => false, "message" => $error_message, "debug" => $e->getTraceAsString()]);
 }
 ?>
