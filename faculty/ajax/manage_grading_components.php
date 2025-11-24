@@ -887,6 +887,8 @@ function updateColumn($conn, $column_id, $max_score, $faculty_id) {
  * Update a column's name and max score
  */
 function updateColumnFull($conn, $column_id, $column_name, $max_score, $faculty_id) {
+    error_log("DEBUG: updateColumnFull called with column_id=$column_id, column_name=$column_name, max_score=$max_score");
+    
     $verify = $conn->prepare("
         SELECT gcc.id 
         FROM grading_component_columns gcc
@@ -915,11 +917,18 @@ function updateColumnFull($conn, $column_id, $column_name, $max_score, $faculty_
     
     // Get CO mappings, is_summative, and performance_target from POST
     $co_mappings = $_POST['co_mappings'] ?? '[]';
+    $is_summative = $_POST['is_summative'] ?? 'no';
+    $performance_target = $_POST['performance_target'] ?? 60;
+    
+    error_log("DEBUG: updateColumnFull POST data - co_mappings=$co_mappings, is_summative=$is_summative, performance_target=$performance_target");
+    
     $co_array = json_decode($co_mappings, true);
     if ($co_array === null) {
         $co_array = [];
     }
     $co_mappings_json = !empty($co_array) ? json_encode($co_array) : NULL;
+    
+    error_log("DEBUG: updateColumnFull processed - co_array=" . json_encode($co_array) . ", co_mappings_json=$co_mappings_json");
     
     $is_summative = $_POST['is_summative'] ?? 'no';
     $performance_target = floatval($_POST['performance_target'] ?? 60.00);
@@ -942,6 +951,7 @@ function updateColumnFull($conn, $column_id, $column_name, $max_score, $faculty_
     
     if ($stmt->execute()) {
         $stmt->close();
+        error_log("DEBUG: updateColumnFull - Update successful for column_id=$column_id");
         return [
             'success' => true,
             'message' => 'Item updated successfully'
@@ -949,6 +959,7 @@ function updateColumnFull($conn, $column_id, $column_name, $max_score, $faculty_
     } else {
         $error = $stmt->error;
         $stmt->close();
+        error_log("DEBUG: updateColumnFull - Update failed for column_id=$column_id: $error");
         throw new Exception('Failed to update item: ' . $error);
     }
 }
