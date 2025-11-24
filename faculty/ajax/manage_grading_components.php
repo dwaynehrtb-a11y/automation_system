@@ -5,6 +5,10 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// Create a basic debug file to test if this file is being executed
+$test_debug_file = __DIR__ . '/../../../test_debug.txt';
+file_put_contents($test_debug_file, "PHP file executed at: " . date('Y-m-d H:i:s') . "\n", FILE_APPEND);
+
 // Error handling
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -83,6 +87,13 @@ try {
             break;
             
         case 'update_component':
+            // Create debug file immediately
+            $debug_file = __DIR__ . '/../../../debug_co_log.txt';
+            $debug_content = "=== UPDATE COMPONENT START ===\n";
+            $debug_content .= "Time: " . date('Y-m-d H:i:s') . "\n";
+            $debug_content .= "Action: update_component\n";
+            file_put_contents($debug_file, $debug_content, FILE_APPEND);
+            
             $component_id = $_POST['component_id'] ?? '';
             $component_name = $_POST['component_name'] ?? '';
             $percentage = $_POST['percentage'] ?? '';
@@ -91,6 +102,13 @@ try {
             $apply_summative = $_POST['apply_summative'] ?? 'no';
             $is_summative = $_POST['is_summative'] ?? 'no';
             $performance_target = $_POST['performance_target'] ?? '60';
+            
+            $debug_content = "POST data received:\n";
+            $debug_content .= "component_id: $component_id\n";
+            $debug_content .= "apply_co_mappings: $apply_co_mappings\n";
+            $debug_content .= "co_mappings: $co_mappings\n";
+            $debug_content .= "=== END POST DATA ===\n";
+            file_put_contents($debug_file, $debug_content, FILE_APPEND);
             
             error_log("DEBUG: Received update_component POST: component_id=$component_id, apply_co_mappings=$apply_co_mappings, co_mappings=$co_mappings");
             
@@ -644,14 +662,26 @@ function updateComponent($conn, $component_id, $component_name, $percentage, $fa
     if ($apply_co_mappings === 'yes') {
         error_log("DEBUG: Applying CO mappings to component $component_id");
         error_log("DEBUG: co_mappings_json = $co_mappings_json");
+        
+        // Create a debug file to capture output
+        $debug_file = __DIR__ . '/../../../debug_co_log.txt';
+        $debug_content = "=== CO DEBUG ===\n";
+        $debug_content .= "Time: " . date('Y-m-d H:i:s') . "\n";
+        $debug_content .= "Component ID: $component_id\n";
+        $debug_content .= "Apply CO Mappings: $apply_co_mappings\n";
+        $debug_content .= "CO Mappings JSON: $co_mappings_json\n";
+        
         $co_array = json_decode($co_mappings_json, true);
         if ($co_array === null) {
             $co_array = [];
+            $debug_content .= "JSON decode failed, using empty array\n";
             error_log("DEBUG: JSON decode failed, using empty array");
         } else {
+            $debug_content .= "Decoded co_array: " . json_encode($co_array) . "\n";
             error_log("DEBUG: Decoded co_array: " . json_encode($co_array));
         }
         $co_json = !empty($co_array) ? json_encode($co_array) : NULL;
+        $debug_content .= "Final co_json: $co_json\n";
         error_log("DEBUG: Final co_json = $co_json");
         
         $update_items = $conn->prepare("
@@ -660,17 +690,36 @@ function updateComponent($conn, $component_id, $component_name, $percentage, $fa
             WHERE component_id = ?
         ");
         
+        $debug_content .= "SQL Query prepared\n";
+        
         if ($update_items) {
             $update_items->bind_param("si", $co_json, $component_id);
             $result = $update_items->execute();
+            $debug_content .= "Query executed: " . ($result ? 'SUCCESS' : 'FAILED') . "\n";
+            $debug_content .= "Affected rows: " . $update_items->affected_rows . "\n";
             error_log("DEBUG: Update query executed: " . ($result ? 'success' : 'failed'));
             if (!$result) {
+                $debug_content .= "Error: " . $update_items->error . "\n";
                 error_log("DEBUG: Update error: " . $update_items->error);
             }
             $update_items->close();
         } else {
+            $debug_content .= "Prepare failed: " . $conn->error . "\n";
             error_log("DEBUG: Prepare failed: " . $conn->error);
         }
+        
+        $debug_content .= "=== END DEBUG ===\n\n";
+        file_put_contents($debug_file, $debug_content, FILE_APPEND);
+    } else {
+        // Debug when CO mappings are not being applied
+        $debug_file = __DIR__ . '/../../../debug_co_log.txt';
+        $debug_content = "=== CO NOT APPLIED ===\n";
+        $debug_content .= "Time: " . date('Y-m-d H:i:s') . "\n";
+        $debug_content .= "apply_co_mappings: '$apply_co_mappings'\n";
+        $debug_content .= "co_mappings: '$co_mappings'\n";
+        $debug_content .= "File: " . __FILE__ . "\n";
+        $debug_content .= "=== END ===\n\n";
+        file_put_contents($debug_file, $debug_content, FILE_APPEND);
     }
     
     // Apply summative assessment to all items if requested
