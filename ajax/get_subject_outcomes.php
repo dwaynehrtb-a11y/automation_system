@@ -1,21 +1,33 @@
 <?php
+// Set JSON header FIRST before any other output
+header('Content-Type: application/json');
+header('Cache-Control: no-cache');
+
 // Prevent ANY HTML output
 ob_start();
-error_reporting(0);
+error_reporting(E_ALL);
 ini_set('display_errors', 0);
+ini_set('log_errors', 1);
 
-require_once '../config/session.php';
-require_once '../config/db.php';
+try {
+    // Load database config
+    require_once '../config/db.php';
+} catch (Exception $e) {
+    ob_clean();
+    http_response_code(500);
+    echo json_encode(['success' => false, 'message' => 'Configuration error']);
+    exit;
+}
 
 // Clean output buffer
 ob_clean();
 
-// Set JSON header
+// Ensure JSON header is still set
 header('Content-Type: application/json');
-header('Cache-Control: no-cache');
 
 // Check database connection
 if (!isset($conn) || !$conn) {
+    http_response_code(500);
     echo json_encode(['success' => false, 'message' => 'Database not connected']);
     exit;
 }
@@ -24,6 +36,7 @@ if (!isset($conn) || !$conn) {
 $course_code = $_GET['code'] ?? '';
 
 if (empty($course_code)) {
+    http_response_code(400);
     echo json_encode(['success' => false, 'message' => 'No course code provided']);
     exit;
 }
@@ -105,9 +118,12 @@ try {
     ]);
     
 } catch (Exception $e) {
+    http_response_code(500);
+    ob_clean(); // Clear any buffered output
+    header('Content-Type: application/json');
     echo json_encode([
         'success' => false, 
-        'message' => 'Error: ' . $e->getMessage()
+        'message' => 'Database error'
     ]);
 }
 
