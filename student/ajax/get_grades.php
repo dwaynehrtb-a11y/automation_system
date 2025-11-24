@@ -319,14 +319,7 @@ function getStudentGradeSummary($conn, $student_id, $class_code) {
         // Use GradesModel for auto-decryption and access control
         $gradesModel = new GradesModel($conn);
         
-        // Get the MOST RECENT grade entry by looking for the latest updated_at or created_at
-        $stmt = $conn->prepare("
-            SELECT midterm_percentage, finals_percentage, term_percentage, term_grade, grade_status, is_encrypted, updated_at 
-            FROM grade_term 
-            WHERE student_id = ? AND class_code = ? 
-            ORDER BY updated_at DESC 
-            LIMIT 1
-        ");
+        $stmt = $conn->prepare("SELECT midterm_percentage, finals_percentage, term_percentage, term_grade, grade_status, is_encrypted FROM grade_term WHERE student_id = ? AND class_code = ? LIMIT 1");
         $stmt->bind_param('ss', $student_id, $class_code);
         $stmt->execute();
         $row = $stmt->get_result()->fetch_assoc();
@@ -347,31 +340,38 @@ function getStudentGradeSummary($conn, $student_id, $class_code) {
                     'message' => 'Grades are not yet released'
                 ];
             }
-            
-            // Use stored percentages directly from grade_term (faculty already calculated these correctly)
             $midterm_pct = floatval($row['midterm_percentage'] ?? 0);
             $finals_pct = floatval($row['finals_percentage'] ?? 0);
             $term_pct = floatval($row['term_percentage'] ?? 0);
             $term_grade = ($row['term_grade'] !== null && $row['term_grade'] !== '') ? floatval($row['term_grade']) : 0;
             
-            // Convert percentages to grades using the same conversion as faculty
-            $midterm_grade = percentageToGrade($midterm_pct);
-            $finals_grade = percentageToGrade($finals_pct);
-            $term_grade_calculated = percentageToGrade($term_pct);
+            // CALCULATE percentages from components to get accurate grades
+            $midterm_details = calculateTermGradePercentage($conn, $student_id, $class_code, 'midterm');
+            $finals_details = calculateTermGradePercentage($conn, $student_id, $class_code, 'finals');
             
-            error_log("Student view - Grade summary: Student=$student_id, Class=$class_code");
-            error_log("Midterm: $midterm_pct% -> Grade $midterm_grade");
-            error_log("Finals: $finals_pct% -> Grade $finals_grade");
-            error_log("Term: $term_pct% -> Grade $term_grade_calculated (stored term_grade=$term_grade)");
+            // Use calculated percentages if available, otherwise use stored percentages
+            $calc_midterm_pct = $midterm_details['percentage'] > 0 ? $midterm_details['percentage'] : $midterm_pct;
+            $calc_finals_pct = $finals_details['percentage'] > 0 ? $finals_details['percentage'] : $finals_pct;
+            
+            // Convert percentages to grades
+            $midterm_grade = percentageToGrade($calc_midterm_pct);
+            $finals_grade = percentageToGrade($calc_finals_pct);
+            
+            // RECALCULATE term grade from term percentage to match faculty calculation
+            $calc_term_grade = percentageToGrade($term_pct);
+            
+            error_log("Grade calculation: calc_midterm_pct=$calc_midterm_pct, midterm_grade=$midterm_grade");
+            error_log("Finals calculation: calc_finals_pct=$calc_finals_pct, finals_grade=$finals_grade");
+            error_log("Term calculation: term_pct=$term_pct, calc_term_grade=$calc_term_grade");
             
             return [
                 'success' => true,
                 'midterm_grade' => $midterm_grade,
-                'midterm_percentage' => $midterm_pct,
+                'midterm_percentage' => $calc_midterm_pct,
                 'finals_grade' => $finals_grade,
-                'finals_percentage' => $finals_pct,
+                'finals_percentage' => $calc_finals_pct,
                 'term_percentage' => $term_pct,
-                'term_grade' => $term_grade_calculated,
+                'term_grade' => $calc_term_grade,
                 'grade_status' => $row['grade_status'] ?? 'pending',
                 'term_grade_hidden' => false,
                 'message' => 'Grades have been released'
