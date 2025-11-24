@@ -700,59 +700,77 @@ $error = $_GET['error'] ?? '';
                 </div>
                 <div class="profile-grid">
                     <!-- Personal Information Card -->
-                    <div class="content-card profile-card">
-                        <div class="card-header">
-                            <h3><i class="fas fa-user"></i> Personal Information</h3>
+                    <div class="content-card profile-card" style="margin-bottom: 24px;">
+                        <div class="card-header" style="padding: 20px 24px; border-bottom: 1px solid #e5e7eb;">
+                            <h3 style="margin: 0; font-size: 18px; font-weight: 600;"><i class="fas fa-user" style="margin-right: 8px;"></i> Personal Information</h3>
                         </div>
-                        <div class="profile-details">
-                            <div class="profile-row"><div class="profile-label">Full Name</div><div class="profile-value"><?= $faculty_user ? htmlspecialchars($faculty_user['name']) : htmlspecialchars($faculty_name) ?></div></div>
-                            <div class="profile-row"><div class="profile-label">Email</div><div class="profile-value"><i class="fas fa-envelope text-icon"></i><?= $faculty_user ? htmlspecialchars($faculty_user['email']) : 'N/A' ?></div></div>
-                            <div class="profile-row"><div class="profile-label">Employee ID</div><div class="profile-value"><?= $faculty_user ? htmlspecialchars($faculty_user['employee_id']) : 'N/A' ?></div></div>
-                            <div class="profile-row"><div class="profile-label">Role</div><div class="profile-value"><span class="role-badge">Faculty</span></div></div>
+                        <div class="profile-details" style="padding: 24px;">
+                            <div class="profile-row" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f3f4f6;">
+                                <div class="profile-label" style="font-weight: 500; color: #6b7280; flex: 1;">Full Name</div>
+                                <div class="profile-value" style="font-weight: 600; color: #111827; flex: 2; text-align: right;"><?= $faculty_user ? htmlspecialchars($faculty_user['name']) : htmlspecialchars($faculty_name) ?></div>
+                            </div>
+                            <div class="profile-row" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f3f4f6;">
+                                <div class="profile-label" style="font-weight: 500; color: #6b7280; flex: 1;">Email</div>
+                                <div class="profile-value" style="font-weight: 600; color: #111827; flex: 2; text-align: right;"><i class="fas fa-envelope text-icon" style="margin-right: 8px;"></i><?= $faculty_user ? htmlspecialchars($faculty_user['email']) : 'N/A' ?></div>
+                            </div>
+                            <div class="profile-row" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f3f4f6;">
+                                <div class="profile-label" style="font-weight: 500; color: #6b7280; flex: 1;">Employee ID</div>
+                                <div class="profile-value" style="font-weight: 600; color: #111827; flex: 2; text-align: right;"><?= $faculty_user ? htmlspecialchars($faculty_user['employee_id']) : 'N/A' ?></div>
+                            </div>
+                            <div class="profile-row" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0;">
+                                <div class="profile-label" style="font-weight: 500; color: #6b7280; flex: 1;">Role</div>
+                                <div class="profile-value" style="font-weight: 600; color: #111827; flex: 2; text-align: right;"><span class="role-badge" style="background: #dbeafe; color: #1e40af; padding: 4px 12px; border-radius: 20px; font-size: 12px;">Faculty</span></div>
+                            </div>
                         </div>
                     </div>
                     <!-- Account Status Card -->
-                    <div class="content-card profile-card">
-                        <div class="card-header">
-                            <h3><i class="fas fa-clock"></i> Account Status</h3>
+                    <div class="content-card profile-card" style="margin-bottom: 24px;">
+                        <div class="card-header" style="padding: 20px 24px; border-bottom: 1px solid #e5e7eb;">
+                            <h3 style="margin: 0; font-size: 18px; font-weight: 600;"><i class="fas fa-clock" style="margin-right: 8px;"></i> Account Status</h3>
                         </div>
-                        <div class="profile-details">
-                            <div class="profile-row"><div class="profile-label">Account Created</div><div class="profile-value"><i class="fas fa-calendar text-icon"></i><?= $faculty_user && $faculty_user['created_at'] ? date('M d, Y', strtotime($faculty_user['created_at'])) : 'N/A' ?></div></div>
-                            <div class="profile-row"><div class="profile-label">Status</div><div class="profile-value"><span class="status-badge-active"><i class="fas fa-check-circle"></i> Active</span></div></div>
+                        <div class="profile-details" style="padding: 24px;">
+                            <div class="profile-row" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f3f4f6;">
+                                <div class="profile-label" style="font-weight: 500; color: #6b7280; flex: 1;">Account Created</div>
+                                <div class="profile-value" style="font-weight: 600; color: #111827; flex: 2; text-align: right;"><i class="fas fa-calendar text-icon" style="margin-right: 8px;"></i><?= $faculty_user && $faculty_user['created_at'] ? date('M d, Y', strtotime($faculty_user['created_at'])) : 'N/A' ?></div>
+                            </div>
+                            <div class="profile-row" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0;">
+                                <div class="profile-label" style="font-weight: 500; color: #6b7280; flex: 1;">Status</div>
+                                <div class="profile-value" style="font-weight: 600; color: #111827; flex: 2; text-align: right;"><span class="status-badge-active" style="background: #dcfce7; color: #166534; padding: 4px 12px; border-radius: 20px; font-size: 12px;"><i class="fas fa-check-circle" style="margin-right: 4px;"></i> Active</span></div>
+                            </div>
                         </div>
                     </div>
                     <!-- Security Card -->
-                    <div class="content-card profile-card">
-                        <div class="card-header">
-                            <h3><i class="fas fa-lock"></i> Security</h3>
+                    <div class="content-card profile-card" style="margin-bottom: 24px;">
+                        <div class="card-header" style="padding: 20px 24px; border-bottom: 1px solid #e5e7eb;">
+                            <h3 style="margin: 0; font-size: 18px; font-weight: 600;"><i class="fas fa-lock" style="margin-right: 8px;"></i> Security</h3>
                         </div>
-                        <div class="profile-actions">
-                            <button class="btn btn-primary" onclick="openChangePasswordModal()">
-                                <i class="fas fa-key"></i> Change Password
+                        <div class="profile-actions" style="padding: 24px; display: flex; gap: 12px;">
+                            <button class="btn btn-primary" onclick="openChangePasswordModal()" style="flex: 1; padding: 12px 20px;">
+                                <i class="fas fa-key" style="margin-right: 8px;"></i> Change Password
                             </button>
-                            <a href="../auth/logout.php" class="btn btn-secondary">
-                                <i class="fas fa-sign-out-alt"></i> Logout
+                            <a href="../auth/logout.php" class="btn btn-secondary" style="flex: 1; padding: 12px 20px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-sign-out-alt" style="margin-right: 8px;"></i> Logout
                             </a>
                         </div>
                     </div>
                     <!-- Notification Preferences Card -->
-                    <div class="content-card profile-card">
-                        <div class="card-header">
-                            <h3><i class="fas fa-cog"></i> Notification Preferences</h3>
+                    <div class="content-card profile-card" style="margin-bottom: 24px;">
+                        <div class="card-header" style="padding: 20px 24px; border-bottom: 1px solid #e5e7eb;">
+                            <h3 style="margin: 0; font-size: 18px; font-weight: 600;"><i class="fas fa-cog" style="margin-right: 8px;"></i> Notification Preferences</h3>
                         </div>
-                        <div class="preferences-list">
-                            <div class="preference-item">
-                                <span class="preference-label"><i class="fas fa-envelope text-icon"></i> Email Notifications</span>
-                                <label class="toggle-switch">
-                                    <input type="checkbox" id="email_notifications" checked onchange="updatePreference('email_notifications')">
-                                    <span class="toggle-slider"></span>
+                        <div class="preferences-list" style="padding: 24px;">
+                            <div class="preference-item" style="display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-bottom: 1px solid #f3f4f6;">
+                                <span class="preference-label" style="font-weight: 500; color: #111827;"><i class="fas fa-envelope text-icon" style="margin-right: 12px; color: #6b7280;"></i> Email Notifications</span>
+                                <label class="toggle-switch" style="position: relative; display: inline-block; width: 50px; height: 24px;">
+                                    <input type="checkbox" id="email_notifications" checked onchange="updatePreference('email_notifications')" style="opacity: 0; width: 0; height: 0;">
+                                    <span class="toggle-slider" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 24px;"></span>
                                 </label>
                             </div>
-                            <div class="preference-item">
-                                <span class="preference-label"><i class="fas fa-bell text-icon"></i> Dashboard Notifications</span>
-                                <label class="toggle-switch">
-                                    <input type="checkbox" id="dashboard_notifications" checked onchange="updatePreference('dashboard_notifications')">
-                                    <span class="toggle-slider"></span>
+                            <div class="preference-item" style="display: flex; justify-content: space-between; align-items: center; padding: 16px 0;">
+                                <span class="preference-label" style="font-weight: 500; color: #111827;"><i class="fas fa-bell text-icon" style="margin-right: 12px; color: #6b7280;"></i> Dashboard Notifications</span>
+                                <label class="toggle-switch" style="position: relative; display: inline-block; width: 50px; height: 24px;">
+                                    <input type="checkbox" id="dashboard_notifications" checked onchange="updatePreference('dashboard_notifications')" style="opacity: 0; width: 0; height: 0;">
+                                    <span class="toggle-slider" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 24px;"></span>
                                 </label>
                             </div>
                         </div>
@@ -873,16 +891,19 @@ $error = $_GET['error'] ?? '';
             </select>
         </div>
         
-        <div style="text-align: right;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <button id="bulk-remove-btn" class="btn btn-danger btn-sm" style="display: none;"><i class="fas fa-trash"></i> Remove Selected</button>
             <span id="masterlist-filtered-count" style="display: inline-block; padding: 6px 12px; background: #eff6ff; color: #1e40af; border-radius: 6px; font-size: 13px; font-weight: 600;">
                 <i class="fas fa-users"></i> <span id="filtered-count-number">0</span> students
             </span>
         </div>
     </div>
+    </div>
                 
                 <div id="masterlist-content" class="modal-table-wrapper">
                     <table class="masterlist-table">
                 <colgroup>
+                <col style="width: 50px;">
                 <col style="width: 130px;">
                 <col style="width: 240px;">
                 <col style="width: 320px;">
@@ -891,6 +912,7 @@ $error = $_GET['error'] ?? '';
                 </colgroup>
                         <thead>
                             <tr>
+                                <th class="text-center"><input type="checkbox" id="select-all-remove"></th>
                                 <th>Student ID</th>
                                 <th>Name</th>
                                 <th>Email</th>
@@ -916,7 +938,7 @@ $error = $_GET['error'] ?? '';
     <div id="add-student-to-class-modal" class="modal-backdrop">
         <div class="modal-content" style="max-width: 600px;">
             <div class="modal-header">
-                <h3><i class="fas fa-user-plus"></i> Enroll Student</h3>
+                <h3 style="text-decoration: none;"><i class="fas fa-user-plus"></i> Enroll Student</h3>
                 <button class="modal-close" onclick="closeAddStudentToClass()">
                     <i class="fas fa-times"></i>
                 </button>

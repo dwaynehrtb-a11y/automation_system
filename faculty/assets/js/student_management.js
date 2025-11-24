@@ -3,7 +3,7 @@
 console.log('✓ Student Management Module Loaded');
 
 // Global variable for current class code
-let currentClassCodeForMasterlist = '';
+window.currentClassCodeForMasterlist = '';
 
 /**
  * View Student Masterlist
@@ -76,7 +76,7 @@ async function loadClassMasterlist(classCode) {
     const tbody = document.getElementById('masterlist-table-body');
     if (!tbody) return;
     
-    tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 40px;"><i class="fas fa-spinner fa-spin" style="color: #667eea;"></i> Loading...</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px;"><i class="fas fa-spinner fa-spin" style="color: #667eea;"></i> Loading...</td></tr>';
     
     const formData = new FormData();
     formData.append('action', 'get_class_students');
@@ -104,6 +104,7 @@ async function loadClassMasterlist(classCode) {
             } else {
                 tbody.innerHTML = data.students.map(student => `
                     <tr>
+                        <td style="text-align: center;"><input type="checkbox" class="remove-checkbox" value="${student.student_id}"></td>
                         <td><span class="student-id">${student.student_id}</span></td>
                         <td style="font-weight: 500;">${student.full_name}</td>
                         <td>${student.email || 'N/A'}</td>
@@ -117,9 +118,41 @@ async function loadClassMasterlist(classCode) {
                         </td>
                     </tr>
                 `).join('');
-                
                 // Update the count after loading students
                 filterMasterlistByStatus();
+                
+                // Select all functionality
+                const selectAllRemove = document.getElementById('select-all-remove');
+                if (selectAllRemove) {
+                    selectAllRemove.addEventListener('change', function() {
+                        const checkboxes = document.querySelectorAll('.remove-checkbox');
+                        checkboxes.forEach(cb => cb.checked = this.checked);
+                        updateBulkRemoveButton();
+                    });
+                }
+                
+                // Individual checkbox change
+                document.querySelectorAll('.remove-checkbox').forEach(cb => {
+                    cb.addEventListener('change', updateBulkRemoveButton);
+                });
+                
+                // Bulk remove button
+                const bulkRemoveBtn = document.getElementById('bulk-remove-btn');
+                if (bulkRemoveBtn) {
+                    bulkRemoveBtn.addEventListener('click', function() {
+                        const checked = Array.from(document.querySelectorAll('.remove-checkbox:checked')).map(cb => cb.value);
+                        if (checked.length === 0) {
+                            Swal.fire({
+                                title: 'No Students Selected',
+                                text: 'Please select at least one student to remove.',
+                                icon: 'warning',
+                                confirmButtonColor: '#2563eb'
+                            });
+                            return;
+                        }
+                        removeMultipleStudentsFromClass(checked, classCode);
+                    });
+                }
             }
         } else {
             tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 40px; color: red;">Error: ${data.message}</td></tr>`;
@@ -279,19 +312,30 @@ function displayEnrollmentStudents(students) {
     const resultsDiv = document.getElementById('student-search-results');
     if (!resultsDiv) return;
     
-    if (students.length === 0) {
-        resultsDiv.innerHTML = '<p style="text-align: center; color: #999; padding: 20px;"><i class="fas fa-search"></i> No students found</p>';
+    // Filter out already enrolled students
+    const availableStudents = students.filter(student => Number(student.already_enrolled) !== 1);
+    
+    if (availableStudents.length === 0) {
+        resultsDiv.innerHTML = '<p style="text-align: center; color: #999; padding: 20px;"><i class="fas fa-search"></i> No students available for enrollment</p>';
     } else {
-        resultsDiv.innerHTML = students.map(student => {
+        // Bulk enroll UI
+        let html = '<form id="bulk-enroll-form">';
+        // Select all checkbox
+        html += '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;"><label style="display: flex; align-items: center; font-weight: 600;"><input type="checkbox" id="select-all-checkbox" style="margin-right: 8px;"> Select All</label><button type="button" id="bulk-enroll-btn" class="btn btn-success"><i class="fas fa-user-plus"></i> Enroll Selected</button></div>';
+        // Bulk enroll button at the top
+        // html += '<div style="text-align: right; margin-bottom: 16px;"><button type="button" id="bulk-enroll-btn" class="btn btn-success"><i class="fas fa-user-plus"></i> Enroll Selected</button></div>';
+        html += availableStudents.map(student => {
             const isEnrolled = Number(student.already_enrolled) === 1;
             const statusLabel = (student.status || '').toLowerCase();
             const statusBadge = statusLabel === 'pending' ? `<span style="display:inline-block;padding:4px 8px;border-radius:8px;background:#f59e0b;color:white;font-size:12px;margin-right:8px;">Pending</span>` : `<span style="display:inline-block;padding:4px 8px;border-radius:8px;background:#10b981;color:white;font-size:12px;margin-right:8px;">Active</span>`;
-
             return `
             <div class="student-search-item" style="display: flex; justify-content: space-between; align-items: center; padding: 12px; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 8px; background: #fff; transition: all 0.2s ease;">
-                <div style="flex: 1;">
-                    <div class="student-info-name" style="font-weight: 600; color: #1f2937; margin-bottom: 4px;">${statusBadge}${escapeHtml(student.full_name)}</div>
-                    <div class="student-info-details" style="font-size: 13px; color: #6b7280;"><i class="fas fa-id-card"></i> ${student.student_id} • <i class="fas fa-envelope"></i> ${escapeHtml(student.email || 'N/A')}</div>
+                <div style="display: flex; align-items: center; flex: 1;">
+                    ${!isEnrolled ? `<input type="checkbox" class="bulk-enroll-checkbox" name="student_ids[]" value="${student.student_id}" style="margin-right: 12px;">` : `<input type="checkbox" disabled style="margin-right: 12px; opacity: .5;">`}
+                    <div>
+                        <div class="student-info-name" style="font-weight: 600; color: #1f2937; margin-bottom: 4px;">${statusBadge}${escapeHtml(student.full_name)}</div>
+                        <div class="student-info-details" style="font-size: 13px; color: #6b7280;"><i class="fas fa-id-card"></i> ${student.student_id} • <i class="fas fa-envelope"></i> ${escapeHtml(student.email || 'N/A')}</div>
+                    </div>
                 </div>
                 ${isEnrolled ? `
                     <button class="btn btn-outline btn-sm" disabled style="margin-left: 10px; white-space: nowrap; opacity: .8; cursor: default;">
@@ -303,8 +347,20 @@ function displayEnrollmentStudents(students) {
                     </button>
                 `}
             </div>
-        `}).join('');
-        
+        `;}).join('');
+        // Button already added at the top
+        html += '</form>';
+        resultsDiv.innerHTML = html;
+
+        // Select all functionality
+        const selectAllCheckbox = document.getElementById('select-all-checkbox');
+        if (selectAllCheckbox) {
+            selectAllCheckbox.addEventListener('change', function() {
+                const checkboxes = document.querySelectorAll('.bulk-enroll-checkbox');
+                checkboxes.forEach(cb => cb.checked = this.checked);
+            });
+        }
+
         // Add event listeners to all enroll buttons
         resultsDiv.querySelectorAll('.enroll-student-btn').forEach(btn => {
             btn.addEventListener('click', function(e) {
@@ -313,12 +369,153 @@ function displayEnrollmentStudents(students) {
                 enrollStudentToClass(studentId);
             });
         });
+
+        // Bulk enroll button event
+        const bulkBtn = document.getElementById('bulk-enroll-btn');
+        if (bulkBtn) {
+            bulkBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const checked = Array.from(document.querySelectorAll('.bulk-enroll-checkbox:checked')).map(cb => cb.value);
+                if (checked.length === 0) {
+                    Swal.fire({
+                        title: 'No Students Selected',
+                        text: 'Please select at least one student to enroll.',
+                        icon: 'warning',
+                        confirmButtonColor: '#2563eb'
+                    });
+                    return;
+                }
+                enrollMultipleStudentsToClass(checked);
+            });
+        }
     }
 }
 
 /**
- * Escape HTML to prevent XSS
+ * Update class student count in dashboard
  */
+function updateClassStudentCount(classCode, increment) {
+    // Find the classes table
+    const tables = document.querySelectorAll('table.table');
+    for (let table of tables) {
+        const rows = table.querySelectorAll('tbody tr');
+        for (let row of rows) {
+            const enrollBtn = row.querySelector('button[onclick*="openAddStudentModal"]');
+            if (enrollBtn) {
+                const onclick = enrollBtn.getAttribute('onclick');
+                const match = onclick.match(/openAddStudentModal\('([^']+)'\)/);
+                if (match && match[1] === classCode) {
+                    // Found the row, update student count (5th column)
+                    const tds = row.querySelectorAll('td');
+                    if (tds.length >= 5) {
+                        const countTd = tds[4]; // 0-indexed, 4th is Students
+                        const currentCount = parseInt(countTd.textContent.trim()) || 0;
+                        countTd.textContent = currentCount + increment;
+                    }
+                    return;
+                }
+            }
+        }
+    }
+}
+function updateBulkRemoveButton() {
+    const checked = document.querySelectorAll('.remove-checkbox:checked');
+    const bulkRemoveBtn = document.getElementById('bulk-remove-btn');
+    if (bulkRemoveBtn) {
+        bulkRemoveBtn.style.display = checked.length > 0 ? 'inline-block' : 'none';
+    }
+}
+
+/**
+ * Remove multiple students from class (bulk)
+ */
+function removeMultipleStudentsFromClass(studentIds, classCode) {
+    if (!Array.isArray(studentIds) || studentIds.length === 0) return;
+    
+    Swal.fire({
+        title: 'Remove Multiple Students?',
+        html: `Are you sure you want to remove <b>${studentIds.length}</b> students from this class?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ef4444',
+        cancelButtonColor: '#d1d5db',
+        confirmButtonText: 'Yes, Remove',
+        cancelButtonText: 'Cancel',
+        didOpen: (modal) => {
+            // Ensure buttons are clickable
+            const confirmBtn = modal.querySelector('.swal2-confirm');
+            const cancelBtn = modal.querySelector('.swal2-cancel');
+            if (confirmBtn) {
+                confirmBtn.style.pointerEvents = 'auto';
+                confirmBtn.style.cursor = 'pointer';
+            }
+            if (cancelBtn) {
+                cancelBtn.style.pointerEvents = 'auto';
+                cancelBtn.style.cursor = 'pointer';
+            }
+        }
+    }).then(async result => {
+        if (result.isConfirmed) {
+            // Remove all selected students
+            const promises = studentIds.map(studentId => removeStudentFromClassSilent(studentId, classCode));
+            const results = await Promise.all(promises);
+            const successCount = results.filter(success => success).length;
+            
+            // Show result
+            if (successCount > 0) {
+                Swal.fire({
+                    title: 'Removed!',
+                    text: `${successCount} students removed successfully!`,
+                    icon: 'success',
+                    confirmButtonColor: '#10b981',
+                    didOpen: (modal) => {
+                        const confirmBtn = modal.querySelector('.swal2-confirm');
+                        if (confirmBtn) {
+                            confirmBtn.style.pointerEvents = 'auto';
+                            confirmBtn.style.cursor = 'pointer';
+                        }
+                    }
+                });
+                // Update local student list to mark as not enrolled
+                if (allStudentsForEnrollment && allStudentsForEnrollment.length) {
+                    studentIds.forEach(studentId => {
+                        const idx = allStudentsForEnrollment.findIndex(s => s.student_id === studentId);
+                        if (idx !== -1) {
+                            allStudentsForEnrollment[idx].already_enrolled = 0;
+                        }
+                    });
+                }
+                // Update class student count in dashboard
+                updateClassStudentCount(classCode, -successCount);
+                loadClassMasterlist(classCode);
+            }
+        }
+    });
+}
+
+/**
+ * Remove student silently (without confirmation)
+ */
+async function removeStudentFromClassSilent(studentId, classCode) {
+    const formData = new FormData();
+    formData.append('action', 'remove_student');
+    formData.append('student_id', studentId);
+    formData.append('class_code', classCode);
+    formData.append('csrf_token', window.csrfToken || window.APP.csrfToken);
+    
+    try {
+        const response = await fetch((window.APP?.apiPath || '/faculty/ajax/') + 'student_management.php', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const data = await response.json();
+        return data.success;
+    } catch (error) {
+        console.error('Remove error:', error);
+        return false;
+    }
+}
 function escapeHtml(text) {
     const map = {
         '&': '&amp;',
@@ -328,6 +525,98 @@ function escapeHtml(text) {
         "'": '&#039;'
     };
     return text.replace(/[&<>"']/g, m => map[m]);
+}
+
+/**
+ * Enroll multiple students to class (bulk)
+ */
+function enrollMultipleStudentsToClass(studentIds) {
+    if (!Array.isArray(studentIds) || studentIds.length === 0) return;
+    const classCode = window.currentClassCodeForMasterlist;
+    const csrfToken = window.csrfToken || (window.APP && window.APP.csrfToken);
+
+    Swal.fire({
+        title: 'Confirm Bulk Enrollment',
+        html: `Are you sure you want to enroll <b>${studentIds.length}</b> students to this class?`,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#10b981',
+        cancelButtonColor: '#d1d5db',
+        confirmButtonText: 'Yes, Enroll',
+        cancelButtonText: 'Cancel',
+        didOpen: (modal) => {
+            // Ensure confirm/cancel buttons are always clickable
+            const confirmBtn = modal.querySelector('.swal2-confirm');
+            const cancelBtn = modal.querySelector('.swal2-cancel');
+            if (confirmBtn) {
+                confirmBtn.style.pointerEvents = 'auto';
+                confirmBtn.style.cursor = 'pointer';
+            }
+            if (cancelBtn) {
+                cancelBtn.style.pointerEvents = 'auto';
+                cancelBtn.style.cursor = 'pointer';
+            }
+        }
+    }).then(result => {
+        if (result.isConfirmed) {
+            // AJAX request to enroll multiple students
+            fetch((window.APP?.apiPath || '/faculty/ajax/') + 'student_management.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `action=bulk_enroll&class_code=${encodeURIComponent(classCode)}&student_ids=${encodeURIComponent(JSON.stringify(studentIds))}&csrf_token=${encodeURIComponent(csrfToken)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        title: 'Enrolled!',
+                        text: `${studentIds.length} students enrolled successfully!`,
+                        icon: 'success',
+                        confirmButtonColor: '#10b981',
+                        didOpen: (modal) => {
+                            // Ensure confirm button is always clickable
+                            const confirmBtn = modal.querySelector('.swal2-confirm');
+                            if (confirmBtn) {
+                                confirmBtn.style.pointerEvents = 'auto';
+                                confirmBtn.style.cursor = 'pointer';
+                            }
+                        }
+                    });
+                    // Update local student list to mark as enrolled
+                    if (allStudentsForEnrollment && allStudentsForEnrollment.length) {
+                        studentIds.forEach(studentId => {
+                            const idx = allStudentsForEnrollment.findIndex(s => s.student_id === studentId);
+                            if (idx !== -1) {
+                                allStudentsForEnrollment[idx].already_enrolled = 1;
+                                if (allStudentsForEnrollment[idx].status && allStudentsForEnrollment[idx].status.toLowerCase() === 'pending') {
+                                    allStudentsForEnrollment[idx].status = 'active';
+                                }
+                            }
+                        });
+                    }
+                    // Update class student count in dashboard
+                    updateClassStudentCount(classCode, studentIds.length);
+                    // Refresh student list
+                    searchStudentsForEnrollment();
+                } else {
+                    Swal.fire({
+                        title: 'Error',
+                        text: data.message || 'Failed to enroll students.',
+                        icon: 'error',
+                        confirmButtonColor: '#ef4444'
+                    });
+                }
+            })
+            .catch(() => {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Failed to enroll students.',
+                    icon: 'error',
+                    confirmButtonColor: '#ef4444'
+                });
+            });
+        }
+    });
 }
 
 // Original error handler snippet (to be completed):
@@ -431,6 +720,9 @@ async function enrollStudentToClass(studentId) {
                 }
             }
 
+            // Update class student count in dashboard
+            updateClassStudentCount(currentClassCodeForMasterlist, 1);
+
             // Re-render search results (if visible) to reflect enrolled state
             try { searchStudentsForEnrollment(); } catch (e) { /* ignore */ }
 
@@ -467,7 +759,20 @@ async function removeStudentFromClass(studentId, classCode) {
             confirmButtonColor: '#ef4444',
             cancelButtonColor: '#6b7280',
             confirmButtonText: 'Yes, remove',
-            cancelButtonText: 'Cancel'
+            cancelButtonText: 'Cancel',
+            didOpen: (modal) => {
+                // Ensure buttons are clickable
+                const confirmBtn = modal.querySelector('.swal2-confirm');
+                const cancelBtn = modal.querySelector('.swal2-cancel');
+                if (confirmBtn) {
+                    confirmBtn.style.pointerEvents = 'auto';
+                    confirmBtn.style.cursor = 'pointer';
+                }
+                if (cancelBtn) {
+                    cancelBtn.style.pointerEvents = 'auto';
+                    cancelBtn.style.cursor = 'pointer';
+                }
+            }
         });
         confirmed = result.isConfirmed;
     } else {
@@ -495,9 +800,23 @@ async function removeStudentFromClass(studentId, classCode) {
         if (typeof hideLoading === 'function') hideLoading();
         
         if (data.success) {
-            if (typeof Toast !== 'undefined') {
-                Toast.fire({ icon: 'success', title: 'Student removed successfully' });
-            }
+            // Success dialog
+            Swal.fire({
+                title: 'Removed!',
+                text: 'Student removed from class successfully.',
+                icon: 'success',
+                confirmButtonColor: '#10b981',
+                didOpen: (modal) => {
+                    // Ensure confirm button is always clickable
+                    const confirmBtn = modal.querySelector('.swal2-confirm');
+                    if (confirmBtn) {
+                        confirmBtn.style.pointerEvents = 'auto';
+                        confirmBtn.style.cursor = 'pointer';
+                    }
+                }
+            });
+            // Update class student count in dashboard
+            updateClassStudentCount(classCode, -1);
             // Update cached students list if present
             if (allStudentsForEnrollment && allStudentsForEnrollment.length) {
                 const idx = allStudentsForEnrollment.findIndex(s => s.student_id === studentId);

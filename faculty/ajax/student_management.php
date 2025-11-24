@@ -39,11 +39,45 @@ if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_tok
     exit();
 }
 
-$faculty_id = $_SESSION['user_id'];
+$faculty_id = (string)$_SESSION['user_id'];
 $action = $_POST['action'] ?? '';
 
 try {
     switch ($action) {
+        case 'bulk_enroll':
+            $class_code = trim($_POST['class_code'] ?? '');
+            $student_ids_json = $_POST['student_ids'] ?? '';
+            if (empty($class_code) || empty($student_ids_json)) {
+                throw new Exception('Class code and student IDs required');
+            }
+            $student_ids = json_decode($student_ids_json, true);
+            if (!is_array($student_ids) || count($student_ids) === 0) {
+                throw new Exception('No students selected');
+            }
+            // Debug logging
+            error_log("Bulk enroll: class_code=$class_code, faculty_id=$faculty_id, students=" . count($student_ids));
+            $success_count = 0;
+            $errors = [];
+            foreach ($student_ids as $sid) {
+                try {
+                    $result = enrollStudent($conn, $sid, $class_code, $faculty_id);
+                    if (!empty($result['success'])) {
+                        $success_count++;
+                    } else {
+                        $errors[] = $result['message'] ?? 'Unknown error';
+                    }
+                } catch (Exception $e) {
+                    $errors[] = $e->getMessage();
+                }
+            }
+            $result = [
+                'success' => $success_count > 0,
+                'enrolled' => $success_count,
+                'errors' => $errors,
+                'debug' => "class_code: $class_code, faculty_id: $faculty_id",
+                'message' => $success_count > 0 ? ("$success_count students enrolled.") : ("No students enrolled. Debug: $class_code|$faculty_id | " . implode('; ', $errors)),
+            ];
+            break;
         case 'get_class_students':
             $class_code = $_POST['class_code'] ?? '';
             if (empty($class_code)) {
@@ -119,7 +153,7 @@ function getClassStudents($conn, $class_code, $faculty_id) {
         throw new Exception('Database error: ' . $conn->error);
     }
     
-    $verify->bind_param("si", $class_code, $faculty_id);
+    $verify->bind_param("ss", $class_code, $faculty_id);
     $verify->execute();
     if ($verify->get_result()->num_rows === 0) {
         return ['success' => false, 'message' => 'Class not found or access denied'];
@@ -459,7 +493,7 @@ function enrollStudent($conn, $student_id, $class_code, $faculty_id) {
         throw new Exception('Database error: ' . $conn->error);
     }
     
-    $verify->bind_param("si", $class_code, $faculty_id);
+    $verify->bind_param("ss", $class_code, $faculty_id);
     $verify->execute();
     $result = $verify->get_result();
     
@@ -559,7 +593,7 @@ function removeStudent($conn, $student_id, $class_code, $faculty_id) {
         throw new Exception('Database error: ' . $conn->error);
     }
     
-    $verify->bind_param("si", $class_code, $faculty_id);
+    $verify->bind_param("ss", $class_code, $faculty_id);
     $verify->execute();
     if ($verify->get_result()->num_rows === 0) {
         return ['success' => false, 'message' => 'Class not found or access denied'];

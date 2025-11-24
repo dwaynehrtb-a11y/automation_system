@@ -22725,3 +22725,35 @@ Stack trace:
 [23-Nov-2025 16:33:43 Europe/Berlin] Student ID: 2022-118764
 [23-Nov-2025 16:33:43 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
 [23-Nov-2025 16:33:43 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"finals_grade":3.5,"term_grade":2.7,"grade_status":"pending","status":"passed"}
+[24-Nov-2025 12:28:22 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-24 12:28:22 ===
+[24-Nov-2025 12:28:23 Europe/Berlin] Database and session files loaded
+[24-Nov-2025 12:28:23 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2025-276819","csrf_token":"f02657163d0b09865430fb8fa88f8c04fa135cc15db042ee58da80278afc9d2f","_t":"1763983702992"}
+[24-Nov-2025 12:28:23 Europe/Berlin] User ID: 2025-276819
+[24-Nov-2025 12:28:23 Europe/Berlin] Role: student
+[24-Nov-2025 12:28:23 Europe/Berlin] Student ID: 2025-276819
+[24-Nov-2025 12:28:23 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[24-Nov-2025 12:28:23 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"finals_grade":0,"term_grade":0,"grade_status":"pending","status":"pending"}
+[24-Nov-2025 12:28:24 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-24 12:28:24 ===
+[24-Nov-2025 12:28:24 Europe/Berlin] Database and session files loaded
+[24-Nov-2025 12:28:24 Europe/Berlin] POST data: {"action":"get_student_detailed_grades","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2025-276819","csrf_token":"f02657163d0b09865430fb8fa88f8c04fa135cc15db042ee58da80278afc9d2f"}
+[24-Nov-2025 12:28:24 Europe/Berlin] User ID: 2025-276819
+[24-Nov-2025 12:28:24 Europe/Berlin] Role: student
+[24-Nov-2025 12:28:24 Europe/Berlin] Student ID: 2025-276819
+[24-Nov-2025 12:28:24 Europe/Berlin] Getting detailed grades for class: 25_T2_CCPRGG1L_INF223
+[24-Nov-2025 12:28:24 Europe/Berlin] Success: {"success":true,"midterm":{"components":[{"id":58,"component_name":"Classwork","percentage":10,"items":[{"id":286,"column_name":"C 1","max_score":10,"score":null,"order_index":1},{"id":287,"column_name":"C 2","max_score":10,"score":null,"order_index":2},{"id":288,"column_name":"C 3","max_score":10,"score":null,"order_index":3}],"average_percentage":0,"grade":0}],"grade":0,"percentage":0},"finals":{"components":[],"grade":0,"percentage":0},"term_grade":0,"grade_status":"failed","term_grade_hidden":false,"midterm_weight":40,"finals_weight":60}
+[24-Nov-2025 12:28:33 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-24 12:28:33 ===
+[24-Nov-2025 12:28:33 Europe/Berlin] Database and session files loaded
+[24-Nov-2025 12:28:33 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2025-276819","csrf_token":"f02657163d0b09865430fb8fa88f8c04fa135cc15db042ee58da80278afc9d2f","_t":"1763983712998"}
+[24-Nov-2025 12:28:33 Europe/Berlin] User ID: 2025-276819
+[24-Nov-2025 12:28:33 Europe/Berlin] Role: student
+[24-Nov-2025 12:28:33 Europe/Berlin] Student ID: 2025-276819
+[24-Nov-2025 12:28:33 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[24-Nov-2025 12:28:33 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"finals_grade":0,"term_grade":0,"grade_status":"pending","status":"pending"}
+[24-Nov-2025 12:28:57 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-24 12:28:57 ===
+[24-Nov-2025 12:28:57 Europe/Berlin] Database and session files loaded
+[24-Nov-2025 12:28:57 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T1_CCQUAMET_INF223","student_id":"2025-196253","csrf_token":"85ece01ff5ad615fd505fa5b2d9f9f4a70d0596933cc5e23bc3a1e02d23fff3c","_t":"1763983737789"}
+[24-Nov-2025 12:28:57 Europe/Berlin] User ID: 2025-196253
+[24-Nov-2025 12:28:57 Europe/Berlin] Role: student
+[24-Nov-2025 12:28:57 Europe/Berlin] Student ID: 2025-196253
+[24-Nov-2025 12:28:57 Europe/Berlin] Getting summary for class: 24_T1_CCQUAMET_INF223
+[24-Nov-2025 12:28:57 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"finals_grade":0,"term_grade":0,"grade_status":"pending","status":"pending"}

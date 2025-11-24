@@ -13,9 +13,10 @@ $role = $_SESSION['role'] ?? '';
 $user_id = $_SESSION['user_id'];
 
 // Get user details based on role
+
 if ($role === 'student') {
     $student_id = $_SESSION['student_id'];
-    $check_query = "SELECT must_change_password, 'student' as role, CONCAT(first_name, ' ', last_name) as name, email FROM student WHERE student_id = ?";
+    $check_query = "SELECT must_change_password, 'student' as role, first_name, last_name, email FROM student WHERE student_id = ?";
     $stmt = $conn->prepare($check_query);
     $stmt->bind_param("s", $student_id);
 } else {
@@ -27,6 +28,25 @@ if ($role === 'student') {
 $stmt->execute();
 $result = $stmt->get_result();
 $user = $result->fetch_assoc();
+
+// Decrypt student names if needed
+if ($role === 'student') {
+    require_once '../config/encryption.php';
+    try {
+        if (!empty($user['first_name'])) {
+            $user['first_name'] = Encryption::decrypt($user['first_name']);
+        }
+        if (!empty($user['last_name'])) {
+            $user['last_name'] = Encryption::decrypt($user['last_name']);
+        }
+        if (!empty($user['email'])) {
+            $user['email'] = Encryption::decrypt($user['email']);
+        }
+        $user['name'] = $user['first_name'] . ' ' . $user['last_name'];
+    } catch (Exception $e) {
+        $user['name'] = $user['first_name'] . ' ' . $user['last_name'];
+    }
+}
 
 // If user doesn't need to change password, redirect to appropriate dashboard
 if ($user['must_change_password'] == 0) {

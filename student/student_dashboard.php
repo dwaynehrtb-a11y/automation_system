@@ -16,10 +16,10 @@ $current_user = getCurrentUser();
 $student_id = $current_user['student_id'];
 
 // Get student details
+
 $student_query = "
     SELECT 
         student_id,
-        CONCAT(first_name, ' ', last_name) as full_name,
         first_name,
         last_name,
         middle_initial,
@@ -31,18 +31,29 @@ $student_query = "
     WHERE student_id = ?
 ";
 $stmt = $conn->prepare($student_query);
-
 if (!$stmt) {
     die("SQL Error: " . $conn->error);
 }
-
 $stmt->bind_param("s", $student_id);
 $stmt->execute();
 $student = $stmt->get_result()->fetch_assoc();
 $stmt->close();
-
 if (!$student) {
     die("Student record not found");
+}
+// Decrypt names if needed
+require_once '../config/encryption.php';
+try {
+    if (!empty($student['first_name'])) {
+        $student['first_name'] = Encryption::decrypt($student['first_name']);
+    }
+    if (!empty($student['last_name'])) {
+        $student['last_name'] = Encryption::decrypt($student['last_name']);
+    }
+    $student['full_name'] = $student['first_name'] . ' ' . $student['last_name'];
+} catch (Exception $e) {
+    // If decryption fails, use as-is
+    $student['full_name'] = $student['first_name'] . ' ' . $student['last_name'];
 }
 
 // Get enrolled classes with grade information
