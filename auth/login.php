@@ -199,7 +199,7 @@ if (!isset($_SESSION['csrf_token'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NU Academic System - Login</title>
-    <link rel="icon" type="image/png" href="/admin/assets/images/favicon.png">
+    <link rel="icon" type="image/png" href="/auth/assets/images/favicon.png">
     <link rel="stylesheet" href="../admin/assets/css/login.css?v=<?= time() ?>">
 </head>
 <body>
