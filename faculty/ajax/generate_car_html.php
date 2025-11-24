@@ -8,6 +8,7 @@ ini_set('log_errors', 1);
 
 if (session_status() === PHP_SESSION_NONE) { session_start(); }
 require_once '../../config/db.php';
+require_once '../../config/encryption.php';
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'faculty') {
     http_response_code(403);
@@ -71,92 +72,270 @@ try {
     // Course Outcomes
     $stmt = $conn->prepare("SELECT * FROM course_outcomes WHERE course_code = ? ORDER BY co_number"); $stmt->bind_param("s", $class['course_code']); $stmt->execute(); $courseOutcomes=[]; $res=$stmt->get_result(); while($row=$res->fetch_assoc()){ $courseOutcomes[]=$row; } $stmt->close();
 
+    // CO-SO Mappings from co_so_mapping table
+    $coSoMappings = [];
+    $stmt = $conn->prepare("SELECT csm.co_id, csm.so_number FROM co_so_mapping csm JOIN course_outcomes co ON csm.co_id = co.co_id WHERE co.course_code = ?");
+    if ($stmt) { 
+        $stmt->bind_param("s", $class['course_code']); 
+        $stmt->execute(); 
+        $res = $stmt->get_result(); 
+        while($row = $res->fetch_assoc()) { 
+            $coId = $row['co_id'];
+            $soNum = $row['so_number'];
+            if (!isset($coSoMappings[$coId])) {
+                $coSoMappings[$coId] = [];
+            }
+            $coSoMappings[$coId][] = 'SO' . $soNum;
+        } 
+        $stmt->close(); 
+    }
+
     // INC / DROPPED Students
-    $stmt = $conn->prepare("SELECT s.student_id, CONCAT(s.last_name, ', ', s.first_name) AS name, tg.grade_status, tg.lacking_requirements FROM class_enrollments ce JOIN student s ON ce.student_id=s.student_id JOIN grade_term tg ON tg.class_code=ce.class_code AND tg.student_id=s.student_id WHERE ce.class_code=? AND ce.status='enrolled' AND tg.grade_status IN ('incomplete','dropped') ORDER BY s.last_name, s.first_name");
-    $stmt->bind_param("s", $class_code); $stmt->execute(); $incStudents=[]; $res=$stmt->get_result(); while($row=$res->fetch_assoc()){ $incStudents[]=$row; } $stmt->close();
+    $incStudents = [];
+    $stmt = $conn->prepare("SELECT s.student_id, s.last_name, s.first_name, tg.grade_status, tg.lacking_requirements FROM class_enrollments ce JOIN student s ON ce.student_id=s.student_id JOIN grade_term tg ON tg.class_code=ce.class_code AND tg.student_id=s.student_id WHERE ce.class_code=? AND ce.status='enrolled' AND tg.grade_status IN ('incomplete','dropped') ORDER BY s.last_name, s.first_name");
+    if ($stmt) {
+        $stmt->bind_param("s", $class_code);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        while($row = $res->fetch_assoc()) {
+            $lastName = trim($row['last_name'] ?? '');
+            $firstName = trim($row['first_name'] ?? '');
+            // Decrypt names
+            try {
+                if (!empty($lastName)) {
+                    $lastName = Encryption::decrypt($lastName);
+                }
+                if (!empty($firstName)) {
+                    $firstName = Encryption::decrypt($firstName);
+                }
+            } catch (Exception $e) {
+                // If decryption fails, use as-is
+            }
+            $row['name'] = $firstName . ', ' . $lastName;
+            $incStudents[] = $row;
+        }
+        $stmt->close();
+    }
+
+    // Build Grade Distribution Table
+    $gradeRows = '';
+    $gradeOrder = ['4.00' => 0, '3.50' => 0, '3.00' => 0, '2.50' => 0, '2.00' => 0, '1.50' => 0, '1.00' => 0, 'IP' => 0, 'INC' => 0, 'R' => 0, 'DRP' => 0, 'FAILED' => 0];
+    foreach ($gradeDist as $grade => $count) {
+        if (array_key_exists($grade, $gradeOrder)) {
+            $gradeOrder[$grade] = $count;
+        }
+    }
+    foreach ($gradeOrder as $grade => $count) {
+        $displayGrade = $grade;
+        if ($grade === 'IP') $displayGrade = 'IN PROGRESS (IP)';
+        if ($grade === 'INC') $displayGrade = 'INCOMPLETE (INC)';
+        if ($grade === 'R') $displayGrade = 'REPEAT (R)';
+        if ($grade === 'DRP') $displayGrade = 'DROPPED (DR)';
+        if ($grade === 'FAILED') $displayGrade = 'FAILED (0.00)';
+        $gradeRows .= '<tr><td style="border:1px solid #000;padding:4px">' . $displayGrade . '</td><td style="border:1px solid #000;padding:4px;text-align:center">' . $count . '</td></tr>';
+    }
+
+    // Build CO-SO Map Table
+    $coMapRows = '';
+    $soColumns = ['SO1', 'SO2', 'SO3', 'SO4', 'SO5', 'SO6'];
+    // Build header: CO | SO1 | SO2 | SO3 | SO4 | SO5 | SO6 (7 columns total)
+    $coMapHeader = '<tr>';
+    $coMapHeader .= '<td style="border:1px solid #000;padding:4px;background:#ccc;text-align:center"><strong>CO</strong></td>';
+    foreach ($soColumns as $so) {
+        $coMapHeader .= '<td style="border:1px solid #000;padding:4px;background:#ccc;text-align:center"><strong>' . $so . '</strong></td>';
+    }
+    $coMapHeader .= '</tr>';
+    
+    foreach ($courseOutcomes as $co) {
+        $coId = $co['co_id'];
+        $coNum = $co['co_number'];
+        $coMapRows .= '<tr>';
+        $coMapRows .= '<td style="border:1px solid #000;padding:4px;text-align:center">' . $coNum . '</td>';
+        // Get mapped SOs for this CO from the co_so_mapping table
+        $mappedSOs = isset($coSoMappings[$coId]) ? $coSoMappings[$coId] : [];
+        foreach ($soColumns as $so) {
+            // Only show "/" if this SO is mapped to this CO
+            $mark = in_array($so, $mappedSOs) ? '/' : '';
+            $coMapRows .= '<td style="border:1px solid #000;padding:4px;text-align:center">' . $mark . '</td>';
+        }
+        $coMapRows .= '</tr>';
+    }
+
+    // Student Outcomes Text
+    $soText = '';
+    if ($subject && isset($subject['student_outcomes'])) {
+        $soData = json_decode($subject['student_outcomes'], true);
+        if (is_array($soData)) {
+            foreach ($soData as $idx => $soDesc) {
+                $soNum = $idx + 1;
+                $soText .= $soNum . '. ' . htmlspecialchars($soDesc) . "\n";
+            }
+        }
+    }
+
+    // Build CO Performance Table for Page 2
+    $coPerfRows = '';
+    foreach ($courseOutcomes as $co) {
+        $coNum = $co['co_number'];
+        $coDesc = htmlspecialchars($co['co_description']);
+        $coDesc = preg_replace('/^\d+\.\s*/', '', $coDesc);
+        $matching = array_filter($coPerf, function($p) use ($coNum) { return $p['co_number'] == $coNum; });
+        if (count($matching) > 0) {
+            $assessments = array_column($matching, 'assessment_name');
+            $targets = array_column($matching, 'performance_target');
+            $successRates = array_column($matching, 'success_rate');
+            $avgSuccess = count($successRates) > 0 ? array_sum($successRates) / count($successRates) : 0;
+            
+            $coPerfRows .= '<tr>';
+            $coPerfRows .= '<td style="border:1px solid #000;padding:4px;text-align:center">CO' . $coNum . '</td>';
+            $coPerfRows .= '<td style="border:1px solid #000;padding:4px">' . $coDesc . '</td>';
+            $coPerfRows .= '<td style="border:1px solid #000;padding:4px;text-align:center">' . (count($targets) > 0 ? $targets[0] : 60) . '%</td>';
+            $coPerfRows .= '<td style="border:1px solid #000;padding:4px;text-align:center">' . round($avgSuccess) . '%(' . ($matching[0]['students_met_target'] ?? 0) . ')</td>';
+            $coPerfRows .= '</tr>';
+        }
+    }
+
+    // INC/Dropped Students for Page 2
+    $incStudentRows = '';
+    foreach ($incStudents as $s) {
+        $status = ucfirst($s['grade_status']);
+        $lacking = $s['lacking_requirements'] ?? ($status === 'Dropped' ? 'Officially Dropped' : '');
+        $incStudentRows .= '<tr><td style="border:1px solid #000;padding:4px">' . htmlspecialchars($s['name']) . '</td><td style="border:1px solid #000;padding:4px">' . htmlspecialchars($lacking) . '</td></tr>';
+    }
+
+    // Intervention count
+    $interventionCount = $metadata['intervention_student_count'] ?? count($incStudents);
 
     // HTML build
     $html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>CAR - ' . htmlspecialchars($class_code) . '</title>'
-        . '<style>@page { size:A4 landscape; margin:20.64mm 25.4mm 26.99mm 25.4mm;} @page :first{margin-top:12.7mm;} @page :last{margin-bottom:12.7mm;}'
-        . 'body{font-family:Calibri,Arial,sans-serif;font-size:9pt;line-height:1.0;margin:0;} .page{page-break-after:always;} .page:last-child{page-break-after:avoid;}'
-        . '.header-container{width:100%;display:table;margin-bottom:15px;} .logo-section{display:table-cell;width:10%;vertical-align:middle;} .header-info{display:table-cell;width:90%;text-align:right;vertical-align:middle;}'
-        . '.header-title{font-weight:bold;font-size:11pt;} table{border-collapse:collapse;width:100%;} th,td{border:1px solid #000;padding:6px 5px;}'
-        . '.shade1{background:#A5A5A5;font-weight:bold;} .shade2{background:#AEAAAA;font-weight:bold;} .footer{text-align:right;font-size:8pt;margin-top:8px;border-top:1px solid #000;padding-top:4px;}'
+        . '<style>@page { size:A4 landscape; margin:15mm;} '
+        . 'body{font-family:Calibri,Arial,sans-serif;font-size:10pt;line-height:1.15;margin:0;padding:0;} '
+        . '.page{page-break-after:always;padding:10px;} .page:last-child{page-break-after:avoid;}'
+        . '.header-container{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}'
+        . '.logo-section{display:flex;align-items:center;gap:10px;}'
+        . '.header-info{text-align:right;}'
+        . '.header-title{font-weight:bold;font-size:11pt;}'
+        . 'table{border-collapse:collapse;width:100%;font-size:10pt;} '
+        . 'th,td{border:1px solid #000;padding:5px;vertical-align:top;}'
+        . '.gray-header{background:#ccc;font-weight:bold;}'
+        . '.footer{position:absolute;bottom:10px;right:10px;font-size:9pt;}'
         . '</style></head><body>';
 
-    // Page 1
-    $html .= '<div class="page"><div class="header-container"><div class="logo-section"><div style="display:flex;align-items:center;gap:10px"><img src="/automation_system/assets/images/nu_logo.png" style="width:77px;height:81px;object-fit:contain"><span style="font-weight:bold;font-size:18pt;letter-spacing:.5px;white-space:nowrap">NU LIPA</span></div></div><div class="header-info"><div class="header-title">COURSE ASSESSMENT REPORT</div><div>AD-FO-01</div><div>OCT 2022</div></div></div>'
-        . '<table style="width:23.2cm;border-collapse:collapse;margin:15px 0;font-size:11pt;font-family:Calibri">
-        <colgroup>
-            <col style="width:5.8cm">
-            <col style="width:5.8cm">
-            <col style="width:11.6cm">
-        </colgroup>
-        <!-- Row 1: Header -->
-        <tr>
-            <td style="border:1px solid #000;padding:6px;background-color:#ccc;vertical-align:middle"><strong>ACADEMIC TERM/ SCHOOL YEAR:</strong></td>
-            <td style="border:1px solid #000;padding:6px;background-color:#ccc;vertical-align:middle"><strong>COURSE CODE:</strong></td>
-            <td style="border:1px solid #000;padding:6px;background-color:#ccc;vertical-align:middle"><strong>COPIES ISSUED TO:</strong></td>
-        </tr>
-        <!-- Row 2: Term/AY and Copies -->
-        <tr>
-            <td colspan="2" style="border:1px solid #000;padding:6px;text-align:center;vertical-align:middle"><strong>' . htmlspecialchars($class['term'] ?? 'N/A') . ', AY ' . htmlspecialchars($class['academic_year'] ?? 'N/A') . '</strong></td>
-            <td style="border:1px solid #000;padding:6px;text-align:left;vertical-align:middle">
-                <div><strong>PROGRAM</strong></div>
-                <div><strong>CHAIR</strong></div>
-                <div><strong>ACADEMIC</strong></div>
-                <div><strong>DIRECTOR</strong></div>
-            </td>
-        </tr>
-        <!-- Row 3: Course Code and Title -->
-        <tr>
-            <td colspan="2" style="border:1px solid #000;padding:6px;text-align:center;vertical-align:middle"><strong>' . htmlspecialchars($subject['course_code'] ?? 'N/A') . '</strong></td>
-            <td style="border:1px solid #000;padding:6px;text-align:center;vertical-align:middle"><strong>' . htmlspecialchars($subject['course_title'] ?? 'N/A') . '</strong></td>
-        </tr>
-        <!-- Row 4: Section/Class Size Header and Course Description Header -->
-        <tr>
-            <td style="border:1px solid #000;padding:6px;background-color:#ccc;vertical-align:middle"><strong>SECTION</strong></td>
-            <td style="border:1px solid #000;padding:6px;background-color:#ccc;vertical-align:middle"><strong>CLASS SIZE</strong></td>
-            <td style="border:1px solid #000;padding:6px;background-color:#ccc;vertical-align:middle"><strong>COURSE DESCRIPTION:</strong></td>
-        </tr>
-        <!-- Row 5: Section/Class Size Data and Description -->
-        <tr>
-            <td style="border:1px solid #000;padding:6px;text-align:center;vertical-align:middle"><strong>' . htmlspecialchars($class['section'] ?? 'N/A') . '</strong></td>
-            <td style="border:1px solid #000;padding:6px;text-align:center;vertical-align:middle"><strong>' . htmlspecialchars($studentCount ?? 'N/A') . '</strong></td>
-            <td rowspan="3" style="border:1px solid #000;padding:6px;text-align:left;vertical-align:top">' . htmlspecialchars($subject['course_desc'] ?? 'N/A') . '</td>
-        </tr>
-        <!-- Row 6: Instructor Label -->
-        <tr>
-            <td colspan="2" style="border:1px solid #000;padding:6px;text-align:left;vertical-align:middle"><strong>INSTRUCTOR:</strong></td>
-        </tr>
-        <!-- Row 7: Instructor Name -->
-        <tr>
-            <td colspan="2" style="border:1px solid #000;padding:6px;text-align:left;vertical-align:middle"><strong>' . htmlspecialchars($faculty['name'] ?? 'N/A') . '</strong></td>
-        </tr>
-        <!-- Row 8: Signature -->
-        <tr>
-            <td colspan="2" style="border:1px solid #000;padding:6px;text-align:left;vertical-align:middle"><strong>SIGNATURE:</strong></td>
-            <td style="border:1px solid #000;padding:6px;text-align:center;vertical-align:middle">&nbsp;</td>
-        </tr>
-        <!-- Row 9: Grade Distribution and CO-SO Map -->
-        <tr>
-            <td style="border:1px solid #000;padding:6px;background-color:#ccc;vertical-align:middle"><strong>GRADE DISTRIBUTION:</strong></td>
-            <td colspan="2" style="border:1px solid #000;padding:6px;background-color:#ccc;vertical-align:middle"><strong>CO-SO MAP</strong></td>
-        </tr>
-        </table></div>';
+    // PAGE 1
+    $html .= '<div class="page">';
+    $html .= '<div class="header-container">'
+        . '<div class="logo-section">'
+        . '<img src="/automation_system/assets/images/nu_logo.png" style="width:60px;height:63px">'
+        . '<span style="font-weight:bold;font-size:16pt;color:#003087">NU LIPA</span>'
+        . '</div>'
+        . '<div class="header-info">'
+        . '<div class="header-title">COURSE ASSESSMENT REPORT</div>'
+        . '<div>AD-FO-01</div>'
+        . '<div>OCT 2022</div>'
+        . '</div></div>';
 
-    // Page 2
-    $html .= '<div class="page"><div class="header-container"><div class="logo-section"><div style="display:flex;align-items:center;gap:10px"><img src="/automation_system/assets/images/nu_logo.png" style="width:77px;height:81px;object-fit:contain"><span style="font-weight:bold;font-size:18pt;letter-spacing:.5px">NU LIPA</span></div></div><div class="header-info"><div class="header-title">COURSE ASSESSMENT REPORT</div><div>AD-FO-01</div><div>OCT 2022</div></div></div>';
+    $html .= '<table>'
+        . '<tr><td class="gray-header" style="width:25%">ACADEMIC TERM/ SCHOOL YEAR:</td><td class="gray-header" style="width:25%">COURSE CODE:</td><td class="gray-header" colspan="3" style="width:50%">COPIES ISSUED TO:</td></tr>'
+        . '<tr><td style="text-align:center"><strong>' . strtoupper($class['term'] ?? '') . ', AY ' . htmlspecialchars($class['academic_year'] ?? '') . '</strong></td><td style="text-align:center"><strong>' . htmlspecialchars($subject['course_code'] ?? '') . '</strong></td><td colspan="3" rowspan="3" style="padding:10px;vertical-align:top"><strong>PROGRAM CHAIR<br>ACADEMIC DIRECTOR</strong></td></tr>'
+        . '<tr><td class="gray-header" style="width:25%">SECTION</td><td class="gray-header" style="width:25%">CLASS SIZE</td></tr>'
+        . '<tr><td style="text-align:center"><strong>' . htmlspecialchars($class['section'] ?? '') . '</strong></td><td style="text-align:center"><strong>' . $studentCount . '</strong></td></tr>'
+        . '<tr><td class="gray-header">COURSE TITLE:</td><td class="gray-header" colspan="4">COURSE DESCRIPTION:</td></tr>'
+        . '<tr><td style="text-align:center"><strong>' . htmlspecialchars($subject['course_title'] ?? '') . '</strong></td><td colspan="4" rowspan="4" style="padding:10px;vertical-align:top">' . nl2br(htmlspecialchars($subject['course_desc'] ?? '')) . '</td></tr>'
+        . '<tr><td class="gray-header">INSTRUCTOR:</td></tr>'
+        . '<tr><td><strong>' . htmlspecialchars($faculty['name'] ?? '') . '</strong></td></tr>'
+        . '<tr><td class="gray-header">SIGNATURE:</td></tr>'
+        . '<tr><td style="padding:20px;vertical-align:top">&nbsp;</td></tr>'
+        . '</table>';
 
-    $html .= '<p>Content for Page 2 will go here</p></div>';
+    $html .= '<table style="margin-top:10px"><tr><td style="width:40%" class="gray-header">GRADE DISTRIBUTION:</td><td class="gray-header">CO-SO MAP</td></tr></table>';
+    $html .= '<table style="margin-top:0;border-top:none"><tr><td style="width:40%;vertical-align:top;border-top:none">';
+    $html .= '<table style="width:100%"><tr><td class="gray-header">GRADE</td><td class="gray-header">NO. OF STUDENTS</td></tr>' . $gradeRows . '</table>';
+    $html .= '</td><td style="vertical-align:top;border-top:none">';
+    $html .= '<table style="width:100%">' . $coMapHeader . $coMapRows . '</table>';
+    $html .= '<div style="margin-top:10px;font-size:9pt;line-height:1.3"><strong>Student Outcomes (SO)</strong><br>';
+    foreach (range(1, 6) as $i) {
+        $soDesc = '';
+        if ($subject && isset($subject['student_outcomes'])) {
+            $soData = json_decode($subject['student_outcomes'], true);
+            if (is_array($soData) && isset($soData[$i-1])) {
+                $soDesc = $soData[$i-1];
+            }
+        }
+        if (empty($soDesc)) {
+            $defaultSO = [
+                'Analyze a complex computing problem and to apply principles of computing and other relevant disciplines to identify solutions.',
+                'Design, implement, and evaluate a computing-based solution to meet a given set of computing requirements in the context of the programs.',
+                'Communicate effectively in a variety of professional contexts.',
+                'Recognize professional responsibilities and make informed judgements in computing practice based on legal and ethical principles.',
+                'Function effectively as a member or leader of a team engaged in activities appropriate to the program\'s discipline.',
+                'Apply computer science theory and software development fundamentals to produce computing-based solutions'
+            ];
+            $soDesc = $defaultSO[$i-1] ?? '';
+        }
+        $html .= $i . '. ' . htmlspecialchars($soDesc) . '<br>';
+    }
+    $html .= '</div>';
+    $html .= '<div style="margin-top:8px;font-size:9pt;line-height:1.3"><strong>Course Outcomes (CO)</strong><br>';
+    foreach ($courseOutcomes as $co) {
+        $desc = htmlspecialchars($co['co_description']);
+        $desc = preg_replace('/^\d+\.\s*/', '', $desc);
+        $html .= $co['co_number'] . '. ' . $desc . '<br>';
+    }
+    $html .= '</div></td></tr></table>';
+    $html .= '<div class="footer">Page 1 of 3</div></div>';
 
-    // Page 3
-    $html .= '<div class="page"><div class="header-container"><div class="logo-section"><div style="display:flex;align-items:center;gap:10px"><img src="/automation_system/assets/images/nu_logo.png" style="width:77px;height:81px;object-fit:contain"><span style="font-weight:bold;font-size:18pt;letter-spacing:.5px">NU LIPA</span></div></div><div class="header-info"><div class="header-title">COURSE ASSESSMENT REPORT</div><div>AD-FO-01</div><div>OCT 2022</div></div></div>';
+    // PAGE 2
+    $html .= '<div class="page">';
+    $html .= '<div class="header-container">'
+        . '<div class="logo-section">'
+        . '<img src="/automation_system/assets/images/nu_logo.png" style="width:60px;height:63px">'
+        . '<span style="font-weight:bold;font-size:16pt;color:#003087">NU LIPA</span>'
+        . '</div>'
+        . '<div class="header-info">'
+        . '<div class="header-title">COURSE ASSESSMENT REPORT</div>'
+        . '<div>AD-FO-01</div>'
+        . '<div>OCT 2022</div>'
+        . '</div></div>';
 
-    $html .= '<p>Content for Page 3 will go here</p></div>';
+    $html .= '<table><tr><td class="gray-header" colspan="4">COURSE LEARNING OUTCOMES ASSESSMENT</td></tr>'
+        . '<tr><td class="gray-header">COURSE<br>OUTCOME</td><td class="gray-header">SUMMATIVE ASSESSMENT</td><td class="gray-header">PERFORMANCE TARGET</td><td class="gray-header">SUCCESS RATE<br>(in % and enclose the number in ( ))</td></tr>'
+        . $coPerfRows . '</table>';
+
+    $html .= '<table style="margin-top:10px"><tr><td class="gray-header" colspan="2">List of Students with INC</td></tr>'
+        . '<tr><td class="gray-header">Name</td><td class="gray-header">Lacking Requirements</td></tr>'
+        . ($incStudentRows ? $incStudentRows : '<tr><td colspan="2" style="text-align:center">None</td></tr>')
+        . '</table>';
+
+    $html .= '<table style="margin-top:10px"><tr><td class="gray-header" colspan="2">Teaching Strategies Employed <span style="font-weight:normal">(List and give a brief description of each teaching strategy employed in class)</span></td></tr>'
+        . '<tr><td colspan="2" style="padding:10px;min-height:80px">' . nl2br(htmlspecialchars($metadata['teaching_strategies'] ?? '')) . '</td></tr></table>';
+
+    $html .= '<table style="margin-top:10px"><tr><td class="gray-header" colspan="2">Intervention or Enrichment Activities Conducted</td><td class="gray-header">No. of Students Involved</td></tr>'
+        . '<tr><td colspan="2" style="padding:10px;min-height:60px">' . nl2br(htmlspecialchars($metadata['interventions'] ?? '')) . '</td><td style="text-align:center;vertical-align:top">' . $interventionCount . '</td></tr></table>';
+
+    $html .= '<table style="margin-top:10px"><tr><td class="gray-header" style="width:50%">Problems Encountered <span style="font-weight:normal">(Brief Description)</span></td><td class="gray-header" style="width:50%">Action Taken</td></tr>'
+        . '<tr><td style="padding:10px;min-height:80px;vertical-align:top">' . nl2br(htmlspecialchars($metadata['problems_encountered'] ?? '')) . '</td><td style="padding:10px;vertical-align:top">' . nl2br(htmlspecialchars($metadata['actions_taken'] ?? '')) . '</td></tr></table>';
+
+    $html .= '<div class="footer">Page 2 of 3</div></div>';
+
+    // PAGE 3
+    $html .= '<div class="page">';
+    $html .= '<div class="header-container">'
+        . '<div class="logo-section">'
+        . '<img src="/automation_system/assets/images/nu_logo.png" style="width:60px;height:63px">'
+        . '<span style="font-weight:bold;font-size:16pt;color:#003087">NU LIPA</span>'
+        . '</div>'
+        . '<div class="header-info">'
+        . '<div class="header-title">COURSE ASSESSMENT REPORT</div>'
+        . '<div>AD-FO-01</div>'
+        . '<div>OCT 2022</div>'
+        . '</div></div>';
+
+    $html .= '<table><tr><td class="gray-header">PROPOSED ACTIONS FOR COURSE IMPROVEMENT</td></tr>'
+        . '<tr><td style="padding:20px;min-height:500px;vertical-align:top">' . nl2br(htmlspecialchars($metadata['proposed_improvements'] ?? '––')) . '</td></tr></table>';
+
+    $html .= '<div class="footer">Page 3 of 3</div></div>';
 
     $html .= '</body></html>';
-    $html = preg_replace('/>\s+</', ">\n<", $html);
     if (ob_get_level()) { ob_end_clean(); }
     echo json_encode(['success'=>true,'html'=>$html,'class_code'=>$class_code], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     exit;

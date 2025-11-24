@@ -174,7 +174,7 @@ function renderUI() {
                         `<div style=\"font-size:11px;opacity:.85;margin-bottom:0;\">${c.percentage}%${c.columns&&c.columns.length?` • ${c.columns.length} item${c.columns.length>1?'s':''}`:''}</div>`;
                         if (FGS.editMode) {
                             html += `<div style="position:absolute;top:10px;right:8px;display:flex;gap:3px;flex-wrap:nowrap;">` +
-                                    `<button class="fgs-btn-small" title="Edit Component" onclick="event.stopPropagation(); editComponent(${c.id})" style="width:24px;height:24px;padding:3px;background:#3b82f6;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;transition:all 0.2s ease;flex-shrink:0;" onmouseover="this.style.background='#2563eb';this.style.boxShadow='0 2px 6px rgba(59,130,246,0.3)'" onmouseout="this.style.background='#3b82f6';this.style.boxShadow='none'"><i class="fas fa-edit"></i></button>` +
+                                    `<button class="fgs-btn-small" title="Edit Component" onclick="event.stopPropagation(); editComponent(${c.id}, '${c.component_name.replace(/'/g, "\\'")}', ${c.percentage})" style="width:24px;height:24px;padding:3px;background:#3b82f6;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;transition:all 0.2s ease;flex-shrink:0;" onmouseover="this.style.background='#2563eb';this.style.boxShadow='0 2px 6px rgba(59,130,246,0.3)'" onmouseout="this.style.background='#3b82f6';this.style.boxShadow='none'"><i class="fas fa-edit"></i></button>` +
                                     `<button class="fgs-btn-small" title="Bulk Add Items" onclick="event.stopPropagation(); bulkAddColumnModal(${c.id}, '${c.component_name}')" style="width:24px;height:24px;padding:3px;background:#10b981;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;transition:all 0.2s ease;flex-shrink:0;" onmouseover="this.style.background='#059669';this.style.boxShadow='0 2px 6px rgba(16,185,129,0.3)'" onmouseout="this.style.background='#10b981';this.style.boxShadow='none'"><i class="fas fa-plus"></i></button>` +
                                     `<button class="fgs-btn-small" title="Delete Component" onclick="event.stopPropagation(); delComponent(${c.id}, '${c.component_name}')" style="width:24px;height:24px;padding:3px;background:#ef4444;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;transition:all 0.2s ease;flex-shrink:0;" onmouseover="this.style.background='#dc2626';this.style.boxShadow='0 2px 6px rgba(239,68,68,0.3)'" onmouseout="this.style.background='#ef4444';this.style.boxShadow='none'"><i class="fas fa-trash"></i></button>` +
                                     `</div>`;
@@ -469,6 +469,10 @@ function renderTable() {
     });
     
     html += `<th style="text-align:center; background:#fff5d8; color:#7a4e00; padding:8px 4px;"><div style="font-size:13px; font-weight:700; letter-spacing:.5px;">TOTAL %</div></th></tr></thead><tbody>`;
+
+    // Helper banner: show a brief note to users about input format
+    const helperBanner = `<div style="margin-bottom:8px;padding:10px;border-radius:8px;background:#f1f5f9;color:#0f172a;font-size:13px;border:1px solid #e6eef8;">` +
+        `<strong style="margin-right:8px;">Note:</strong> Enter <strong>raw scores only</strong> (e.g. <code>8</code> for a /10 item). Do <em>not</em> include a percent sign (%). The <strong>TOTAL %</strong> column shows the computed percentage.</div>`;
     
     FGS.students.forEach((student, idx) => {
         if (idx === 0) {
@@ -496,11 +500,16 @@ function renderTable() {
                 console.log(`    Raw Value From DB:`, rawVal, `(type: ${typeof rawVal})`);
             }
             
-            // Strip % symbol if present as string
-            if (typeof rawVal === 'string' && rawVal.includes('%')) {
-                if (idx === 0) console.log(`    → Found % symbol, stripping...`);
-                rawVal = rawVal.replace('%', '').trim();
-                if (idx === 0) console.log(`    → After strip:`, rawVal);
+            // Strip % symbol if present as string (debug info)
+            if (typeof rawVal === 'string') {
+                if (rawVal.includes('%')) {
+                    console.debug(`DEBUG: Found '%' symbol in grade for student ${student.student_id}, col ${col.id} — original rawVal: '${rawVal}'`);
+                    rawVal = rawVal.replace('%', '').trim();
+                    console.debug(`DEBUG: After removing '%', rawVal='${rawVal}'`);
+                } else {
+                    // Log if value is stored as string but not percent
+                    if (idx === 0) console.debug(`DEBUG: rawVal is string for ${student.student_id}_${col.id}: '${rawVal}' (no % found)`);
+                }
             }
             
             // CRITICAL AUTO-FIX: Detect if value is stored as percentage instead of raw score
@@ -518,6 +527,7 @@ function renderTable() {
                 // Enhanced auto-fix: Only trigger if value > maxScore, <= 100, and maxScore is reasonable (>= 5)
                 // This prevents false positives for small max scores where raw scores might be > maxScore due to data errors
                 if (numVal > maxScore && numVal <= 100 && maxScore >= 5) {
+                    console.warn(`DEBUG-AUTO-FIX: Treating stored value ${numVal} as percent for ${student.student_id} col ${col.id} (maxScore ${maxScore}) — converting to raw`);
                     const correctedRawVal = (numVal / 100) * maxScore;
                     if (idx === 0) console.warn(`    🔧 AUTO-FIX: Converting ${numVal}% → ${correctedRawVal.toFixed(2)}/${maxScore} (maxScore: ${maxScore})`);
 
@@ -539,6 +549,7 @@ function renderTable() {
                             const data = await res.json();
                             if (data.success) {
                                 console.log(`    ✅ Database corrected: ${student.student_id} column ${col.id} = ${correctedRawVal.toFixed(2)}`);
+                                console.debug(`DEBUG: Auto-fix DB save response for ${student.student_id}_${col.id}:`, data);
                                 FGS.grades[key].score = correctedRawVal;
                             } else {
                                 console.error(`    ❌ Database correction failed: ${data.message || 'Unknown error'}`);
@@ -569,7 +580,12 @@ function renderTable() {
             }
             
             // Format display value - NOW uses corrected rawVal
-            const displayVal = rawVal !== '' ? (parseFloat(rawVal) % 1 === 0 ? parseInt(rawVal) : parseFloat(rawVal).toFixed(2)) : '';
+            let displayVal = rawVal !== '' ? (parseFloat(rawVal) % 1 === 0 ? parseInt(rawVal) : parseFloat(rawVal).toFixed(2)) : '';
+            // Force removal of any stray '%' and trim
+            if (typeof displayVal === 'string' && displayVal.includes('%')) {
+                console.debug(`DEBUG: Removing stray '%' from displayVal for ${student.student_id}_${col.id} -> '${displayVal}'`);
+                displayVal = displayVal.replace(/%/g, '').trim();
+            }
             
             if (idx === 0) {
                 console.log(`    → Final displayVal: "${displayVal}"`);
@@ -583,9 +599,9 @@ function renderTable() {
             
             // If component is marked as INC, show "INC" instead of input field
             if (gradeStatus === 'inc') {
-                html += `<td style="text-align:center; padding:12px 6px; background:#fee2e2; border-radius:5px; position:relative;" oncontextmenu="markComponentStatus(event, '${student.student_id}', ${col.id}, 'submitted')" title="Right-click to mark as submitted"><div style="font-weight:700; font-size:14px; color:#dc2626; padding:8px; cursor:pointer;">INC</div></td>`;
+                html += `<td style="text-align:center; padding:12px 6px; background:#fee2e2; border-radius:5px; position:relative;" title="Marked as incomplete" oncontextmenu="showComponentContextMenu(event, '${student.student_id}', ${col.id}); return false;"><div style="font-weight:700; font-size:14px; color:#dc2626; padding:8px; cursor:pointer;">INC</div></td>`;
             } else {
-                html += `<td style="text-align:center; padding:12px 6px; position:relative;" oncontextmenu="showComponentContextMenu(event, '${student.student_id}', ${col.id})" title="Right-click to mark as incomplete"><input type="number" class="fgs-score-input" data-student-id="${student.student_id}" data-column-id="${col.id}" min="0" max="${maxScore}" step="0.01" value="${displayVal}" onchange="saveRawScore(this)" oninput="validateInput(this, ${maxScore})" style="width:70px; padding:8px 6px; border:1.5px solid ${borderColor}; border-radius:5px; text-align:center; font-weight:600; font-size:14px; transition:all .2s ease; background:${bgColor};" onmouseover="this.style.borderColor='#9ca3af'" onmouseout="this.style.borderColor='${borderColor}'" onfocus="this.style.borderColor='#3b82f6'; this.style.boxShadow='0 0 0 3px rgba(59,130,246,0.1)'" onblur="this.style.borderColor='${borderColor}'; this.style.boxShadow='none'" /></td>`;
+                html += `<td style="text-align:center; padding:12px 6px; position:relative;"><input type="number" class="fgs-score-input" data-student-id="${student.student_id}" data-column-id="${col.id}" min="0" max="${maxScore}" step="0.01" value="${displayVal}" onchange="saveRawScore(this)" oninput="validateInput(this, ${maxScore})" oncontextmenu="showComponentContextMenu(event, '${student.student_id}', ${col.id}); return false;" style="width:70px; padding:8px 6px; border:1.5px solid ${borderColor}; border-radius:5px; text-align:center; font-weight:600; font-size:14px; transition:all .2s ease; background:${bgColor};" onmouseover="this.style.borderColor='#9ca3af'" onmouseout="this.style.borderColor='${borderColor}'" onfocus="this.style.borderColor='#3b82f6'; this.style.boxShadow='0 0 0 3px rgba(59,130,246,0.1)'" onblur="this.style.borderColor='${borderColor}'; this.style.boxShadow='none'" /></td>`;
             }
         });
         
@@ -627,7 +643,8 @@ function renderTable() {
         console.log(`💾 Second row starts with:`, secondRow);
     }
     
-    container.innerHTML = html;
+    // Prepend helper banner that instructs users to enter raw scores only
+    container.innerHTML = (typeof helperBanner !== 'undefined' ? helperBanner : '') + html;
     
     console.log(`✅ HTML rendered to DOM. Table should now be visible.`);
     
@@ -995,13 +1012,85 @@ async function submitAddComp(e) {
     return false;
 }
 
-function editComponent(id, name, pct) {
+async function editComponent(id, name, pct) {
     const m = document.getElementById('edit-comp-modal');
     if (m) m.remove();
 
+    // Get course code from class code
+    const courseCode = FGS.currentClassCode ? FGS.currentClassCode.split('_')[2] : '';
+    
+    // Load Course Outcomes for this subject
+    let courseOutcomes = [];
+    if (courseCode) {
+        try {
+            const response = await fetch(`${window.APP?.apiPath || "/faculty/ajax/"}get_subject_outcomes.php?code=${courseCode}`);
+            const data = await response.json();
+            if (data.success && data.outcomes) {
+                courseOutcomes = data.outcomes;
+            }
+        } catch (error) {
+            console.error('Error loading course outcomes:', error);
+        }
+    }
+
+    // Build CO checkboxes HTML
+    let coCheckboxesHtml = '';
+    if (courseOutcomes.length > 0) {
+        coCheckboxesHtml = `
+            <div class="fgs-form-group" style="margin-top: 20px; padding: 15px; background: #f9fafb; border-radius: 8px; border: 1px solid #e5e7eb;">
+                <label class="fgs-form-label" style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                    <i class="fas fa-bullseye" style="color: #3b82f6;"></i>
+                    Apply Course Outcomes to ALL Items (Optional)
+                </label>
+                <small class="fgs-form-hint" style="display: block; margin-bottom: 12px; color: #6b7280;">
+                    Select outcomes to apply to all items in this component
+                </small>
+                <div id="co-checkboxes-edit-comp" style="display: flex; flex-direction: column; gap: 8px;">
+        `;
+        
+        courseOutcomes.forEach(co => {
+            coCheckboxesHtml += `
+                <label style="display: flex; align-items: start; gap: 10px; padding: 8px; cursor: pointer; border-radius: 6px; transition: background 0.2s;" 
+                       onmouseover="this.style.background='#f3f4f6'" 
+                       onmouseout="this.style.background='transparent'">
+                    <input type="checkbox" 
+                           name="co_mapping_edit_comp[]" 
+                           value="${co.number}" 
+                           style="margin-top: 2px; cursor: pointer;">
+                    <span style="flex: 1; font-size: 14px; line-height: 1.5;">
+                        <strong style="color: #1f2937;">CO${co.number}:</strong> 
+                        <span style="color: #4b5563;">${co.description}</span>
+                    </span>
+                </label>
+            `;
+        });
+        
+        coCheckboxesHtml += `
+                </div>
+            </div>
+        `;
+        
+        coCheckboxesHtml += `
+            <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #e5e7eb;">
+                <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; cursor: pointer;">
+                    <input type="checkbox" id="is-summative-checkbox-edit-comp" style="cursor: pointer;" onchange="togglePerformanceTargetEditComp()">
+                    <span style="font-weight: 600; color: #1f2937;">
+                        <i class="fas fa-graduation-cap" style="color: #3b82f6;"></i>
+                        Mark ALL Items as Summative Assessment
+                    </span>
+                </label>
+                <div id="performance-target-section-edit-comp" style="display: none; margin-left: 24px;">
+                    <label class="fgs-form-label" style="font-size: 13px;">Performance Target (%)</label>
+                    <input type="number" id="performance-target-input-edit-comp" class="fgs-form-input" min="0" max="100" value="60" step="0.01" style="width: 120px;">
+                    <small class="fgs-form-hint">Minimum percentage to be considered successful</small>
+                </div>
+            </div>
+        `;
+    }
+
     const html = `
         <div id="edit-comp-modal" class="fgs-modal-overlay">
-            <div class="fgs-modal">
+            <div class="fgs-modal" style="max-width: 600px;">
                 <div class="fgs-modal-header">
                     <h3 class="fgs-modal-title">Edit Component</h3>
                     <button onclick="closeModal('edit-comp-modal')" class="fgs-modal-close">&times;</button>
@@ -1016,10 +1105,11 @@ function editComponent(id, name, pct) {
                             <label class="fgs-form-label">Percentage (%) *</label>
                             <input type="number" id="edit-comp-pct" class="fgs-form-input" required min="0" step="0.01" value="${pct}">
                         </div>
+                        ${coCheckboxesHtml}
                     </div>
                     <div class="fgs-modal-actions">
                         <button type="button" onclick="closeModal('edit-comp-modal')" class="fgs-modal-btn fgs-modal-btn-cancel">Cancel</button>
-                        <button type="submit" class="fgs-modal-btn fgs-modal-btn-update">Update</button>
+                        <button type="submit" class="fgs-modal-btn fgs-modal-btn-update">Update Component & Apply to All Items</button>
                     </div>
                 </form>
             </div>
@@ -1028,16 +1118,46 @@ function editComponent(id, name, pct) {
     document.body.insertAdjacentHTML('beforeend', html);
 }
 
+// Toggle performance target for edit component
+window.togglePerformanceTargetEditComp = function() {
+    const checkbox = document.getElementById('is-summative-checkbox-edit-comp');
+    const section = document.getElementById('performance-target-section-edit-comp');
+    if (checkbox && section) {
+        section.style.display = checkbox.checked ? 'block' : 'none';
+    }
+};
+
 async function submitEditComp(e, id) {
     e.preventDefault();
     const name = document.getElementById('edit-comp-name').value.trim();
     const pct = parseFloat(document.getElementById('edit-comp-pct').value);
+
+    // Get CO mappings
+    const coCheckboxes = document.querySelectorAll('input[name="co_mapping_edit_comp[]"]:checked');
+    const coMappings = Array.from(coCheckboxes).map(cb => parseInt(cb.value));
+    
+    // Get summative assessment data
+    const isSummative = document.getElementById('is-summative-checkbox-edit-comp')?.checked ? 'yes' : 'no';
+    const performanceTarget = document.getElementById('performance-target-input-edit-comp')?.value || '60';
 
     const fd = new FormData();
     fd.append('action', 'update_component');
     fd.append('component_id', id);
     fd.append('component_name', name);
     fd.append('percentage', pct);
+    
+    // Add CO mappings and summative data to apply to all items
+    if (coMappings.length > 0) {
+        fd.append('apply_co_mappings', 'yes');
+        fd.append('co_mappings', JSON.stringify(coMappings));
+    }
+    
+    if (isSummative === 'yes') {
+        fd.append('apply_summative', 'yes');
+        fd.append('is_summative', isSummative);
+        fd.append('performance_target', performanceTarget);
+    }
+    
     fd.append('csrf_token', window.csrfToken || APP.csrfToken);
 
     const res = await fetch(APP.apiPath + 'manage_grading_components.php', { method: 'POST', body: fd });
@@ -1085,7 +1205,7 @@ async function addColumnModal(compId, compName) {
     let courseOutcomes = [];
     if (courseCode) {
         try {
-            const response = await fetch(`/faculty/ajax/get_subject_outcomes.php?code=${courseCode}`);
+            const response = await fetch(`${window.APP?.apiPath || "/faculty/ajax/"}get_subject_outcomes.php?code=${courseCode}`);
             const data = await response.json();
             if (data.success && data.outcomes) {
                 courseOutcomes = data.outcomes;
@@ -1190,7 +1310,7 @@ async function bulkAddColumnModal(compId, compName) {
     let courseOutcomes = [];
     if (courseCode) {
         try {
-            const response = await fetch(`/faculty/ajax/get_subject_outcomes.php?code=${courseCode}`);
+            const response = await fetch(`${window.APP?.apiPath || "/faculty/ajax/"}get_subject_outcomes.php?code=${courseCode}`);
             const data = await response.json();
             if (data.success && data.outcomes) {
                 courseOutcomes = data.outcomes;
@@ -1447,7 +1567,7 @@ async function editColumn(id, name, max) {
     let courseOutcomes = [];
     if (courseCode) {
         try {
-            const response = await fetch(`/faculty/ajax/get_subject_outcomes.php?code=${courseCode}`);
+            const response = await fetch(`${window.APP?.apiPath || "/faculty/ajax/"}get_subject_outcomes.php?code=${courseCode}`);
             const data = await response.json();
             if (data.success && data.outcomes) {
                 courseOutcomes = data.outcomes;
@@ -2349,7 +2469,14 @@ async function saveRawScore(inputEl) {
     const columnId = inputEl.getAttribute('data-column-id');
     const studentId = inputEl.getAttribute('data-student-id');
     const classCode = FGS.currentClassCode;
-    const raw = inputEl.value.trim();
+    let raw = inputEl.value.trim();
+    // Sanitize inputs: strip any percent sign before sending
+    if (typeof raw === 'string' && raw.includes('%')) {
+        console.debug(`DEBUG: Stripping '%' from input before sending for ${studentId}_${columnId} -> '${raw}'`);
+        raw = raw.replace(/%/g, '').trim();
+        // update the visible input to the sanitized value
+        inputEl.value = raw;
+    }
     if (!columnId || !studentId || !classCode) return;
     
     // Prevent duplicate rapid saves
@@ -2379,7 +2506,10 @@ async function saveRawScore(inputEl) {
     }
     
     try {
-        console.log(`💾 Sending to server: grade=${raw}, student=${studentId}, column=${columnId}`);
+        console.log(`💾 Sending to server: grade='${raw}', student=${studentId}, column=${columnId}`);
+        if (typeof raw === 'string' && raw.includes('%')) {
+            console.debug(`DEBUG: Input contains '%' before sending for ${studentId}_${columnId} -> '${raw}'`);
+        }
         const res = await fetch('/automation_system/ajax/update_grade.php', { method:'POST', body: fd });
         if (!res.ok) {
             console.error(`💾 HTTP Error: ${res.status}`);
@@ -2408,37 +2538,81 @@ async function saveRawScore(inputEl) {
         }
         
         console.log(`💾 ✅ Save successful!`);
+        if (typeof data.saved_raw !== 'undefined') {
+            console.debug(`DEBUG: Server saved_raw=${data.saved_raw} for ${studentId}_${columnId}`);
+        }
         
         // Mark as saved to prevent duplicates
         inputEl.dataset.lastSaved = saveKey;
+
+        // Update in-memory cache so the table keeps showing the raw score the user entered
+        try {
+            const cacheKey = `${studentId}_${columnId}`;
+            if (!FGS.grades) FGS.grades = {};
+            
+            // Check if this grade was previously marked as INC
+            const wasINC = FGS.grades[cacheKey]?.status === 'inc';
+            
+            // Use server's saved_raw if present to avoid desync; otherwise fall back to the local input
+            const numVal = (typeof data.saved_raw !== 'undefined') ? parseFloat(data.saved_raw) : (raw === '' ? 0 : parseFloat(raw));
+            FGS.grades[cacheKey] = Object.assign(FGS.grades[cacheKey] || {}, { score: numVal, status: 'submitted' });
+
+            // Ensure the input shows the saved raw value formatted consistently
+            if (Number.isInteger(numVal)) {
+                inputEl.value = String(numVal);
+            } else {
+                inputEl.value = numVal.toFixed(2);
+            }
+
+            // Update the row total immediately to reflect the raw value
+            updateStudentRowTotal(studentId);
+            
+            // If this was previously INC and now has a grade, refresh the summary to recalculate status
+            if (wasINC && raw !== '' && parseFloat(raw) > 0) {
+                console.log('🔄 Previously INC grade now has value, refreshing summary');
+                setTimeout(() => {
+                    if (typeof loadGradeSummary === 'function') {
+                        loadGradeSummary(FGS.currentClassCode);
+                    }
+                }, 500);
+            }
+        } catch (err) {
+            console.warn('Failed to update local cache after save:', err);
+        }
         
         // Silently update summary without animation
         if (data.recomputed && data.recomputed.student_id) {
-            const table = document.querySelector('.fgs-summary-table tbody');
-            if (table) {
-                const tr = Array.from(table.querySelectorAll('tr')).find(r => r.querySelector('.fgs-student-id') && r.querySelector('.fgs-student-id').textContent === data.recomputed.student_id);
-                if (tr) {
-                    const cells = tr.querySelectorAll('td');
-                    if (cells && cells.length >= 6) {
-                        cells[1].innerHTML = `${data.recomputed.midterm_percentage}%`;
-                        cells[2].innerHTML = `${data.recomputed.finals_percentage}%`;
-                        cells[3].innerHTML = `${data.recomputed.term_percentage}%`;
-                        
-                        const gradeBadge = cells[4] ? cells[4].querySelector('.fgs-summary-grade-badge') : null;
-                        if (gradeBadge) {
-                            gradeBadge.textContent = data.recomputed.term_grade ? data.recomputed.term_grade : '--';
-                            gradeBadge.style.background = gradeColor(parseFloat(data.recomputed.term_grade||0));
+            // IMPORTANT: Only look for summary table when we're NOT viewing a component
+            // If currentComponentId is set, we're in component view, so skip this entirely
+            if (!FGS.currentComponentId) {
+                const table = document.querySelector('.fgs-summary-table tbody');
+                if (table) {
+                    const tr = Array.from(table.querySelectorAll('tr')).find(r => r.querySelector('.fgs-student-id') && r.querySelector('.fgs-student-id').textContent === data.recomputed.student_id);
+                    if (tr) {
+                        const cells = tr.querySelectorAll('td');
+                        if (cells && cells.length >= 6) {
+                            cells[1].innerHTML = `${data.recomputed.midterm_percentage}%`;
+                            cells[2].innerHTML = `${data.recomputed.finals_percentage}%`;
+                            cells[3].innerHTML = `${data.recomputed.term_percentage}%`;
+                            
+                            const gradeBadge = cells[4] ? cells[4].querySelector('.fgs-summary-grade-badge') : null;
+                            if (gradeBadge) {
+                                gradeBadge.textContent = data.recomputed.term_grade ? data.recomputed.term_grade : '--';
+                                gradeBadge.style.background = gradeColor(parseFloat(data.recomputed.term_grade||0));
+                            }
+                            
+                            const statusBadge = cells[5] ? cells[5].querySelector('.fgs-status-badge') : null;
+                            if (statusBadge) {
+                                statusBadge.dataset.status = data.recomputed.grade_status;
+                                statusBadge.textContent = (data.recomputed.grade_status === 'passed' ? 'Passed' : data.recomputed.grade_status === 'failed' ? 'Failed' : data.recomputed.grade_status);
+                            }
+                        } else {
+                            console.warn('Summary table row does not have expected number of cells:', cells ? cells.length : 0);
                         }
-                        
-                        const statusBadge = cells[5] ? cells[5].querySelector('.fgs-status-badge') : null;
-                        if (statusBadge) {
-                            statusBadge.dataset.status = data.recomputed.grade_status;
-                            statusBadge.textContent = (data.recomputed.grade_status === 'passed' ? 'Passed' : data.recomputed.grade_status === 'failed' ? 'Failed' : data.recomputed.grade_status);
-                        }
-                    } else {
-                        console.warn('Summary table row does not have expected number of cells:', cells ? cells.length : 0);
                     }
                 }
+            } else {
+                console.debug('Skipping summary update - currently viewing component', FGS.currentComponentId);
             }
         }
     } catch (e) {
@@ -2671,7 +2845,7 @@ async function saveCARMetadata() {
     console.log(' Data to send:', data);
     
     try {
-        const response = await fetch('/faculty/ajax/save_car_metadata.php', {
+        const response = await fetch((window.APP?.apiPath || '/faculty/ajax/') + 'save_car_metadata.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
@@ -2733,7 +2907,7 @@ async function generateCARDocument() {
         
         console.log('📤 Sending payload:', payload);
         
-       const response = await fetch('/faculty/ajax/generate_car_document.php', {
+       const response = await fetch((window.APP?.apiPath || '/faculty/ajax/') + 'generate_car_document.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -3064,6 +3238,144 @@ function showComponentContextMenu(event, studentId, columnId) {
 async function markComponentStatus(event, studentId, columnId, status) {
     event.preventDefault();
     
+    // If marking as INC, prompt for lacking requirements
+    if (status === 'inc') {
+        // Find the item name from the table - simpler approach
+        let itemName = 'Component item';
+        
+        // Get all table headers within the grading table (skip first which is "Student")
+        const gradingTable = document.querySelector('table.fgs-summary-table');
+        if (gradingTable) {
+            const headers = gradingTable.querySelectorAll('thead th');
+            const gradeInputs = gradingTable.querySelectorAll('input.fgs-score-input');
+            
+            // Find which column this input belongs to by checking the first occurrence
+            let targetColumnIndex = -1;
+            for (let i = 0; i < gradeInputs.length; i++) {
+                if (gradeInputs[i].dataset.columnId == columnId) {
+                    // Count how many cells are before this one in its row
+                    const row = gradeInputs[i].closest('tr');
+                    const cell = gradeInputs[i].closest('td');
+                    const cells = Array.from(row.querySelectorAll('td'));
+                    targetColumnIndex = cells.indexOf(cell); // Index matches header index (both start at 0 with student column)
+                    break;
+                }
+            }
+            
+            console.log('🔍 Target column index:', targetColumnIndex, 'Total headers:', headers.length);
+            
+            if (targetColumnIndex > 0 && targetColumnIndex < headers.length) {
+                const header = headers[targetColumnIndex];
+                const spans = header.querySelectorAll('span');
+                if (spans.length > 0) {
+                    // First span should have the column name
+                    itemName = spans[0].textContent.trim();
+                }
+                console.log('🔍 Header HTML:', header.innerHTML);
+                console.log('🔍 Extracted item name:', itemName);
+            }
+        }
+        
+        console.log('🔍 Final item name:', itemName);
+        
+        // Get existing lacking requirements
+        let existingLackingReqs = '';
+        try {
+            const lackingReqsResponse = await loadLackingRequirements(studentId);
+            existingLackingReqs = lackingReqsResponse || '';
+        } catch (error) {
+            console.warn('Could not load existing lacking requirements:', error);
+        }
+        
+        // Suggest adding the item name if not already present
+        let suggestedText = existingLackingReqs;
+        if (existingLackingReqs && !existingLackingReqs.includes(itemName)) {
+            suggestedText = existingLackingReqs + (existingLackingReqs.endsWith('.') || existingLackingReqs.endsWith(',') ? ' ' : ', ') + itemName;
+        } else if (!existingLackingReqs) {
+            suggestedText = `Missing ${itemName}`;
+        }
+        
+        const result = await Swal.fire({
+            title: 'Mark Component as Incomplete',
+            html: `
+                <div style="text-align: left;">
+                    <p style="margin-bottom: 15px; font-size: 14px; color: #1f2937;">Marking <strong>${itemName}</strong> as incomplete.</p>
+                    <label style="display: block; margin-bottom: 10px; font-weight: 700; color: #FDB81E; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;">Lacking Requirements / Reason</label>
+                    <textarea id="swal-inc-lacking-requirements" style="width: 100%; padding: 14px 16px; font-size: 14px; border: 2px solid #FDB81E !important; border-radius: 8px; font-family: inherit; resize: none; height: 100px; line-height: 1.5; color: #1f2937; background: white; box-sizing: border-box; outline: none;" placeholder="e.g., Missing quiz, needs to submit assignment">${suggestedText}</textarea>
+                    <p style="margin-top: 10px; font-size: 12px; color: #6b7280;">This will appear in the Course Assessment Report (CAR).</p>
+                </div>
+            `,
+            showCancelButton: true,
+            confirmButtonText: 'Mark as INC',
+            cancelButtonText: 'Cancel',
+            confirmButtonColor: '#FDB81E',
+            cancelButtonColor: '#6b7280',
+            preConfirm: () => {
+                const lackingReqs = document.getElementById('swal-inc-lacking-requirements').value.trim();
+                return lackingReqs;
+            }
+        });
+        
+        if (!result.isConfirmed) {
+            return; // User cancelled
+        }
+        
+        const lackingReqs = result.value || '';
+        
+        console.log('💾 Saving lacking requirements:', lackingReqs, 'for student:', studentId);
+        
+        // Save lacking requirements to grade_term table
+        const lackingFd = new FormData();
+        lackingFd.append('action', 'update_lacking_requirements');
+        lackingFd.append('student_id', studentId);
+        lackingFd.append('class_code', FGS.currentClassCode);
+        lackingFd.append('lacking_requirements', lackingReqs);
+        lackingFd.append('csrf_token', window.csrfToken || APP.csrfToken);
+        
+        try {
+            const lackingResponse = await fetch(APP.apiPath + 'save_term_grades.php', {
+                method: 'POST',
+                body: lackingFd
+            });
+            
+            const responseText = await lackingResponse.text();
+            console.log('📡 Response text:', responseText);
+            
+            if (!responseText || responseText.trim() === '') {
+                console.error('❌ Empty response from server');
+                return;
+            }
+            
+            const lackingData = JSON.parse(responseText);
+            if (lackingData.success) {
+                console.log('✅ Lacking requirements saved successfully');
+            } else {
+                console.error('❌ Failed to save lacking requirements:', lackingData.message);
+            }
+        } catch (error) {
+            console.error('❌ Error saving lacking requirements:', error);
+        }
+        
+        // Also update the overall grade status to 'incomplete'
+        const statusFd = new FormData();
+        statusFd.append('action', 'update_grade_status');
+        statusFd.append('class_code', FGS.currentClassCode);
+        statusFd.append('student_id', studentId);
+        statusFd.append('grade_status', 'incomplete');
+        statusFd.append('lacking_requirements', lackingReqs);
+        statusFd.append('csrf_token', window.csrfToken || APP.csrfToken);
+        
+        try {
+            await fetch(APP.apiPath + 'save_term_grades.php', {
+                method: 'POST',
+                body: statusFd
+            });
+            console.log('✅ Grade status updated to incomplete');
+        } catch (error) {
+            console.error('❌ Error updating grade status:', error);
+        }
+    }
+    
     const fd = new FormData();
     fd.append('action', 'update_component_status');
     fd.append('student_id', studentId);
@@ -3093,6 +3405,15 @@ async function markComponentStatus(event, studentId, columnId, status) {
             const currentComp = FGS.components.find(c => c.selected);
             if (currentComp) {
                 renderTable(currentComp);
+            }
+            
+            // If this was marking as INC, refresh the summary table to show updated status
+            if (status === 'inc') {
+                console.log('🔄 Refreshing summary table after marking as INC');
+                // Call loadGradeSummary to refresh the summary view
+                if (typeof loadGradeSummary === 'function') {
+                    loadGradeSummary(FGS.currentClassCode);
+                }
             }
             
             Toast.fire({

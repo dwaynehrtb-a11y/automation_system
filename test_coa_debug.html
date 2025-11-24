@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head><title>COA Debug</title><style>pre{background:#f5f5f5;padding:10px;border-radius:5px;} body{font-family:Arial}</style></head>
+<body>
+<h1>COA Debug Console</h1>
+<button onclick="testEndpoint()">Test Endpoint</button>
+<pre id="result"></pre>
+
+<script>
+function testEndpoint() {
+    const pre = document.getElementById('result');
+    pre.textContent = 'Testing...';
+    
+    fetch('/faculty/ajax/generate_coa_html.php?class_code=24_T2_CCPRGG1L_INF222')
+        .then(r => {
+            pre.textContent += '\nStatus: ' + r.status + '\n';
+            return r.text();
+        })
+        .then(text => {
+            try {
+                const data = JSON.parse(text);
+                pre.textContent += 'Response Type: JSON\n';
+                pre.textContent += 'Success: ' + data.success + '\n';
+                if (data.success) {
+                    pre.textContent += 'HTML Length: ' + data.html.length + '\n';
+                    pre.textContent += 'First 200 chars: ' + data.html.substring(0, 200) + '\n';
+                } else {
+                    pre.textContent += 'Error: ' + data.message + '\n';
+                }
+            } catch (e) {
+                pre.textContent += 'Response Type: Text\n';
+                pre.textContent += text.substring(0, 500) + '\n';
+            }
+        })
+        .catch(e => {
+            pre.textContent += 'Fetch Error: ' + e.message;
+        });
+}
+
+testEndpoint();
+</script>
+</body>
+</html>

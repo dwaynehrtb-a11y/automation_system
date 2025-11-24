@@ -126,6 +126,12 @@ try {
                 $student['full_name'] .= ' ' . $student['middle_initial'] . '.';
             }
             
+            // Determine account status class
+            $account_status_class = 'active';
+            if ($student['must_change_password'] == 1 && $student['first_login_at'] == null) {
+                $account_status_class = 'pending';
+            }
+            
             // Determine account status badge
             if ($student['account_status'] == 'inactive' || $student['account_status'] == 'suspended') {
                 $account_status_badge = '<span class="badge badge-danger"><i class="fas fa-ban"></i> Inactive</span>';
@@ -143,11 +149,40 @@ try {
             }
             
             // Determine enrollment status
+            $enrollment_class = 'active';
             if ($student['status'] == 'pending') {
                 $enrollment_status_badge = '<span class="badge badge-info"><i class="fas fa-hourglass-start"></i> Pending</span>';
+                $enrollment_class = 'pending';
             } else {
                 $enrollment_status_badge = '<span class="badge badge-success"><i class="fas fa-check"></i> Active</span>';
             }
+            
+            // Build action buttons
+            $action_buttons = '<div class="action-buttons">';
+            
+            // Resend email button for pending accounts
+            if ($account_status_class == 'pending') {
+                $action_buttons .= '<button onclick="resendStudentCredentials(\'' . htmlspecialchars($student['student_id']) . '\', \'' . htmlspecialchars(addslashes($student['full_name'])) . '\', \'' . htmlspecialchars($student['email']) . '\')" class="btn btn-sm btn-info btn-icon" title="Resend Email">
+                    <i class="fas fa-envelope"></i>
+                </button>';
+            }
+            
+            // View button
+            $action_buttons .= '<button onclick="viewStudentDetails(\'' . htmlspecialchars($student['student_id']) . '\')" class="btn btn-sm btn-info btn-icon" title="View Student">
+                <i class="fas fa-eye"></i>
+            </button>';
+            
+            // Edit button
+            $action_buttons .= '<button onclick="editStudent(\'' . htmlspecialchars($student['student_id']) . '\', \'' . htmlspecialchars(addslashes($student['first_name'])) . '\', \'' . htmlspecialchars(addslashes($student['last_name'])) . '\', \'' . htmlspecialchars(addslashes($student['middle_initial'] ?? '')) . '\', \'' . htmlspecialchars($student['email']) . '\', \'' . $student['birthday'] . '\', \'' . $student['status'] . '\')" class="btn btn-sm btn-warning btn-icon" title="Edit Student">
+                <i class="fas fa-edit"></i>
+            </button>';
+            
+            // Delete button
+            $action_buttons .= '<button onclick="deleteStudent(\'' . htmlspecialchars($student['student_id']) . '\')" class="btn btn-sm btn-danger btn-icon" title="Delete Student">
+                <i class="fas fa-trash"></i>
+            </button>';
+            
+            $action_buttons .= '</div>';
             
             // Build row HTML
             $html .= '<tr>
@@ -156,17 +191,16 @@ try {
                 <td><small>' . htmlspecialchars($student['email']) . '</small></td>
                 <td>' . ($student['birthday'] !== 'Jan 1, 1970' ? date('M d, Y', strtotime($student['birthday'])) : 'Jan 1, 1970') . '</td>
                 <td>' . $account_status_badge . '</td>
-                <td>' . $enrollment_status_badge . '<br><small>' . htmlspecialchars($student['enrolled_classes']) . ' ' . ($student['enrolled_classes'] == 1 ? 'class' : 'classes') . '</small></td>
                 <td>
-                    <div style="display: flex; gap: 6px; justify-content: center;">
-                        <button class="btn-sm" onclick="editStudent(\'' . htmlspecialchars($student['student_id']) . '\')" title="Edit">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="btn-sm btn-danger" onclick="deleteStudent(\'' . htmlspecialchars($student['student_id']) . '\')" title="Delete">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
+                    <span class="badge ' . $enrollment_class . '">
+                    ' . ucfirst($student['status']) . '
+                    </span>
+                    <br>
+                    <small style="color: var(--text-muted);">
+                    ' . $student['enrolled_classes'] . ' class' . ($student['enrolled_classes'] != 1 ? 'es' : '') . '
+                    </small>
                 </td>
+                <td>' . $action_buttons . '</td>
             </tr>';
         }
     } else {

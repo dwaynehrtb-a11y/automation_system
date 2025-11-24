@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>COA Test</title>
+<style>
+body { font-family: Arial, sans-serif; margin: 20px; }
+iframe { width: 100%; height: 800px; border: 2px solid #ccc; }
+button { padding: 10px 20px; font-size: 14px; margin-bottom: 20px; }
+.logs { background: #f5f5f5; padding: 10px; margin-top: 20px; max-height: 200px; overflow-y: auto; }
+</style>
+</head>
+<body>
+
+<h1>COA Test Page</h1>
+<p>Testing COA generation with class code: <strong>24_T2_CCPRGG1L_INF222</strong></p>
+
+<button onclick="testCOA()">Generate COA Report</button>
+<button onclick="viewLogs()">View Debug Logs</button>
+
+<div id="result"></div>
+<iframe id="coa-frame"></iframe>
+
+<div class="logs">
+<h3>Debug Info:</h3>
+<pre id="debug"></pre>
+</div>
+
+<script>
+function testCOA() {
+    const classCode = '24_T2_CCPRGG1L_INF222';
+    const debugDiv = document.getElementById('debug');
+    
+    debugDiv.textContent = 'Loading...';
+    
+    fetch(`/faculty/ajax/generate_coa_html.php?class_code=${encodeURIComponent(classCode)}`)
+        .then(res => {
+            debugDiv.textContent += `\nStatus: ${res.status}\n`;
+            return res.json();
+        })
+        .then(data => {
+            debugDiv.textContent += JSON.stringify(data, null, 2).substring(0, 500) + '...\n';
+            
+            if (data.success && data.html) {
+                document.getElementById('coa-frame').srcDoc = data.html;
+                document.getElementById('result').innerHTML = '<p style="color:green">✓ COA Generated Successfully!</p>';
+            } else {
+                document.getElementById('result').innerHTML = '<p style="color:red">✗ Error: ' + (data.message || 'Unknown error') + '</p>';
+            }
+        })
+        .catch(err => {
+            debugDiv.textContent += `Error: ${err.message}\n`;
+            document.getElementById('result').innerHTML = '<p style="color:red">✗ Fetch error: ' + err.message + '</p>';
+        });
+}
+
+function viewLogs() {
+    fetch('/logs/coa_debug.log')
+        .then(res => res.text())
+        .then(text => {
+            document.getElementById('debug').textContent = text.split('\n').slice(-20).join('\n');
+        })
+        .catch(err => {
+            document.getElementById('debug').textContent = 'Could not load logs: ' + err.message;
+        });
+}
+
+// Auto-run on load
+window.addEventListener('load', testCOA);
+</script>
+
+</body>
+</html>

@@ -108,7 +108,7 @@ async function loadClassMasterlist(classCode) {
                         <td style="font-weight: 500;">${student.full_name}</td>
                         <td>${student.email || 'N/A'}</td>
                         <td style="text-align: center;">
-                        <span class="status-badge ${(student.status || 'enrolled').toLowerCase()}">${student.status || 'Enrolled'}</span>
+                        <span class="status-badge ${(student.status || 'enrolled').toLowerCase()}">${(student.status || 'enrolled').toLowerCase()}</span>
                         </td>
                         <td style="text-align: center;">
                         <button onclick="removeStudentFromClass('${student.student_id}', '${classCode}')" class="btn btn-danger btn-sm">
@@ -117,6 +117,9 @@ async function loadClassMasterlist(classCode) {
                         </td>
                     </tr>
                 `).join('');
+                
+                // Update the count after loading students
+                filterMasterlistByStatus();
             }
         } else {
             tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 40px; color: red;">Error: ${data.message}</td></tr>`;
@@ -176,6 +179,9 @@ function closeAddStudentToClass() {
  * Search Students for Enrollment
  */
 let searchTimeout;
+// Store all students for client-side filtering
+let allStudentsForEnrollment = [];
+
 async function searchStudentsForEnrollment() {
     clearTimeout(searchTimeout);
     
@@ -184,58 +190,148 @@ async function searchStudentsForEnrollment() {
     
     if (!searchInput || !resultsDiv) return;
     
-    const searchTerm = searchInput.value.trim();
+    const searchTerm = searchInput.value.trim().toLowerCase();
     
-    if (searchTerm.length < 2) {
-        resultsDiv.innerHTML = '<p style="text-align: center; color: #999; padding: 20px;">Type at least 2 characters...</p>';
+    // If no search term and we haven't loaded all students yet, load them
+    if (searchTerm.length === 0) {
+        if (allStudentsForEnrollment.length === 0) {
+            resultsDiv.innerHTML = '<p style="text-align: center; padding: 20px;"><i class="fas fa-spinner fa-spin" style="color: #667eea;"></i> Loading all students...</p>';
+            
+            searchTimeout = setTimeout(async () => {
+                await loadAllStudentsForEnrollment();
+                displayEnrollmentStudents(allStudentsForEnrollment);
+            }, 300);
+        } else {
+            displayEnrollmentStudents(allStudentsForEnrollment);
+        }
         return;
     }
     
+    // If we have students loaded, filter them client-side
+    if (allStudentsForEnrollment.length > 0) {
+        const filtered = allStudentsForEnrollment.filter(student => {
+            const name = student.full_name.toLowerCase();
+            const id = student.student_id.toLowerCase();
+            const email = (student.email || '').toLowerCase();
+            return name.includes(searchTerm) || id.includes(searchTerm) || email.includes(searchTerm);
+        });
+        
+        resultsDiv.innerHTML = '<p style="text-align: center; padding: 10px; color: #666; font-size: 13px;"><i class="fas fa-check-circle"></i> Found ' + filtered.length + ' matching student(s)</p>';
+        displayEnrollmentStudents(filtered);
+        return;
+    }
+    
+    // Otherwise, fetch all students and filter
     resultsDiv.innerHTML = '<p style="text-align: center; padding: 20px;"><i class="fas fa-spinner fa-spin" style="color: #667eea;"></i> Searching...</p>';
     
     searchTimeout = setTimeout(async () => {
-        const formData = new FormData();
-        formData.append('action', 'search_students');
-        formData.append('search_term', searchTerm);
-        formData.append('class_code', currentClassCodeForMasterlist);
-        formData.append('csrf_token', window.csrfToken || window.APP.csrfToken);
+        await loadAllStudentsForEnrollment();
         
-        try {
-            const response = await fetch((window.APP?.apiPath || '/faculty/ajax/') + 'student_management.php', {
-                method: 'POST',
-                body: formData
+        if (allStudentsForEnrollment.length > 0) {
+            const filtered = allStudentsForEnrollment.filter(student => {
+                const name = student.full_name.toLowerCase();
+                const id = student.student_id.toLowerCase();
+                const email = (student.email || '').toLowerCase();
+                return name.includes(searchTerm) || id.includes(searchTerm) || email.includes(searchTerm);
             });
             
-            const data = await response.json();
-            
-            if (data.success) {
-                if (data.students.length === 0) {
-                    resultsDiv.innerHTML = '<p style="text-align: center; color: #999; padding: 20px;">No students found</p>';
-                } else {
-                    resultsDiv.innerHTML = data.students.map(student => `
-                        <div class="student-search-item">
-                            <div>
-                                <div class="student-info-name">${student.full_name}</div>
-                                <div class="student-info-details">${student.student_id} • ${student.email || 'No email'}</div>
-                            </div>
-                            <button class="btn btn-primary btn-sm enroll-student-btn" data-student-id="${student.student_id}">
-                                <i class="fas fa-plus"></i> Enroll
-                            </button>
-                        </div>
-                    `).join('');
-                    
-                    // Add event listeners to all enroll buttons
-                    resultsDiv.querySelectorAll('.enroll-student-btn').forEach(btn => {
-                        btn.addEventListener('click', function(e) {
-                            e.preventDefault();
-                            const studentId = this.getAttribute('data-student-id');
-                            enrollStudentToClass(studentId);
-                        });
-                    });
-                }
-            } else {
-                resultsDiv.innerHTML = `<p style="text-align: center; color: red; padding: 20px;">Error: ${data.message}</p>`;
-            }
+            resultsDiv.innerHTML = '<p style="text-align: center; padding: 10px; color: #666; font-size: 13px;"><i class="fas fa-check-circle"></i> Found ' + filtered.length + ' matching student(s)</p>';
+            displayEnrollmentStudents(filtered);
+        } else {
+            resultsDiv.innerHTML = '<p style="text-align: center; color: red; padding: 20px;">No students available</p>';
+        }
+    }, 300);
+}
+
+/**
+ * Load all students available for enrollment
+ */
+async function loadAllStudentsForEnrollment() {
+    const formData = new FormData();
+    formData.append('action', 'get_all_students');
+    formData.append('class_code', currentClassCodeForMasterlist);
+    formData.append('csrf_token', window.csrfToken || window.APP.csrfToken);
+    
+    try {
+        const response = await fetch((window.APP?.apiPath || '/faculty/ajax/') + 'student_management.php', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const data = await response.json();
+        
+        if (data.success && Array.isArray(data.students)) {
+            allStudentsForEnrollment = data.students;
+        } else {
+            console.error('Error loading students:', data.message);
+            allStudentsForEnrollment = [];
+        }
+    } catch (error) {
+        console.error('Error loading students:', error);
+        allStudentsForEnrollment = [];
+    }
+}
+
+/**
+ * Display enrollment students in results div
+ */
+function displayEnrollmentStudents(students) {
+    const resultsDiv = document.getElementById('student-search-results');
+    if (!resultsDiv) return;
+    
+    if (students.length === 0) {
+        resultsDiv.innerHTML = '<p style="text-align: center; color: #999; padding: 20px;"><i class="fas fa-search"></i> No students found</p>';
+    } else {
+        resultsDiv.innerHTML = students.map(student => {
+            const isEnrolled = Number(student.already_enrolled) === 1;
+            const statusLabel = (student.status || '').toLowerCase();
+            const statusBadge = statusLabel === 'pending' ? `<span style="display:inline-block;padding:4px 8px;border-radius:8px;background:#f59e0b;color:white;font-size:12px;margin-right:8px;">Pending</span>` : `<span style="display:inline-block;padding:4px 8px;border-radius:8px;background:#10b981;color:white;font-size:12px;margin-right:8px;">Active</span>`;
+
+            return `
+            <div class="student-search-item" style="display: flex; justify-content: space-between; align-items: center; padding: 12px; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 8px; background: #fff; transition: all 0.2s ease;">
+                <div style="flex: 1;">
+                    <div class="student-info-name" style="font-weight: 600; color: #1f2937; margin-bottom: 4px;">${statusBadge}${escapeHtml(student.full_name)}</div>
+                    <div class="student-info-details" style="font-size: 13px; color: #6b7280;"><i class="fas fa-id-card"></i> ${student.student_id} • <i class="fas fa-envelope"></i> ${escapeHtml(student.email || 'N/A')}</div>
+                </div>
+                ${isEnrolled ? `
+                    <button class="btn btn-outline btn-sm" disabled style="margin-left: 10px; white-space: nowrap; opacity: .8; cursor: default;">
+                        <i class="fas fa-check"></i> Enrolled
+                    </button>
+                ` : `
+                    <button class="btn btn-primary btn-sm enroll-student-btn" data-student-id="${student.student_id}" style="margin-left: 10px; white-space: nowrap;">
+                        <i class="fas fa-plus"></i> Enroll
+                    </button>
+                `}
+            </div>
+        `}).join('');
+        
+        // Add event listeners to all enroll buttons
+        resultsDiv.querySelectorAll('.enroll-student-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const studentId = this.getAttribute('data-student-id');
+                enrollStudentToClass(studentId);
+            });
+        });
+    }
+}
+
+/**
+ * Escape HTML to prevent XSS
+ */
+function escapeHtml(text) {
+    const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+    };
+    return text.replace(/[&<>"']/g, m => map[m]);
+}
+
+// Original error handler snippet (to be completed):
+/*
         } catch (error) {
             console.error('Search error:', error);
             resultsDiv.innerHTML = '<p style="text-align: center; color: red; padding: 20px;">Search failed</p>';
@@ -323,6 +419,21 @@ async function enrollStudentToClass(studentId) {
             }
             
             
+            // Mark the student locally as enrolled so UI updates immediately
+            if (allStudentsForEnrollment && allStudentsForEnrollment.length) {
+                const idx = allStudentsForEnrollment.findIndex(s => s.student_id === studentId);
+                    if (idx !== -1) {
+                        allStudentsForEnrollment[idx].already_enrolled = 1;
+                        // after successful enrollment, pending students become active
+                        if (allStudentsForEnrollment[idx].status && allStudentsForEnrollment[idx].status.toLowerCase() === 'pending') {
+                        allStudentsForEnrollment[idx].status = 'active';
+                        }
+                }
+            }
+
+            // Re-render search results (if visible) to reflect enrolled state
+            try { searchStudentsForEnrollment(); } catch (e) { /* ignore */ }
+
             loadClassMasterlist(currentClassCodeForMasterlist);
             
         } else {
@@ -387,6 +498,15 @@ async function removeStudentFromClass(studentId, classCode) {
             if (typeof Toast !== 'undefined') {
                 Toast.fire({ icon: 'success', title: 'Student removed successfully' });
             }
+            // Update cached students list if present
+            if (allStudentsForEnrollment && allStudentsForEnrollment.length) {
+                const idx = allStudentsForEnrollment.findIndex(s => s.student_id === studentId);
+                if (idx !== -1) {
+                    allStudentsForEnrollment[idx].already_enrolled = 0;
+                }
+            }
+            try { searchStudentsForEnrollment(); } catch (e) { /* ignore */ }
+
             loadClassMasterlist(classCode);
         } else {
             if (typeof Toast !== 'undefined') {
@@ -412,6 +532,104 @@ function openAddStudentModal(classCode) {
     showAddStudentToClassModal();
 }
 
+/**
+ * Enroll all unenrolled students at once
+ */
+async function enrollAllUnenrolledStudents() {
+    if (!allStudentsForEnrollment || allStudentsForEnrollment.length === 0) {
+        if (typeof Toast !== 'undefined') {
+            Toast.fire({ icon: 'warning', title: 'No students loaded' });
+        }
+        return;
+    }
+    
+    const unenrolled = allStudentsForEnrollment.filter(s => Number(s.already_enrolled) !== 1);
+    
+    if (unenrolled.length === 0) {
+        if (typeof Toast !== 'undefined') {
+            Toast.fire({ icon: 'info', title: 'All students are already enrolled' });
+        }
+        return;
+    }
+    
+    // Confirm with user
+    if (typeof Swal !== 'undefined') {
+        const result = await Swal.fire({
+            title: 'Enroll All Students?',
+            html: `You are about to enroll <strong>${unenrolled.length} student${unenrolled.length > 1 ? 's' : ''}</strong> to this class.`,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: `Yes, enroll ${unenrolled.length}`,
+            cancelButtonText: 'Cancel',
+            confirmButtonColor: '#3b82f6'
+        });
+        
+        if (!result.isConfirmed) return;
+    } else {
+        if (!confirm(`Enroll all ${unenrolled.length} students?`)) return;
+    }
+    
+    // Show loading
+    if (typeof showLoading === 'function') showLoading('Enrolling students...');
+    
+    let successCount = 0;
+    let errorCount = 0;
+    
+    for (const student of unenrolled) {
+        try {
+            const formData = new FormData();
+            formData.append('action', 'enroll_student');
+            formData.append('student_id', student.student_id);
+            formData.append('class_code', currentClassCodeForMasterlist);
+            formData.append('csrf_token', window.csrfToken || window.APP.csrfToken);
+            
+            const response = await fetch((window.APP?.apiPath || '/faculty/ajax/') + 'student_management.php', {
+                method: 'POST',
+                body: formData
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                successCount++;
+                // Update cache
+                student.already_enrolled = 1;
+            } else {
+                errorCount++;
+                console.error(`Failed to enroll ${student.student_id}:`, data.message);
+            }
+        } catch (error) {
+            errorCount++;
+            console.error(`Error enrolling ${student.student_id}:`, error);
+        }
+    }
+    
+    if (typeof hideLoading === 'function') hideLoading();
+    
+    // Show result
+    if (typeof Toast !== 'undefined') {
+        if (errorCount === 0) {
+            Toast.fire({ 
+                icon: 'success', 
+                title: `Successfully enrolled all ${successCount} students!` 
+            });
+        } else {
+            Toast.fire({ 
+                icon: 'warning', 
+                title: `Enrolled ${successCount}, ${errorCount} failed` 
+            });
+        }
+    }
+    
+    // Refresh the list
+    searchStudentsForEnrollment();
+    
+    // Reload masterlist if it's open
+    if (currentClassCodeForMasterlist) {
+        loadClassMasterlist(currentClassCodeForMasterlist);
+    }
+}
+
 // Export functions to global scope
 window.viewStudentMasterlist = viewStudentMasterlist;
 window.loadClassMasterlist = loadClassMasterlist;
@@ -422,3 +640,12 @@ window.searchStudentsForEnrollment = searchStudentsForEnrollment;
 window.enrollStudentToClass = enrollStudentToClass;
 window.removeStudentFromClass = removeStudentFromClass;
 window.openAddStudentModal = openAddStudentModal;
+window.enrollAllUnenrolledStudents = enrollAllUnenrolledStudents;
+window.filterMasterlistByStatus = filterMasterlistByStatus;
+
+console.log('✓ Student Management functions exported to global scope:', {
+    viewStudentMasterlist: typeof window.viewStudentMasterlist,
+    openAddStudentModal: typeof window.openAddStudentModal,
+    filterMasterlistByStatus: typeof window.filterMasterlistByStatus
+});
+

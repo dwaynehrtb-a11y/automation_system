@@ -28,10 +28,13 @@ function generateReport() {
 // VIEW CLASS SCHEDULES
 function viewClassSchedules(section, course_code, academic_year, term) {
     Swal.fire({
-        title: `<i class="fas fa-spinner fa-spin"></i> Loading Schedules for ${section} - ${course_code}`,
-        html: 'Please wait...',
+        title: `<i class="fas fa-spinner fa-spin"></i> Loading Schedules`,
+        html: '<div style="color: #6b7280; font-weight: 500;">Please wait...</div>',
         showConfirmButton: false,
-        allowOutsideClick: false
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
     });
 
     fetch(`ajax/get_class_schedules.php?section=${section}&course_code=${course_code}&academic_year=${academic_year}&term=${term}`, {
@@ -43,18 +46,27 @@ function viewClassSchedules(section, course_code, academic_year, term) {
         const schedulesHTML = createScheduleViewHTML(section, course_code, academic_year, term, data.data);
 
             Swal.fire({
-                title: `<i class="fas fa-calendar-alt"></i> ${section} - ${course_code} Schedule`,
+                title: `<div style="display: flex; align-items: center; gap: 0.75rem; justify-content: center;">
+                    <i class="fas fa-calendar-alt" style="color: #003082; font-size: 1.5rem;"></i>
+                    <span style="color: #1f2937;">${section} - ${course_code} Schedule</span>
+                </div>`,
                 html: schedulesHTML,
-                width: '800px',
+                width: '850px',
+                customClass: {
+                    container: 'swal-professional',
+                    popup: 'swal-popup-professional'
+                },
                 confirmButtonText: '<i class="fas fa-times"></i> Close',
-                confirmButtonColor: '#6b7280'
+                confirmButtonColor: '#003082',
+                confirmButtonAriaLabel: 'Close modal'
             });
         } else {
             Swal.fire({
                 icon: 'error',
                 title: 'Error Loading Schedules',
                 text: data.message || 'Failed to load class schedules',
-                confirmButtonText: 'OK'
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#003082'
             });
         }
     })
@@ -70,26 +82,28 @@ function viewClassSchedules(section, course_code, academic_year, term) {
 // CREATE SCHEDULE VIEW HTML
 function createScheduleViewHTML(section, course_code, academic_year, term, schedules) {
     let schedulesHTML = `
-        <div style="text-align: left; max-height: 500px; overflow-y: auto;">
-            <div style="margin-bottom: 1.5rem; padding: 1.5rem; background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); border-radius: 0.75rem; border: 1px solid #93c5fd;">
-                <h4 style="margin: 0 0 0.75rem 0; color: #1e40af; display: flex; align-items: center; gap: 0.5rem;">
+        <div style="text-align: left; max-height: 600px; overflow-y: auto;">
+            <!-- Class Information Header -->
+            <div style="margin-bottom: 1.5rem; padding: 1.5rem; background: linear-gradient(135deg, #003082 0%, #002768 100%); border-radius: 12px; border: 2px solid #D4AF37; color: white;">
+                <h4 style="margin: 0 0 0.75rem 0; color: white; display: flex; align-items: center; gap: 0.5rem; font-size: 1.125rem; font-weight: 700;">
                     <i class="fas fa-info-circle"></i>
                     Class Information
                 </h4>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.875rem;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.9rem;">
                     <div>
-                        <p style="margin: 0.25rem 0;"><strong style="color: #374151;">Section:</strong> <span style="color: #1e40af;">${section}</span></p>
-                        <p style="margin: 0.25rem 0;"><strong style="color: #374151;">Course:</strong> <span style="color: #1e40af;">${course_code}</span></p>
+                        <p style="margin: 0.25rem 0;"><strong style="color: #D4AF37;">Section:</strong> <span style="color: #f0f9ff;">${section}</span></p>
+                        <p style="margin: 0.25rem 0;"><strong style="color: #D4AF37;">Course:</strong> <span style="color: #f0f9ff;">${course_code}</span></p>
                     </div>
                     <div>
-                        <p style="margin: 0.25rem 0;"><strong style="color: #374151;">Academic Year:</strong> <span style="color: #1e40af;">${academic_year}</span></p>
-                        <p style="margin: 0.25rem 0;"><strong style="color: #374151;">Term:</strong> <span style="color: #1e40af;">${term}</span></p>
+                        <p style="margin: 0.25rem 0;"><strong style="color: #D4AF37;">Academic Year:</strong> <span style="color: #f0f9ff;">${academic_year}</span></p>
+                        <p style="margin: 0.25rem 0;"><strong style="color: #D4AF37;">Term:</strong> <span style="color: #f0f9ff;">${term}</span></p>
                     </div>
                 </div>
             </div>
             
-            <h5 style="margin-bottom: 1rem; color: #374151; display: flex; align-items: center; gap: 0.5rem;">
-                <i class="fas fa-calendar-week" style="color: #059669;"></i>
+            <!-- Weekly Schedule Header -->
+            <h5 style="margin-bottom: 1rem; color: #1f2937; display: flex; align-items: center; gap: 0.5rem; font-size: 1rem; font-weight: 600;">
+                <i class="fas fa-calendar-week" style="color: #003082;"></i>
                 Weekly Schedule (${schedules.length} time slots)
             </h5>
     `;
@@ -100,15 +114,15 @@ function createScheduleViewHTML(section, course_code, academic_year, term, sched
         });
         
         schedulesHTML += `
-            <div style="margin-top: 1.5rem; padding: 1rem; background: #f0f9ff; border-radius: 0.5rem; border: 1px solid #bae6fd; text-align: center;">
-                <p style="margin: 0; color: #0369a1; font-size: 0.875rem;">
-                    <i class="fas fa-lightbulb" style="color: #f59e0b;"></i>
+            <div style="margin-top: 1.5rem; padding: 1rem; background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border-radius: 8px; border-left: 4px solid #003082; text-align: center;">
+                <p style="margin: 0; color: #003082; font-size: 0.875rem;">
+                    <i class="fas fa-lightbulb" style="color: #D4AF37;"></i>
                     <strong>Total:</strong> ${schedules.length} scheduled time slots for this class
                 </p>
             </div>
         `;
     } else {
-        schedulesHTML += '<p style="text-align: center; color: #6b7280; padding: 2rem;">No schedules found for this class.</p>';
+        schedulesHTML += '<p style="text-align: center; color: #9ca3af; padding: 2rem; font-style: italic;">No schedules found for this class.</p>';
     }
     
     schedulesHTML += '</div>';
@@ -118,54 +132,60 @@ function createScheduleViewHTML(section, course_code, academic_year, term, sched
 // CREATE INDIVIDUAL SCHEDULE CARD HTML
 function createScheduleCardHTML(schedule, index) {
     return `
-        <div style="border: 1px solid #e5e7eb; padding: 1.25rem; margin-bottom: 1rem; border-radius: 0.75rem; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-                <h6 style="margin: 0; color: #1f2937; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-                    <span style="background: #059669; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 600;">${index + 1}</span>
+        <div style="border: 1px solid #e5e7eb; padding: 1.25rem; margin-bottom: 1rem; border-radius: 10px; background: white; box-shadow: 0 4px 6px rgba(0, 48, 130, 0.08); border-left: 4px solid #003082; transition: all 0.3s ease;">
+            <!-- Card Header -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h6 style="margin: 0; color: #1f2937; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; font-weight: 600;">
+                    <span style="background: linear-gradient(135deg, #003082 0%, #002768 100%); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700;">${index + 1}</span>
                     ${schedule.day} Class
                 </h6>
                 <div style="display: flex; gap: 0.5rem;">
                     <button onclick="editClassFromReport(${schedule.class_id}, '${schedule.section}', '${schedule.academic_year}', '${schedule.term}', '${schedule.course_code}', '${schedule.day}', '${schedule.time}', '${schedule.room}', ${schedule.faculty_id}); Swal.close();" 
-                            class="btn btn-warning btn-sm" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">
-                        <i class="fas fa-edit"></i> Edit
+                            class="btn btn-sm btn-warning btn-icon" style="padding: 0.5rem; font-size: 0.875rem;" title="Edit Schedule">
+                        <i class="fas fa-edit"></i>
                     </button>
                     <button onclick="confirmDeleteIndividualClass(${schedule.class_id}, '${schedule.day}', '${schedule.time}'); Swal.close();" 
-                            class="btn btn-danger btn-sm" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">
-                        <i class="fas fa-trash"></i> Delete
+                            class="btn btn-sm btn-danger btn-icon" style="padding: 0.5rem; font-size: 0.875rem;" title="Delete Schedule">
+                        <i class="fas fa-trash"></i>
                     </button>
                 </div>
             </div>
             
-            <div style="background: #f8fafc; padding: 1rem; border-radius: 0.5rem; border-left: 4px solid #059669;">
+            <!-- Card Content -->
+            <div style="background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); padding: 1rem; border-radius: 8px; border: 1px solid #e2e8f0;">
                 <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; font-size: 0.875rem;">
+                    <!-- Time -->
                     <div>
-                        <p style="margin: 0.25rem 0; display: flex; align-items: center; gap: 0.5rem;">
-                            <i class="fas fa-clock" style="color: #f59e0b; width: 16px;"></i>
+                        <p style="margin: 0 0 0.25rem 0; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-clock" style="color: #D4AF37; width: 16px;"></i>
                             <strong style="color: #374151;">Time:</strong>
                         </p>
-                        <p style="margin: 0; color: #059669; font-weight: 500;">${schedule.time}</p>
+                        <p style="margin: 0; color: #003082; font-weight: 600; font-size: 0.95rem;">${schedule.time}</p>
                     </div>
+                    <!-- Room -->
                     <div>
-                        <p style="margin: 0.25rem 0; display: flex; align-items: center; gap: 0.5rem;">
-                            <i class="fas fa-door-open" style="color: #8b5cf6; width: 16px;"></i>
+                        <p style="margin: 0 0 0.25rem 0; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-door-open" style="color: #003082; width: 16px;"></i>
                             <strong style="color: #374151;">Room:</strong>
                         </p>
-                        <p style="margin: 0; color: #7c3aed; font-weight: 500;">${schedule.room}</p>
+                        <p style="margin: 0; color: #003082; font-weight: 600; font-size: 0.95rem;">${schedule.room}</p>
                     </div>
+                    <!-- Faculty -->
                     <div>
-                        <p style="margin: 0.25rem 0; display: flex; align-items: center; gap: 0.5rem;">
+                        <p style="margin: 0 0 0.25rem 0; display: flex; align-items: center; gap: 0.5rem;">
                             <i class="fas fa-user-tie" style="color: #dc2626; width: 16px;"></i>
                             <strong style="color: #374151;">Faculty:</strong>
                         </p>
-                        <p style="margin: 0; color: #dc2626; font-weight: 500;">${schedule.faculty_name}</p>
+                        <p style="margin: 0; color: #dc2626; font-weight: 600; font-size: 0.95rem;">${schedule.faculty_name}</p>
                     </div>
                 </div>
                 
+                <!-- Footer Info -->
                 <div style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid #e5e7eb; font-size: 0.75rem; color: #6b7280;">
                     <p style="margin: 0; display: flex; align-items: center; gap: 0.5rem;">
-                        <i class="fas fa-book"></i>
+                        <i class="fas fa-book" style="color: #003082;"></i>
                         <strong>Course:</strong> ${schedule.course_title || 'N/A'} | 
-                        <strong>Class ID:</strong> ${schedule.class_id}
+                        <strong>Class ID:</strong> <span style="color: #003082; font-weight: 600;">${schedule.class_id}</span>
                     </p>
                 </div>
             </div>

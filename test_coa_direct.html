@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head><title>Test COA Direct</title></head>
+<body>
+<h1>COA Test - Direct HTTP Request</h1>
+<pre id="output">Loading...</pre>
+
+<script>
+fetch('/faculty/ajax/generate_coa_html.php?class_code=24_T2_CCPRGG1L_INF222')
+  .then(r => r.json())
+  .then(d => {
+    if (d.success) {
+      document.body.innerHTML = d.html;
+    } else {
+      document.getElementById('output').textContent = 'ERROR: ' + d.message;
+    }
+  })
+  .catch(e => {
+    document.getElementById('output').textContent = 'FETCH ERROR: ' + e.message;
+  });
+</script>
+</body>
+</html>

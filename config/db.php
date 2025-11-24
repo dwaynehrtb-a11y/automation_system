@@ -352,7 +352,8 @@ function generateUUID() {
     );
 }
 
-if ($dbConfig['debug']) {
-    error_log("Database connected successfully to: " . $dbConfig['db']);
-}
+// Disabled to prevent JSON corruption in AJAX responses
+// if ($dbConfig['debug']) {
+//     error_log("Database connected successfully to: " . $dbConfig['db']);
+// }
 ?>

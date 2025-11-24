@@ -52,6 +52,14 @@ try {
             $result = getClassStudents($conn, $class_code, $faculty_id);
             break;
             
+        case 'get_all_students':
+            $class_code = $_POST['class_code'] ?? '';
+            if (empty($class_code)) {
+                throw new Exception('Class code required');
+            }
+            $result = getAllStudentsForEnrollment($conn, $class_code);
+            break;
+            
         case 'search_students':
             $search_term = $_POST['search_term'] ?? '';
             $class_code = $_POST['class_code'] ?? '';
@@ -272,7 +280,7 @@ function searchStudents($conn, $search_term, $class_code) {
             FROM class_enrollments 
             WHERE class_code = ? AND status = 'enrolled'
         )
-        AND s.status = 'active'
+        AND s.status IN ('active','pending')
         ORDER BY s.student_id
         LIMIT 50
     ";
@@ -359,7 +367,7 @@ function searchStudents($conn, $search_term, $class_code) {
                 FROM class_enrollments 
                 WHERE class_code = ? AND status = 'enrolled'
             )
-            AND s.status = 'active'
+            AND s.status IN ('active','pending')
             ORDER BY s.last_name, s.first_name
             LIMIT 100
         ";
@@ -584,6 +592,97 @@ function removeStudent($conn, $student_id, $class_code, $faculty_id) {
         $stmt->close();
         throw new Exception('Remove failed: ' . $error);
     }
+}
+
+/**
+ * Get all students available for enrollment (not already enrolled in this class)
+ */
+function getAllStudentsForEnrollment($conn, $class_code) {
+    // Get all active students and mark whether they're already enrolled in this class
+    // We previously excluded already-enrolled students here; change to return them as well and include a flag
+    $query = "
+        SELECT 
+            s.student_id,
+            s.first_name,
+            s.last_name,
+            s.middle_initial,
+            s.email,
+            CONCAT(s.last_name, ', ', s.first_name, 
+            CASE WHEN s.middle_initial IS NOT NULL THEN CONCAT(' ', s.middle_initial, '.') ELSE '' END) as full_name,
+            s.status,
+            CASE WHEN ce.student_id IS NOT NULL THEN 1 ELSE 0 END as already_enrolled
+        FROM student s
+        LEFT JOIN class_enrollments ce ON ce.student_id = s.student_id AND ce.class_code = ? AND ce.status = 'enrolled'
+        WHERE s.status IN ('active', 'pending')
+        GROUP BY s.student_id
+        ORDER BY s.last_name, s.first_name
+        LIMIT 500
+    ";
+    
+    $stmt = $conn->prepare($query);
+    if (!$stmt) {
+        throw new Exception('Database error: ' . $conn->error);
+    }
+    
+    $stmt->bind_param("s", $class_code);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    // Initialize encryption for decryption
+    Encryption::init();
+    
+    // Helper function to check if data is encrypted
+    $is_encrypted = function($data) {
+        if (empty($data)) return false;
+        if (strpos($data, ' ') !== false) return false; // Plaintext usually has spaces
+        if (!preg_match('/^[A-Za-z0-9+\/=]+$/', $data)) return false;
+        if ((strlen($data) % 4) != 0) return false;
+        if (strlen($data) < 24) return false; // Encrypted data is always longer than 24 chars
+        $decoded = @base64_decode($data, true);
+        return $decoded !== false;
+    };
+    
+    $students = [];
+    
+    while ($row = $result->fetch_assoc()) {
+        // Decrypt encrypted fields if needed
+        try {
+            if (!empty($row['first_name']) && $is_encrypted($row['first_name'])) {
+                try {
+                    $row['first_name'] = Encryption::decrypt($row['first_name']);
+                } catch (Exception $e) {
+                    error_log("Failed to decrypt first_name in getAllStudentsForEnrollment: " . $e->getMessage());
+                }
+            }
+            if (!empty($row['last_name']) && $is_encrypted($row['last_name'])) {
+                try {
+                    $row['last_name'] = Encryption::decrypt($row['last_name']);
+                } catch (Exception $e) {
+                    error_log("Failed to decrypt last_name in getAllStudentsForEnrollment: " . $e->getMessage());
+                }
+            }
+            if (!empty($row['email']) && $is_encrypted($row['email'])) {
+                try {
+                    $row['email'] = Encryption::decrypt($row['email']);
+                } catch (Exception $e) {
+                    error_log("Failed to decrypt email in getAllStudentsForEnrollment: " . $e->getMessage());
+                }
+            }
+        } catch (Exception $e) {
+            error_log("Decryption error in getAllStudentsForEnrollment: " . $e->getMessage());
+        }
+        
+        // Reconstruct full_name with decrypted values
+        $row['full_name'] = $row['last_name'] . ', ' . $row['first_name'];
+        if (!empty($row['middle_initial'])) {
+            $row['full_name'] .= ' ' . $row['middle_initial'] . '.';
+        }
+        
+        $students[] = $row;
+    }
+    $stmt->close();
+    
+    return ['success' => true, 'students' => $students];
 }
 
 $conn->close();

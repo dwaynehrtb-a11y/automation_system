@@ -29,6 +29,17 @@ function toggleSidebar() {
 function showSection(sectionName) {
     console.log(' showSection called:', sectionName);
     
+    // Update URL - remove query params and hash for dashboard, preserve for others
+    const baseUrl = window.location.pathname;
+    if (sectionName === 'dashboard') {
+        // Dashboard: clean URL with no hash or query params
+        window.history.replaceState(null, '', baseUrl);
+    } else {
+        // Other sections: preserve query parameters and add hash
+        const queryParams = window.location.search;
+        window.history.replaceState(null, '', baseUrl + queryParams + '#' + sectionName);
+    }
+    
     // Remove active from all nav links
     document.querySelectorAll('.nav-link').forEach(link => {
         link.classList.remove('active');
@@ -116,6 +127,42 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('✅ showSection is available globally');
     } else {
         console.error('❌ showSection not found globally');
+    }
+    
+    // Handle hash on page load
+    const hash = window.location.hash.substring(1); // Remove the #
+    if (hash && document.getElementById(hash)) {
+        console.log('📍 Hash detected on load:', hash);
+        // Just activate the section without calling showSection to preserve URL
+        document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+        const targetSection = document.getElementById(hash);
+        if (targetSection) targetSection.classList.add('active');
+        
+        // Update nav and breadcrumb
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.classList.remove('active');
+            const onclick = link.getAttribute('onclick');
+            if (onclick && onclick.includes(`showSection('${hash}')`)) {
+                link.classList.add('active');
+            }
+        });
+        
+        const currentSection = document.getElementById('currentSection');
+        if (currentSection) {
+            const sectionNames = {
+                'dashboard': 'Dashboard',
+                'subjects': 'Manage Subjects',
+                'faculty': 'Manage Faculty',
+                'students': 'Manage Students',
+                'sections': 'Manage Sections',
+                'classes': 'Manage Classes',
+                'reports': 'Reports & Analytics'
+            };
+            currentSection.textContent = sectionNames[hash] || hash;
+        }
+    } else {
+        // Default to dashboard
+        showSection('dashboard');
     }
 });
 

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>COA Report Viewer</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background: #f5f5f5;
+}
+#controls {
+    background: white;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+button:hover {
+    background: #0056b3;
+}
+#status {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 4px;
+}
+.success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+.error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+.loading {
+    background: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+iframe {
+    width: 100%;
+    height: 800px;
+    border: 1px solid #ddd;
+    background: white;
+    border-radius: 5px;
+}
+</style>
+</head>
+<body>
+
+<div id="controls">
+    <h2>Course Outcomes Assessment (COA) Report</h2>
+    <p>Class: <strong>24_T2_CCPRGG1L_INF222</strong></p>
+    <button onclick="generateCOA()">Generate COA Report</button>
+    <button onclick="downloadPDF()">Download as PDF</button>
+    <button onclick="refreshPage()">Refresh</button>
+    <div id="status"></div>
+</div>
+
+<iframe id="coaFrame" title="COA Report"></iframe>
+
+<script>
+function setStatus(message, type = 'loading') {
+    const status = document.getElementById('status');
+    status.innerHTML = message;
+    status.className = type;
+    if (type !== 'loading') {
+        setTimeout(() => status.innerHTML = '', 5000);
+    }
+}
+
+function generateCOA() {
+    const classCode = '24_T2_CCPRGG1L_INF222';
+    setStatus('Loading COA report...', 'loading');
+    
+    fetch(`/faculty/ajax/generate_coa_html.php?class_code=${encodeURIComponent(classCode)}`)
+        .then(response => {
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            return response.json();
+        })
+        .then(data => {
+            if (!data.success) {
+                throw new Error(data.message || 'Failed to generate COA');
+            }
+            
+            const frame = document.getElementById('coaFrame');
+            frame.srcDoc = data.html;
+            setStatus('✓ COA Report generated successfully!', 'success');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            setStatus('✗ Error: ' + error.message, 'error');
+        });
+}
+
+function downloadPDF() {
+    setStatus('PDF download not yet implemented', 'error');
+}
+
+function refreshPage() {
+    location.reload();
+}
+
+// Auto-generate on load
+window.addEventListener('load', generateCOA);
+</script>
+
+</body>
+</html>

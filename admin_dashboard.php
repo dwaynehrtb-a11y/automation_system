@@ -110,7 +110,8 @@
     </div>
 
     <!-- User Info (Right Side) -->
-    <div class="user-info">
+    <div class="user-info-wrapper">
+    <div class="user-info" onclick="toggleProfileDropdown()">
     <div class="user-avatar">
     <?= strtoupper(substr($current_user['name'], 0, 2)) ?>
     </div>
@@ -121,6 +122,24 @@
     <div class="user-role">
     Administrator
     </div>
+    </div>
+    <i class="fas fa-chevron-down"></i>
+    </div>
+    <!-- Profile Dropdown Menu -->
+    <div class="profile-dropdown" id="profileDropdown">
+    <a href="#" class="dropdown-item" onclick="event.preventDefault(); alert('Profile page coming soon')">
+    <i class="fas fa-user-circle"></i>
+    <span>My Profile</span>
+    </a>
+    <a href="#" class="dropdown-item" onclick="event.preventDefault(); alert('Settings coming soon')">
+    <i class="fas fa-cog"></i>
+    <span>Settings</span>
+    </a>
+    <div class="dropdown-divider"></div>
+    <a href="auth/logout.php" class="dropdown-item logout-item">
+    <i class="fas fa-sign-out-alt"></i>
+    <span>Logout</span>
+    </a>
     </div>
     </div>
     </div>
@@ -140,6 +159,7 @@
     </div>
 
     <nav class="sidebar-nav">
+    <!-- Main Section -->
     <div class="nav-item">
     <a href="#dashboard" class="nav-link active" onclick="showSection('dashboard'); return false;">
     <i class="fas fa-tachometer-alt"></i>
@@ -147,6 +167,13 @@
     </a>
     </div>
 
+    <!-- Academic Management Group -->
+    <div class="nav-group">
+    <div class="nav-group-title">
+    <i class="fas fa-graduation-cap"></i>
+    Academic Management
+    </div>
+    
     <div class="nav-item">
     <a href="#subjects" class="nav-link" onclick="showSection('subjects')">
     <i class="fas fa-book"></i>
@@ -167,7 +194,15 @@
     Manage Students
     </a>
     </div>
+    </div>
 
+    <!-- Organization Group -->
+    <div class="nav-group">
+    <div class="nav-group-title">
+    <i class="fas fa-sitemap"></i>
+    Organization
+    </div>
+    
     <div class="nav-item">
     <a href="#sections" class="nav-link" onclick="showSection('sections')">
     <i class="fas fa-calendar-alt"></i>
@@ -181,19 +216,21 @@
     Manage Classes
     </a>
     </div>
+    </div>
 
+    <!-- Reports Group -->
+    <div class="nav-group">
+    <div class="nav-group-title">
+    <i class="fas fa-chart-line"></i>
+    Analytics
+    </div>
+    
     <div class="nav-item">
     <a href="#reports" class="nav-link" onclick="showSection('reports')">
     <i class="fas fa-chart-bar"></i>
     Reports & Analytics
     </a>
     </div>
-
-    <div class="nav-item" style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);">
-    <a href="auth/logout.php" class="nav-link">
-    <i class="fas fa-sign-out-alt"></i>
-    Logout
-    </a>
     </div>
     </nav>
     </div>
@@ -328,15 +365,36 @@
             </select>
         </div>
         
-        <button class="btn-view">
+        <button type="button" class="btn-view">
             <i class="fas fa-eye"></i>
             View
         </button>
         
-        <button class="btn-clear">
+        <button type="button" class="btn-clear">
             <i class="fas fa-times"></i>
             Clear
         </button>
+    </div>
+    
+    <!-- Filtered Classes Results -->
+    <div id="filteredClassesContainer" style="display: none; margin-top: 20px;">
+        <div class="table-wrapper">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Subject Code</th>
+                        <th>Subject Name</th>
+                        <th>Section</th>
+                        <th>Schedule</th>
+                        <th>Room</th>
+                        <th>Faculty</th>
+                    </tr>
+                </thead>
+                <tbody id="filteredClassesBody">
+                    <!-- Results will be loaded here -->
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -362,10 +420,14 @@
     <tbody>
     <?php 
     try {
+    require_once 'config/encryption.php';
+    Encryption::init();
+    
     $recent_students_query = "
     SELECT 
     student_id,
-    CONCAT(last_name, ', ', first_name) as name,
+    first_name,
+    last_name,
     status
     FROM student 
     ORDER BY enrollment_date DESC 
@@ -373,8 +435,26 @@
     ";
     $recent_students_result = $conn->query($recent_students_query);
 
+    // Helper to check if encrypted
+    $is_encrypted = function($data) {
+        return !empty($data) && preg_match('/^[A-Za-z0-9+\/=]+$/', $data) && (strlen($data) % 4) == 0;
+    };
+
     if ($recent_students_result && $recent_students_result->num_rows > 0) {
     while($student = $recent_students_result->fetch_assoc()): 
+        // Decrypt names if needed
+        $first_name = $student['first_name'];
+        $last_name = $student['last_name'];
+        
+        if ($is_encrypted($first_name)) {
+            try { $first_name = Encryption::decrypt($first_name); } catch (Exception $e) {}
+        }
+        if ($is_encrypted($last_name)) {
+            try { $last_name = Encryption::decrypt($last_name); } catch (Exception $e) {}
+        }
+        
+        $student_name = $last_name . ', ' . $first_name;
+        
     $status_class = match($student['status']) {
     'active' => 'badge-success',
     'inactive' => 'badge-secondary',
@@ -387,7 +467,7 @@
     ?>
     <tr>
     <td><strong><?= htmlspecialchars($student['student_id']) ?></strong></td>
-    <td><?= htmlspecialchars($student['name']) ?></td>
+    <td><?= htmlspecialchars($student_name) ?></td>
     <td><span class="badge <?= $status_class ?>"><?= ucfirst($student['status']) ?></span></td>
     </tr>
     <?php 
@@ -437,7 +517,7 @@
     while($section = $sections_result->fetch_assoc()): 
     ?>
     <tr>
-    <td><strong><?= htmlspecialchars($section['section_code']) ?></strong></td>
+    <td><?= htmlspecialchars($section['section_code']) ?></td>
     <td><?= date('M j, Y', strtotime($section['created_at'])) ?></td>
     <td><span class="badge badge-success">Active</span></td>
     </tr>
@@ -556,35 +636,35 @@
     
     <div class="form-body">
         <!-- Import Info Card -->
-        <div class="import-section" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 24px; border-radius: 16px; margin-bottom: 24px; border: 2px solid #0ea5e9; box-shadow: 0 4px 6px rgba(14, 165, 233, 0.1);">
-            <div style="display: flex; align-items: center; gap: 20px;">
+        <div class="import-section">
+            <div class="import-content">
                 <!-- CSV Icon -->
-                <div style="width: 64px; height: 64px; background: linear-gradient(135deg, #0ea5e9, #0284c7); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);">
-                    <i class="fas fa-file-csv" style="font-size: 32px; color: white;"></i>
+                <div class="import-icon">
+                    <i class="fas fa-file-csv"></i>
                 </div>
 
                 <!-- Text Content -->
-                <div style="flex: 1;">
-                    <h4 style="margin: 0 0 8px 0; color: #0c4a6e; font-size: 18px; font-weight: 700;">
+                <div class="import-text">
+                    <h4>
                         <i class="fas fa-upload"></i> Quick Import
                     </h4>
-                    <p style="margin: 0; color: #0369a1; font-size: 14px; line-height: 1.5;">
+                    <p>
                         Upload a CSV file to create multiple student accounts at once. Save time by importing bulk student data. All students will receive activation emails automatically.
                     </p>
                 </div>
 
                 <!-- Import Button -->
-                <button type="button" class="btn btn-primary" onclick="openStudentImportModal()" style="flex-shrink: 0; white-space: nowrap;">
+                <button type="button" class="btn btn-primary" onclick="openStudentImportModal()">
                     <i class="fas fa-file-import"></i>
                     Import CSV
                 </button>
             </div>
 
             <!-- Help Text -->
-            <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(14, 165, 233, 0.2);">
-                <small style="color: #0369a1; display: flex; align-items: center; gap: 8px;">
+            <div class="import-help">
+                <small>
                     <i class="fas fa-info-circle"></i>
-                   <span>Download the <a href="ajax/download_student_template_excel.php" style="color: #0284c7; text-decoration: underline; font-weight: 600;">CSV template</a>
+                   <span>Download the <a href="ajax/download_student_template_excel.php">CSV template</a></span>
                 </small>
             </div>
         </div>
@@ -609,24 +689,27 @@
     <div class="table-container">
     
     <!-- Encryption Controls -->
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 20px; background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%); border-radius: 12px; box-shadow: 0 8px 24px rgba(30, 58, 138, 0.2); border: 1px solid rgba(251, 191, 36, 0.2);">
-        <div style="display: flex; align-items: center; gap: 20px; color: white; flex: 1;">
-            <div style="font-size: 32px; color: #fbbf24;">
+    <div class="encryption-controls">
+        <div class="encryption-info">
+            <div class="encryption-icon">
                 <i class="fas fa-shield-alt"></i>
             </div>
             <div>
-                <div style="font-weight: 700; font-size: 1.1em;">Student Data Encryption</div>
-                <div style="font-size: 0.9em; opacity: 0.9; margin-top: 4px;">
-                    Status: <span id="encryptionStatusTable" style="font-weight: 700; color: #fbbf24; text-transform: uppercase;">Checking...</span>
+                <div class="encryption-title">Student Data Encryption</div>
+                <div class="encryption-status">
+                    Status: <span id="encryptionStatusTable">Checking...</span>
                 </div>
             </div>
         </div>
-        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-            <button id="decryptBtnTable" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; padding: 12px 28px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.95em; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(16, 185, 129, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(16, 185, 129, 0.3)'">
+        <div class="encryption-buttons">
+            <button id="decryptBtnTable" class="btn btn-success">
                 <i class="fas fa-unlock-alt"></i> Decrypt
             </button>
-            <button id="encryptBtnTable" style="background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #1e3a8a; border: none; padding: 12px 28px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.95em; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(251, 191, 36, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(251, 191, 36, 0.3)'">
+            <button id="encryptBtnTable" class="btn btn-gold">
                 <i class="fas fa-lock"></i> Encrypt
+            </button>
+            <button id="bulkDeleteBtn" class="btn btn-danger" style="margin-left: 10px;">
+                <i class="fas fa-trash-alt"></i> Bulk Delete
             </button>
         </div>
     </div>
@@ -655,6 +738,10 @@
     <table class="table">
     <thead>
     <tr>
+    <th style="width: 40px; text-align: center;" id="selectAllCheckboxHeader">
+        <input type="checkbox" id="selectAllStudents" title="Select All" style="cursor: pointer; width: 18px; height: 18px;">
+    </th>
+    <th style="width: 30px; text-align: center;">#</th>
     <th>Student ID</th>
     <th>Full Name</th>
     <th>Email</th>
@@ -666,7 +753,19 @@
     </thead>
     <tbody id="studentsTableBody">
     <?php 
-    // Get students with enrollment count
+    // Pagination settings
+    $students_per_page = 10;
+    $current_page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+    $offset = ($current_page - 1) * $students_per_page;
+    $row_number = $offset + 1;
+    
+    // Get total student count
+    $count_query = "SELECT COUNT(*) as total FROM student";
+    $count_result = $conn->query($count_query);
+    $total_students = $count_result->fetch_assoc()['total'];
+    $total_pages = ceil($total_students / $students_per_page);
+    
+    // Get students with enrollment count with pagination
     $students_query = "
     SELECT 
     s.student_id,
@@ -687,6 +786,7 @@
     LEFT JOIN class_enrollments ce ON s.student_id = ce.student_id AND ce.status = 'enrolled'
     GROUP BY s.student_id, s.first_name, s.last_name, s.middle_initial, s.email, s.birthday, s.status, s.account_status, s.must_change_password, s.first_login_at, s.enrollment_date
     ORDER BY s.enrollment_date DESC, s.last_name, s.first_name
+    LIMIT $students_per_page OFFSET $offset
     ";
 
     $students_result = $conn->query($students_query);
@@ -766,6 +866,10 @@
     };
     ?>
     <tr>
+    <td style="text-align: center;">
+        <input type="checkbox" class="student-checkbox" value="<?= htmlspecialchars($student['student_id']) ?>">
+    </td>
+    <td style="text-align: center; font-weight: 600; color: var(--text-muted);"><?= $row_number++ ?></td>
     <td><strong><?= htmlspecialchars($student['student_id']) ?></strong></td>
     <td>
     <div>
@@ -791,19 +895,17 @@
     </small>
     </td>
     <td>
-    <div class="d-flex gap-2">
+    <div class="action-buttons">
     <?php if ($account_status_class == 'pending'): ?>
     <button onclick="resendStudentCredentials('<?= htmlspecialchars($student['student_id']) ?>', '<?= htmlspecialchars(addslashes($student['full_name'])) ?>', '<?= htmlspecialchars($student['email']) ?>')" 
-    class="btn btn-info btn-sm">
+    class="btn btn-sm btn-info btn-icon" title="Resend Email">
     <i class="fas fa-envelope"></i>
-    Resend Email
     </button>
     <?php endif; ?>
 
     <button onclick="viewStudentDetails('<?= htmlspecialchars($student['student_id']) ?>')" 
-    class="btn btn-sm btn-info">
+    class="btn btn-sm btn-info btn-icon" title="View Student">
     <i class="fas fa-eye"></i>
-    View
     </button>
 
     <button onclick="editStudent('<?= htmlspecialchars($student['student_id']) ?>', 
@@ -813,15 +915,13 @@
     '<?= htmlspecialchars($student['email']) ?>', 
     '<?= $student['birthday'] ?>', 
     '<?= $student['status'] ?>')" 
-    class="btn btn-sm btn-warning">
+    class="btn btn-sm btn-warning btn-icon" title="Edit Student">
     <i class="fas fa-edit"></i>
-    Edit
     </button>
 
     <button onclick="deleteStudent('<?= htmlspecialchars($student['student_id']) ?>')" 
-    class="btn btn-danger btn-sm">
+    class="btn btn-sm btn-danger btn-icon" title="Delete Student">
     <i class="fas fa-trash"></i>
-    Delete
     </button>
     </div>
     </td>
@@ -835,6 +935,66 @@
     </tbody>
     </table>
     </div>
+    
+    <!-- Pagination Controls -->
+    <?php if ($total_pages > 1): ?>
+    <div class="pagination-container" style="display: flex; justify-content: flex-end; align-items: center; padding: 20px; gap: 10px;">
+        <?php if ($current_page > 1): ?>
+        <a href="#" onclick="event.preventDefault(); loadStudentPage(<?= $current_page - 1 ?>)" class="btn btn-sm btn-secondary">
+            <i class="fas fa-chevron-left"></i> Previous
+        </a>
+        <?php else: ?>
+        <button class="btn btn-sm btn-secondary" disabled>
+            <i class="fas fa-chevron-left"></i> Previous
+        </button>
+        <?php endif; ?>
+        
+        <div style="display: flex; gap: 5px;">
+        <?php 
+        // Show page numbers with ellipsis
+        $show_pages = 5; // Show 5 page numbers at a time
+        $start_page = max(1, $current_page - 2);
+        $end_page = min($total_pages, $current_page + 2);
+        
+        // First page
+        if ($start_page > 1) {
+            echo '<a href="#" onclick="event.preventDefault(); loadStudentPage(1)" class="btn btn-sm btn-outline-primary">1</a>';
+            if ($start_page > 2) {
+                echo '<span style="padding: 5px 10px;">...</span>';
+            }
+        }
+        
+        // Page numbers
+        for ($i = $start_page; $i <= $end_page; $i++): 
+        ?>
+            <a href="#" onclick="event.preventDefault(); loadStudentPage(<?= $i ?>)" 
+               class="btn btn-sm <?= $i == $current_page ? 'btn-primary' : 'btn-outline-primary' ?>">
+                <?= $i ?>
+            </a>
+        <?php 
+        endfor;
+        
+        // Last page
+        if ($end_page < $total_pages) {
+            if ($end_page < $total_pages - 1) {
+                echo '<span style="padding: 5px 10px;">...</span>';
+            }
+            echo '<a href="#" onclick="event.preventDefault(); loadStudentPage(' . $total_pages . ')" class="btn btn-sm btn-outline-primary">' . $total_pages . '</a>';
+        }
+        ?>
+        </div>
+        
+        <?php if ($current_page < $total_pages): ?>
+        <a href="#" onclick="event.preventDefault(); loadStudentPage(<?= $current_page + 1 ?>)" class="btn btn-sm btn-secondary">
+            Next <i class="fas fa-chevron-right"></i>
+        </a>
+        <?php else: ?>
+        <button class="btn btn-sm btn-secondary" disabled>
+            Next <i class="fas fa-chevron-right"></i>
+        </button>
+        <?php endif; ?>
+    </div>
+    <?php endif; ?>
     </div>
     </div>
 
@@ -902,8 +1062,9 @@
     <i class="fas fa-align-left"></i>
     Course Description
     </label>
-    <input type="text" id="course_desc" name="course_desc" class="form-control" 
-    placeholder="Brief description of the course">
+    <textarea id="course_desc" name="course_desc" class="form-control" rows="4"
+    placeholder="Brief description of the course" maxlength="500"></textarea>
+    <small class="form-text text-muted">Maximum 500 characters</small>
     </div>
     </div>
     <!-- Course Outcomes Section -->
@@ -1000,7 +1161,7 @@
     <th>Actions</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody id="subjectsTableBody">
     <?php 
     if ($subjects) {
     $subjects->data_seek(0);
@@ -1010,19 +1171,18 @@
     <td><strong><?= htmlspecialchars($subject['course_code']) ?></strong></td>
     <td><?= htmlspecialchars($subject['course_title']) ?></td>
     <td><?= htmlspecialchars($subject['course_desc'] ?? 'No description') ?></td>
-    <td>
+    <td style="text-align: center;">
     <span class="badge badge-primary">
     <?= $subject['units'] ?> unit<?= $subject['units'] > 1 ? 's' : '' ?>
     </span>
     </td>
-    <td>
-    <div class="d-flex">
-    <button onclick="editSubject('<?= htmlspecialchars($subject['course_code']) ?>', '<?= htmlspecialchars($subject['course_title']) ?>', '<?= htmlspecialchars($subject['course_desc'] ?? '') ?>', '<?= $subject['units'] ?>')" class="btn btn-sm btn-outline" style="color: var(--warning-600); border-color: var(--warning-300);">
-    Edit
+    <td style="text-align: center;">
+    <div class="action-buttons" style="display: flex; gap: 8px; justify-content: center; align-items: center;">
+    <button onclick="editSubject('<?= htmlspecialchars($subject['course_code']) ?>', '<?= htmlspecialchars($subject['course_title']) ?>', '<?= htmlspecialchars($subject['course_desc'] ?? '') ?>', '<?= $subject['units'] ?>')" class="btn btn-sm btn-warning btn-icon" title="Edit Subject">
+    <i class="fas fa-edit"></i>
     </button>
-    <button onclick="deleteSubject('<?= htmlspecialchars($subject['course_code']) ?>')" class="btn btn-danger btn-sm">
+    <button onclick="deleteSubject('<?= htmlspecialchars($subject['course_code']) ?>')" class="btn btn-sm btn-danger btn-icon" title="Delete Subject">
     <i class="fas fa-trash"></i>
-    Delete
     </button>
     </div>
     </td>
@@ -1135,7 +1295,7 @@
     <th>Actions</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody id="facultyTableBody">
     <?php 
     $faculty_query = "
     SELECT 
@@ -1200,31 +1360,27 @@
     </td>
     <td><?= $status_badge ?></td>
     <td>
-    <div class="d-flex gap-3">
+    <div class="action-buttons">
     <?php if ($status_class == 'pending'): ?>
     <button onclick="resendCredentials(<?= $faculty['id'] ?>, '<?= addslashes($faculty['name']) ?>', '<?= addslashes($faculty['email']) ?>')" 
-    class="btn btn-info btn-sm">
+    class="btn btn-sm btn-info btn-icon" title="Resend Email">
     <i class="fas fa-envelope"></i>
-    Resend Email
     </button>
     <?php endif; ?>
 
     <button onclick="viewFacultyClasses(<?= $faculty['id'] ?>, '<?= addslashes($faculty['name']) ?>')" 
-    class="btn btn-info btn-sm">
+    class="btn btn-sm btn-info btn-icon" title="View Classes">
     <i class="fas fa-eye"></i>
-    View Classes
     </button>
 
     <button onclick="editFaculty(<?= $faculty['id'] ?>, '<?= addslashes($faculty['name']) ?>', '<?= $faculty['employee_id'] ?>', '<?= $faculty['email'] ?>')" 
-    class="btn btn-warning btn-sm">
+    class="btn btn-sm btn-warning btn-icon" title="Edit Faculty">
     <i class="fas fa-edit"></i>
-    Edit
     </button>
 
     <button onclick="confirmDeleteFaculty(<?= $faculty['id'] ?>, '<?= addslashes($faculty['name']) ?>')" 
-    class="btn btn-danger btn-sm">
+    class="btn btn-sm btn-danger btn-icon" title="Delete Faculty">
     <i class="fas fa-trash"></i>
-    Delete
     </button>
     </div>
     </td>
@@ -1316,20 +1472,20 @@
     <td><strong><?= htmlspecialchars($section['section_code']) ?></strong></td>
     <td><?= date('M j, Y', strtotime($section['created_at'])) ?></td>
     <td>
+    <div class="action-buttons">
     <button data-action="edit-section" 
     data-section-id="<?= $section['section_id'] ?>" 
     data-section-code="<?= htmlspecialchars($section['section_code']) ?>"
-    class="btn btn-warning btn-sm">
+    class="btn btn-sm btn-warning btn-icon" title="Edit Section">
     <i class="fas fa-edit"></i>
-    Edit
     </button>
     <button data-action="delete-section" 
     data-section-id="<?= $section['section_id'] ?>" 
     data-section-code="<?= htmlspecialchars($section['section_code']) ?>"
-    class="btn btn-danger btn-sm">
+    class="btn btn-sm btn-danger btn-icon" title="Delete Section">
     <i class="fas fa-trash"></i>
-    Delete
     </button>
+    </div>
     </td>
     </tr>
     <?php 
@@ -1356,35 +1512,35 @@
     </h3>
     <p class="form-subtitle">Configure class details and schedule</p>
     <!-- Quick Import Section -->
-    <div class="import-section" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 24px; border-radius: 16px; margin-bottom: 32px; border: 2px solid #0ea5e9; box-shadow: 0 4px 6px rgba(14, 165, 233, 0.1);">
-    <div style="display: flex; align-items: center; gap: 20px;">
+    <div class="import-section">
+    <div class="import-content">
     <!-- CSV Icon -->
-    <div style="width: 64px; height: 64px; background: linear-gradient(135deg, #0ea5e9, #0284c7); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);">
-    <i class="fas fa-file-csv" style="font-size: 32px; color: white;"></i>
+    <div class="import-icon">
+    <i class="fas fa-file-csv"></i>
     </div>
 
     <!-- Text Content -->
-    <div style="flex: 1;">
-    <h4 style="margin: 0 0 8px 0; color: #0c4a6e; font-size: 18px; font-weight: 700;">
+    <div class="import-text">
+    <h4>
     <i class="fas fa-upload"></i> Quick Import
     </h4>
-    <p style="margin: 0; color: #0369a1; font-size: 14px; line-height: 1.5;">
+    <p>
     Upload a CSV file to create multiple classes at once. Save time by importing bulk class data.
     </p>
     </div>
 
     <!-- Import Button -->
-    <button type="button" class="btn btn-primary" onclick="openImportModal()" style="flex-shrink: 0; white-space: nowrap;">
+    <button type="button" class="btn btn-primary" onclick="openImportModal()">
     <i class="fas fa-file-import"></i>
     Import CSV
     </button>
     </div>
 
     <!-- Help Text -->
-    <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(14, 165, 233, 0.2);">
-    <small style="color: #0369a1; display: flex; align-items: center; gap: 8px;">
+    <div class="import-help">
+    <small>
     <i class="fas fa-info-circle"></i>
-    <span>Download the <a href="#" onclick="downloadCSVTemplate(); return false;" style="color: #0284c7; text-decoration: underline; font-weight: 600;">CSV template</a> to see the required format</span>
+    <span>Download the <a href="#" onclick="downloadCSVTemplate(); return false;">CSV template</a> to see the required format</span>
     </small>
     </div>
     </div>
@@ -1647,11 +1803,10 @@
     </h3>
     </div>
     <div class="table-wrapper">
-    <table class="table">
+    <table class="table seven-column">
     <thead>
     <tr>
-    <th>Class ID</th>
-    <th>Section</th>
+    <th>Section Code</th>
     <th>Course</th>
     <th>Schedule</th>
     <th>Room</th>
@@ -1660,13 +1815,14 @@
     <th>Actions</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody id="classesTableBody">
     <?php 
     try {
     $classes_query = "
     SELECT 
     MIN(c.class_id) as class_id,
     c.section,
+    sec.section_code,
     c.academic_year,
     c.term,
     c.course_code,
@@ -1686,6 +1842,7 @@
     u.name as faculty_name,
     COUNT(*) as schedule_count
     FROM class c 
+    LEFT JOIN sections sec ON c.section = sec.section_id
     LEFT JOIN subjects s ON c.course_code = s.course_code 
     LEFT JOIN users u ON c.faculty_id = u.id 
     GROUP BY c.section, c.academic_year, c.term, c.course_code, c.faculty_id, c.room
@@ -1697,7 +1854,6 @@
     while($class = $classes_result->fetch_assoc()): 
     ?>
     <tr>
-    <td><strong><?= htmlspecialchars($class['class_id']) ?></strong></td>
     <td><span class="badge badge-primary"><?= htmlspecialchars($class['section']) ?></span></td>
     <td>
     <div>
@@ -1722,18 +1878,15 @@
     </div>
     </td>
     <td>
-    <div class="d-flex">
-    <button onclick="viewClassSchedules('<?= addslashes($class['section']) ?>', '<?= addslashes($class['course_code']) ?>', '<?= addslashes($class['academic_year']) ?>', '<?= addslashes($class['term']) ?>')" class="btn btn-info btn-sm">
+    <div class="action-buttons">
+    <button onclick="viewClassSchedules('<?= addslashes($class['section']) ?>', '<?= addslashes($class['course_code']) ?>', '<?= addslashes($class['academic_year']) ?>', '<?= addslashes($class['term']) ?>')" class="btn btn-sm btn-info btn-icon" title="View Schedules (<?= $class['schedule_count'] ?>)">
     <i class="fas fa-eye"></i>
-    View (<?= $class['schedule_count'] ?>)
     </button>
-    <button onclick="editClassGroup('<?= addslashes($class['section']) ?>', '<?= addslashes($class['academic_year']) ?>', '<?= addslashes($class['term']) ?>', '<?= addslashes($class['course_code']) ?>', <?= $class['faculty_id'] ?? 'null' ?>, '<?= addslashes($class['room']) ?>', '<?= addslashes($class['schedule_data']) ?>')" class="btn btn-warning btn-sm">
+    <button onclick="editClassGroup('<?= addslashes($class['section']) ?>', '<?= addslashes($class['academic_year']) ?>', '<?= addslashes($class['term']) ?>', '<?= addslashes($class['course_code']) ?>', <?= $class['faculty_id'] ?? 'null' ?>, '<?= addslashes($class['room']) ?>', '<?= addslashes($class['schedule_data']) ?>')" class="btn btn-sm btn-warning btn-icon" title="Edit Class">
     <i class="fas fa-edit"></i>
-    Edit
     </button>
-    <button onclick="confirmDeleteClassGroup('<?= addslashes($class['section']) ?>', '<?= addslashes($class['academic_year']) ?>', '<?= addslashes($class['term']) ?>', '<?= addslashes($class['course_code']) ?>', <?= $class['faculty_id'] ?? 'null' ?>, '<?= addslashes($class['room']) ?>')" class="btn btn-danger btn-sm">
+    <button onclick="confirmDeleteClassGroup('<?= addslashes($class['section']) ?>', '<?= addslashes($class['academic_year']) ?>', '<?= addslashes($class['term']) ?>', '<?= addslashes($class['course_code']) ?>', <?= $class['faculty_id'] ?? 'null' ?>, '<?= addslashes($class['room']) ?>')" class="btn btn-sm btn-danger btn-icon" title="Delete Class">
     <i class="fas fa-trash"></i>
-    Delete
     </button>
     </div>
     </td>
@@ -1899,53 +2052,6 @@
             </div>
         </div>
     </div>
-
-    <!-- 3. REPORT GENERATION (Keep Original) -->
-    <div class="form-section" style="margin-top: 30px;">
-        <div class="form-header">
-            <h3>
-                <i class="fas fa-file-download"></i>
-                Generate Reports
-            </h3>
-            <p class="form-subtitle">Export comprehensive system reports</p>
-        </div>
-        <div class="form-body">
-            <!-- Report Generation -->
-            <div class="form-grid">
-                <div class="form-group">
-                    <label for="reportType" class="form-label">
-                        <i class="fas fa-file-alt"></i>
-                        Report Type
-                    </label>
-                    <select id="reportType" class="form-control">
-                        <option value="">Select Report Type</option>
-                        <option value="faculty">Faculty Assignment Report</option>
-                        <option value="subjects">Subject Utilization Report</option>
-                        <option value="sections">Section Overview Report</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="reportPeriod" class="form-label">
-                        <i class="fas fa-calendar-range"></i>
-                        Report Period
-                    </label>
-                    <select id="reportPeriod" class="form-control">
-                        <option value="">Select Period</option>
-                        <option value="current">Current Term</option>
-                        <option value="2024-2025">Academic Year 2024-2025</option>
-                        <option value="2025-2026">Academic Year 2025-2026</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-actions">
-                <button class="btn btn-primary" onclick="generateReport()">
-                    <i class="fas fa-download"></i>
-                    Generate Report
-                </button>
-            </div>
-        </div>
-    </div>
 </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -1956,6 +2062,31 @@
     <script src="admin/assets/jss/subjects.js"></script>
 
     <script>
+    
+    // Profile Dropdown Toggle
+    function toggleProfileDropdown() {
+        const dropdown = document.getElementById('profileDropdown');
+        if (dropdown) {
+            dropdown.classList.toggle('active');
+        }
+    }
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+        const profileWrapper = document.querySelector('.user-info-wrapper');
+        const dropdown = document.getElementById('profileDropdown');
+        
+        if (profileWrapper && dropdown) {
+            if (!profileWrapper.contains(event.target)) {
+                dropdown.classList.remove('active');
+            }
+        }
+    });
+    
+    // Pagination function for students (global scope)
+    function loadStudentPage(page) {
+        window.location.href = 'admin_dashboard.php?page=' + page + '#students';
+    }
 
     // Test if form exists
     document.addEventListener('DOMContentLoaded', () => {
@@ -2031,6 +2162,191 @@
     console.log(' StudentManager NOT initialized');
     }
     }, 1000);
+    
+    // Bulk Delete Students functionality
+    const selectAllCheckbox = document.getElementById('selectAllStudents');
+    const bulkDeleteBtn = document.getElementById('bulkDeleteBtn');
+    let bulkDeleteMode = false;
+    
+    // Toggle checkbox column visibility
+    function toggleCheckboxColumn(show) {
+        // Hide/show the checkbox column (keep # column always visible)
+        const checkboxHeader = document.getElementById('selectAllCheckboxHeader');
+        const tableRows = document.querySelectorAll('tbody tr');
+        
+        if (checkboxHeader) {
+            checkboxHeader.style.display = show ? 'table-cell' : 'none';
+        }
+        
+        tableRows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            if (cells.length > 0) {
+                cells[0].style.display = show ? 'table-cell' : 'none'; // Show/hide checkbox cell
+            }
+        });
+    }
+    
+    // Initially hide checkboxes
+    toggleCheckboxColumn(false);
+    
+    if (selectAllCheckbox) {
+        selectAllCheckbox.addEventListener('change', function() {
+            const checkboxes = document.querySelectorAll('.student-checkbox');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = this.checked;
+            });
+            updateBulkDeleteButton();
+        });
+    }
+    
+    // Update button when individual checkboxes change
+    document.addEventListener('change', function(e) {
+        if (e.target.classList.contains('student-checkbox')) {
+            updateBulkDeleteButton();
+            
+            // Update select all checkbox
+            const allCheckboxes = document.querySelectorAll('.student-checkbox');
+            const checkedCheckboxes = document.querySelectorAll('.student-checkbox:checked');
+            if (selectAllCheckbox) {
+                selectAllCheckbox.checked = allCheckboxes.length === checkedCheckboxes.length && allCheckboxes.length > 0;
+            }
+        }
+    });
+    
+    function updateBulkDeleteButton() {
+        const checkedBoxes = document.querySelectorAll('.student-checkbox:checked');
+        if (bulkDeleteBtn && bulkDeleteMode) {
+            if (checkedBoxes.length > 0) {
+                bulkDeleteBtn.innerHTML = `<i class="fas fa-trash-alt"></i> Delete (${checkedBoxes.length})`;
+                bulkDeleteBtn.classList.remove('btn-danger');
+                bulkDeleteBtn.classList.add('btn-danger');
+            } else {
+                bulkDeleteBtn.innerHTML = '<i class="fas fa-times"></i> Cancel';
+                bulkDeleteBtn.classList.remove('btn-danger');
+                bulkDeleteBtn.classList.add('btn-secondary');
+            }
+        }
+    }
+    
+    if (bulkDeleteBtn) {
+        bulkDeleteBtn.addEventListener('click', async function() {
+            // If not in bulk delete mode, activate it
+            if (!bulkDeleteMode) {
+                bulkDeleteMode = true;
+                toggleCheckboxColumn(true);
+                bulkDeleteBtn.innerHTML = '<i class="fas fa-times"></i> Cancel';
+                bulkDeleteBtn.classList.remove('btn-danger');
+                bulkDeleteBtn.classList.add('btn-secondary');
+                
+                Toast.fire({
+                    icon: 'info',
+                    title: 'Select students to delete'
+                });
+                return;
+            }
+            
+            const checkedBoxes = document.querySelectorAll('.student-checkbox:checked');
+            
+            // If no students selected, exit bulk delete mode
+            if (checkedBoxes.length === 0) {
+                bulkDeleteMode = false;
+                toggleCheckboxColumn(false);
+                bulkDeleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i> Bulk Delete';
+                bulkDeleteBtn.classList.remove('btn-secondary');
+                bulkDeleteBtn.classList.add('btn-danger');
+                
+                // Uncheck select all
+                if (selectAllCheckbox) {
+                    selectAllCheckbox.checked = false;
+                }
+                
+                Toast.fire({
+                    icon: 'info',
+                    title: 'Bulk delete cancelled'
+                });
+                return;
+            }
+            
+            // Proceed with deletion
+            const studentIds = Array.from(checkedBoxes).map(cb => cb.value);
+            
+            const result = await Swal.fire({
+                title: 'Delete Students?',
+                html: `Are you sure you want to delete <strong>${studentIds.length}</strong> student${studentIds.length > 1 ? 's' : ''}?<br><br><small style="color: #dc2626;">This action cannot be undone!</small>`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, Delete',
+                cancelButtonText: 'Cancel',
+                confirmButtonColor: '#dc2626',
+                cancelButtonColor: '#6b7280'
+            });
+            
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: 'Deleting Students...',
+                    text: 'Please wait',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+                
+                try {
+                    const response = await fetch('ajax/bulk_delete_students.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ student_ids: studentIds })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Students Deleted',
+                            text: `Successfully deleted ${data.deleted} student${data.deleted > 1 ? 's' : ''}`,
+                            timer: 2000
+                        });
+                        
+                        // Exit bulk delete mode
+                        bulkDeleteMode = false;
+                        toggleCheckboxColumn(false);
+                        bulkDeleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i> Bulk Delete';
+                        bulkDeleteBtn.classList.remove('btn-secondary');
+                        bulkDeleteBtn.classList.add('btn-danger');
+                        
+                        // Uncheck select all
+                        if (selectAllCheckbox) {
+                            selectAllCheckbox.checked = false;
+                        }
+                        
+                        // Reload student table and stay on students page
+                        if (window.studentManager && window.studentManager.loadStudents) {
+                            window.studentManager.loadStudents();
+                        } else {
+                            window.location.hash = 'students';
+                            location.reload();
+                        }
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: data.message || 'Failed to delete students'
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Failed to delete students'
+                    });
+                }
+            }
+        });
+    }
     });
 
     // Test AJAX files existence
@@ -2122,27 +2438,7 @@ function processStudentCSVImport() {
         return;
     }
     
-    
-    // Show loading with better message
-    Swal.fire({
-    title: 'Processing Excel...',
-    html: `
-    <div>
-        <p>Please wait while we import your students.</p>
-        <p style="color: #666; font-size: 14px; margin-top: 10px;">
-            <i class="fas fa-info-circle"></i> 
-            This may take 1-2 minutes for large files...
-        </p>
-    </div>
-    `,
-    allowOutsideClick: false,
-    allowEscapeKey: false,
-    didOpen: () => {
-    Swal.showLoading();
-    }
-    });
-    
-    // Create FormData
+    // Create FormData first
     const formData = new FormData();
     formData.append('csv_file', file);
     
@@ -2152,6 +2448,56 @@ function processStudentCSVImport() {
         formData.append('csrf_token', csrfToken);
     }
     
+    // Show loading screen with SVG spinner
+    const loadingHtml = `
+        <div style="text-align: center; padding: 30px 20px;">
+            <svg width="80" height="80" viewBox="0 0 80 80" style="margin: 0 auto; display: block; animation: spin 2s linear infinite;">
+                <circle cx="40" cy="40" r="35" fill="none" stroke="#003082" stroke-width="4" stroke-dasharray="55 165"/>
+            </svg>
+            <p style="font-size: 16px; margin-top: 20px; margin-bottom: 10px; font-weight: 600; color: #003082;">Processing your Excel file...</p>
+            <p style="color: #6b7280; font-size: 14px;">
+                <i class="fas fa-info-circle"></i> 
+                This may take 1-2 minutes for large files
+            </p>
+            <div style="margin-top: 20px; padding: 12px; background: #f0f9ff; border-radius: 8px;">
+                <small style="color: #0369a1;">
+                    <i class="fas fa-clock"></i> Please don't close this window
+                </small>
+            </div>
+        </div>
+    `;
+    
+    Swal.fire({
+        title: '<i class="fas fa-file-upload"></i> Importing Students',
+        html: loadingHtml,
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        showConfirmButton: false,
+        didOpen: () => {
+            // Add the spin animation to the document if not already there
+            if (!document.getElementById('spin-animation')) {
+                const style = document.createElement('style');
+                style.id = 'spin-animation';
+                style.innerHTML = `
+                    @keyframes spin {
+                        from { transform: rotate(0deg); }
+                        to { transform: rotate(360deg); }
+                    }
+                    .swal2-html-container svg {
+                        animation: spin 2s linear infinite !important;
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            // Process upload after modal is shown
+            setTimeout(() => {
+                processUpload(formData);
+            }, 100);
+        }
+    });
+}
+
+function processUpload(formData) {
     // Send to server
     fetch('ajax/process_bulk_student_import.php', {
         method: 'POST',
@@ -2375,13 +2721,47 @@ if (!validExtensions.includes(fileExtension)) {
         return;
     }
     
-    // Show loading
+    // Show loading with professional animation
+    const loadingHtml = `
+        <div style="text-align: center; padding: 30px 20px;">
+            <svg width="80" height="80" viewBox="0 0 80 80" style="margin: 0 auto; display: block; animation: spin 2s linear infinite;">
+                <circle cx="40" cy="40" r="35" fill="none" stroke="#003082" stroke-width="4" stroke-dasharray="55 165"/>
+            </svg>
+            <p style="font-size: 16px; margin-top: 20px; margin-bottom: 10px; font-weight: 600; color: #003082;">Processing your Excel file...</p>
+            <p style="color: #6b7280; font-size: 14px;">
+                <i class="fas fa-info-circle"></i> 
+                This may take 1-2 minutes for large files
+            </p>
+            <div style="margin-top: 20px; padding: 12px; background: #f0f9ff; border-radius: 8px;">
+                <small style="color: #0369a1;">
+                    <i class="fas fa-clock"></i> Please don't close this window
+                </small>
+            </div>
+        </div>
+    `;
+    
     Swal.fire({
-        title: 'Processing CSV...',
-        html: 'Please wait while we import your classes.',
+        title: '<i class="fas fa-file-upload"></i> Importing Classes',
+        html: loadingHtml,
         allowOutsideClick: false,
+        allowEscapeKey: false,
+        showConfirmButton: false,
         didOpen: () => {
-            Swal.showLoading();
+            // Add the spin animation to the document if not already there
+            if (!document.getElementById('spin-animation')) {
+                const style = document.createElement('style');
+                style.id = 'spin-animation';
+                style.innerHTML = `
+                    @keyframes spin {
+                        from { transform: rotate(0deg); }
+                        to { transform: rotate(360deg); }
+                    }
+                    .swal2-html-container svg {
+                        animation: spin 2s linear infinite !important;
+                    }
+                `;
+                document.head.appendChild(style);
+            }
         }
     });
     
@@ -2709,6 +3089,97 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
 <script src="admin/assets/jss/analytics.js"></script>
+
+<!-- Filter Classes Functionality -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const viewBtn = document.querySelector('.btn-view');
+    const clearBtn = document.querySelector('.btn-clear');
+    const academicYearFilter = document.getElementById('academicYearFilter');
+    const termFilter = document.getElementById('termFilter');
+    const filteredContainer = document.getElementById('filteredClassesContainer');
+    const filteredBody = document.getElementById('filteredClassesBody');
+    
+    // View button - Filter classes
+    if (viewBtn) {
+        viewBtn.addEventListener('click', function() {
+            const academicYear = academicYearFilter.value;
+            const term = termFilter.value;
+            
+            if (!academicYear || !term) {
+                alert('Please select both Academic Year and Term');
+                return;
+            }
+            
+            // Show loading state
+            filteredBody.innerHTML = '<tr><td colspan="6" style="text-align: center;"><i class="fas fa-spinner fa-spin"></i> Loading classes...</td></tr>';
+            filteredContainer.style.display = 'block';
+            
+            // Fetch filtered classes
+            const formData = new FormData();
+            formData.append('academic_year', academicYear);
+            formData.append('term', term);
+            
+            fetch('get_filtered_classes.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.text();
+            })
+            .then(text => {
+                console.log('Response:', text); // Debug log
+                try {
+                    return JSON.parse(text);
+                } catch (e) {
+                    console.error('JSON parse error:', e, 'Response:', text);
+                    throw new Error('Invalid JSON response');
+                }
+            })
+            .then(data => {
+                console.log('Data:', data); // Debug log
+                if (data.success && data.classes && data.classes.length > 0) {
+                    let html = '';
+                    data.classes.forEach(cls => {
+                        html += `
+                            <tr>
+                                <td><strong>${cls.subject_code}</strong></td>
+                                <td>${cls.subject_name}</td>
+                                <td><span class="badge badge-info">${cls.section}</span></td>
+                                <td>${cls.schedule || 'N/A'}</td>
+                                <td>${cls.room || 'N/A'}</td>
+                                <td>${cls.faculty_name || 'TBA'}</td>
+                            </tr>
+                        `;
+                    });
+                    filteredBody.innerHTML = html;
+                } else if (data.success && data.classes && data.classes.length === 0) {
+                    filteredBody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">No classes found for the selected filters</td></tr>';
+                } else {
+                    filteredBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--danger);">${data.message || 'Error loading classes'}</td></tr>`;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                filteredBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--danger);">Error: ${error.message}</td></tr>`;
+            });
+        });
+    }
+    
+    // Clear button - Reset filters
+    if (clearBtn) {
+        clearBtn.addEventListener('click', function() {
+            academicYearFilter.value = '';
+            termFilter.value = '';
+            filteredContainer.style.display = 'none';
+            filteredBody.innerHTML = '';
+        });
+    }
+});
+</script>
 
 <!-- Encryption/Decryption Functions -->
 <script>

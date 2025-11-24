@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>COA Format Test</title>
+<style>
+body { 
+    margin: 20px;
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+}
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+h1 { color: #333; }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>COA Format Test Preview</h1>
+    <p>The COA format has been updated to match the official document format exactly. Test by:</p>
+    <ol>
+        <li>Navigate to Faculty Dashboard</li>
+        <li>Click "Generate COA" for test class 24_T2_CCPRGG1L_INF222</li>
+        <li>Verify the modal displays with proper formatting</li>
+        <li>Columns should show: Course Outcome | Assessment | Performance Target | Met/Total/% | Evaluation | Recommendation</li>
+    </ol>
+    <h2>Format Changes Applied:</h2>
+    <ul>
+        <li>✓ Header table matches official format (Term, Course Code, Title, Instructor, Description)</li>
+        <li>✓ Assessment table with 8 columns matching document structure</li>
+        <li>✓ Gray header row with column labels</li>
+        <li>✓ Sub-header row showing Met/Total/% subdivisions</li>
+        <li>✓ Data rows with proper alignment and formatting</li>
+        <li>✓ Evaluation logic updated (Passed, Partially Met, Not Met)</li>
+        <li>✓ Recommendations matching official document text</li>
+    </ul>
+    <h2>Technical Details:</h2>
+    <ul>
+        <li>File: faculty/ajax/generate_coa_html.php (updated)</li>
+        <li>Modal: faculty/assets/js/car_management.js (using innerHTML display)</li>
+        <li>Data source: 35 performance records from database</li>
+        <li>Format: A4 Portrait (210×297mm)</li>
+    </ul>
+</div>
+</body>
+</html>

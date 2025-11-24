@@ -18,9 +18,9 @@ async function generateCarPdf(classCode, className = '') {
         const formData = new FormData();
         formData.append('class_code', classCode);
 
-        console.log('Fetching from: /faculty/ajax/download_car_pdf.php');
+        console.log('Fetching from: ' + (window.APP?.apiPath || '/faculty/ajax/') + 'download_car_pdf.php');
         
-        const response = await fetch('/faculty/ajax/download_car_pdf.php', {
+        const response = await fetch(`${window.APP?.apiPath || '/faculty/ajax/'}download_car_pdf.php`, {
             method: 'POST',
             body: formData,
             timeout: 15000
@@ -136,7 +136,7 @@ async function generateCarPdfFast(classCode) {
         const formData = new FormData();
         formData.append('class_code', classCode);
 
-        const response = await fetch('/faculty/ajax/download_car_pdf.php', {
+        const response = await fetch(`${window.APP?.apiPath || '/faculty/ajax/'}download_car_pdf.php`, {
             method: 'POST',
             body: formData
         });
@@ -223,7 +223,7 @@ async function previewCarPdf(classCode) {
         const formData = new FormData();
         formData.append('class_code', classCode);
 
-        const response = await fetch('/faculty/ajax/download_car_pdf.php', {
+        const response = await fetch(`${window.APP?.apiPath || '/faculty/ajax/'}download_car_pdf.php`, {
             method: 'POST',
             body: formData
         });

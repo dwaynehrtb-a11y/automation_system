@@ -159,7 +159,7 @@ const GradeAnalytics = {
         weightsFd.append('class_code', classCode);
         weightsFd.append('csrf_token', window.csrfToken);
 
-        const weightsRes = await fetch('/faculty/ajax/manage_grading_components.php', {
+        const weightsRes = await fetch((window.APP?.apiPath || '/faculty/ajax/') + 'manage_grading_components.php', {
             method: 'POST',
             body: weightsFd
         });
@@ -201,7 +201,7 @@ const GradeAnalytics = {
         fd.append('term_type', termType);
         fd.append('csrf_token', window.csrfToken);
 
-        const res = await fetch('/faculty/ajax/manage_grading_components.php', {
+        const res = await fetch((window.APP?.apiPath || '/faculty/ajax/') + 'manage_grading_components.php', {
             method: 'POST',
             body: fd
         });

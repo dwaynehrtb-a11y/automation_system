@@ -22041,3 +22041,687 @@ Stack trace:
 [22-Nov-2025 20:46:00 Europe/Berlin] Finals calculation: calc_finals_pct=50, finals_grade=0
 [22-Nov-2025 20:46:00 Europe/Berlin] Term calculation: term_pct=46, calc_term_grade=0
 [22-Nov-2025 20:46:00 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":40,"finals_grade":0,"finals_percentage":50,"term_percentage":46,"term_grade":0,"grade_status":"incomplete","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 10:06:10 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 10:06:10 ===
+[23-Nov-2025 10:06:10 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 10:06:10 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763888770398"}
+[23-Nov-2025 10:06:10 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 10:06:10 Europe/Berlin] Role: student
+[23-Nov-2025 10:06:10 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 10:06:10 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 10:06:10 Europe/Berlin] Grade calculation: calc_midterm_pct=36.33, midterm_grade=0
+[23-Nov-2025 10:06:10 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 10:06:10 Europe/Berlin] Term calculation: term_pct=67.93, calc_term_grade=1.5
+[23-Nov-2025 10:06:10 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":36.33,"finals_grade":3.5,"finals_percentage":89,"term_percentage":67.93,"term_grade":1.5,"grade_status":"incomplete","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 10:06:20 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 10:06:20 ===
+[23-Nov-2025 10:06:20 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 10:06:20 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763888780460"}
+[23-Nov-2025 10:06:20 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 10:06:20 Europe/Berlin] Role: student
+[23-Nov-2025 10:06:20 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 10:06:20 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 10:06:20 Europe/Berlin] Grade calculation: calc_midterm_pct=36.33, midterm_grade=0
+[23-Nov-2025 10:06:20 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 10:06:20 Europe/Berlin] Term calculation: term_pct=67.93, calc_term_grade=1.5
+[23-Nov-2025 10:06:20 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":36.33,"finals_grade":3.5,"finals_percentage":89,"term_percentage":67.93,"term_grade":1.5,"grade_status":"incomplete","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 10:06:30 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 10:06:30 ===
+[23-Nov-2025 10:06:30 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 10:06:30 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763888790405"}
+[23-Nov-2025 10:06:30 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 10:06:30 Europe/Berlin] Role: student
+[23-Nov-2025 10:06:30 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 10:06:30 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 10:06:30 Europe/Berlin] Grade calculation: calc_midterm_pct=36.33, midterm_grade=0
+[23-Nov-2025 10:06:30 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 10:06:30 Europe/Berlin] Term calculation: term_pct=67.93, calc_term_grade=1.5
+[23-Nov-2025 10:06:30 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":36.33,"finals_grade":3.5,"finals_percentage":89,"term_percentage":67.93,"term_grade":1.5,"grade_status":"incomplete","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 10:06:40 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 10:06:40 ===
+[23-Nov-2025 10:06:40 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 10:06:40 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763888800464"}
+[23-Nov-2025 10:06:40 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 10:06:40 Europe/Berlin] Role: student
+[23-Nov-2025 10:06:40 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 10:06:40 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 10:06:40 Europe/Berlin] Grade calculation: calc_midterm_pct=36.33, midterm_grade=0
+[23-Nov-2025 10:06:40 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 10:06:40 Europe/Berlin] Term calculation: term_pct=67.93, calc_term_grade=1.5
+[23-Nov-2025 10:06:40 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":36.33,"finals_grade":3.5,"finals_percentage":89,"term_percentage":67.93,"term_grade":1.5,"grade_status":"incomplete","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 10:06:50 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 10:06:50 ===
+[23-Nov-2025 10:06:50 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 10:06:50 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763888810464"}
+[23-Nov-2025 10:06:50 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 10:06:50 Europe/Berlin] Role: student
+[23-Nov-2025 10:06:50 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 10:06:50 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 10:06:50 Europe/Berlin] Grade calculation: calc_midterm_pct=43.83, midterm_grade=0
+[23-Nov-2025 10:06:50 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 10:06:50 Europe/Berlin] Term calculation: term_pct=70.93, calc_term_grade=1.5
+[23-Nov-2025 10:06:50 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":43.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":70.93,"term_grade":1.5,"grade_status":"incomplete","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 10:07:00 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 10:07:00 ===
+[23-Nov-2025 10:07:00 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 10:07:00 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763888820472"}
+[23-Nov-2025 10:07:00 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 10:07:00 Europe/Berlin] Role: student
+[23-Nov-2025 10:07:00 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 10:07:00 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 10:07:00 Europe/Berlin] Grade calculation: calc_midterm_pct=62.83, midterm_grade=1
+[23-Nov-2025 10:07:00 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 10:07:00 Europe/Berlin] Term calculation: term_pct=78.53, calc_term_grade=2.5
+[23-Nov-2025 10:07:00 Europe/Berlin] Success: {"success":true,"midterm_grade":1,"midterm_percentage":62.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":78.53,"term_grade":2.5,"grade_status":"incomplete","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 10:07:05 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 10:07:05 ===
+[23-Nov-2025 10:07:05 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 10:07:05 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763888825143"}
+[23-Nov-2025 10:07:05 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 10:07:05 Europe/Berlin] Role: student
+[23-Nov-2025 10:07:05 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 10:07:05 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 10:07:05 Europe/Berlin] Grade calculation: calc_midterm_pct=62.83, midterm_grade=1
+[23-Nov-2025 10:07:05 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 10:07:05 Europe/Berlin] Term calculation: term_pct=78.53, calc_term_grade=2.5
+[23-Nov-2025 10:07:05 Europe/Berlin] Success: {"success":true,"midterm_grade":1,"midterm_percentage":62.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":78.53,"term_grade":2.5,"grade_status":"incomplete","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 10:07:15 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 10:07:15 ===
+[23-Nov-2025 10:07:15 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 10:07:15 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763888835474"}
+[23-Nov-2025 10:07:15 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 10:07:15 Europe/Berlin] Role: student
+[23-Nov-2025 10:07:15 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 10:07:15 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 10:07:15 Europe/Berlin] Grade calculation: calc_midterm_pct=62.83, midterm_grade=1
+[23-Nov-2025 10:07:15 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 10:07:15 Europe/Berlin] Term calculation: term_pct=78.53, calc_term_grade=2.5
+[23-Nov-2025 10:07:15 Europe/Berlin] Success: {"success":true,"midterm_grade":1,"midterm_percentage":62.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":78.53,"term_grade":2.5,"grade_status":"incomplete","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 10:07:25 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 10:07:25 ===
+[23-Nov-2025 10:07:25 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 10:07:25 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763888845145"}
+[23-Nov-2025 10:07:25 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 10:07:25 Europe/Berlin] Role: student
+[23-Nov-2025 10:07:25 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 10:07:25 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 10:07:25 Europe/Berlin] Grade calculation: calc_midterm_pct=62.83, midterm_grade=1
+[23-Nov-2025 10:07:25 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 10:07:25 Europe/Berlin] Term calculation: term_pct=78.53, calc_term_grade=2.5
+[23-Nov-2025 10:07:25 Europe/Berlin] Success: {"success":true,"midterm_grade":1,"midterm_percentage":62.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":78.53,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 10:07:26 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 10:07:26 ===
+[23-Nov-2025 10:07:26 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 10:07:26 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763888846798"}
+[23-Nov-2025 10:07:26 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 10:07:26 Europe/Berlin] Role: student
+[23-Nov-2025 10:07:26 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 10:07:26 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 10:07:26 Europe/Berlin] Grade calculation: calc_midterm_pct=62.83, midterm_grade=1
+[23-Nov-2025 10:07:26 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 10:07:26 Europe/Berlin] Term calculation: term_pct=78.53, calc_term_grade=2.5
+[23-Nov-2025 10:07:26 Europe/Berlin] Success: {"success":true,"midterm_grade":1,"midterm_percentage":62.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":78.53,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 10:07:32 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 10:07:32 ===
+[23-Nov-2025 10:07:32 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 10:07:32 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763888852227"}
+[23-Nov-2025 10:07:32 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 10:07:32 Europe/Berlin] Role: student
+[23-Nov-2025 10:07:32 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 10:07:32 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 10:07:32 Europe/Berlin] Grade calculation: calc_midterm_pct=62.83, midterm_grade=1
+[23-Nov-2025 10:07:32 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 10:07:32 Europe/Berlin] Term calculation: term_pct=78.53, calc_term_grade=2.5
+[23-Nov-2025 10:07:32 Europe/Berlin] Success: {"success":true,"midterm_grade":1,"midterm_percentage":62.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":78.53,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 10:07:42 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 10:07:42 ===
+[23-Nov-2025 10:07:42 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 10:07:42 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763888862229"}
+[23-Nov-2025 10:07:42 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 10:07:42 Europe/Berlin] Role: student
+[23-Nov-2025 10:07:42 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 10:07:42 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 10:07:42 Europe/Berlin] Grade calculation: calc_midterm_pct=62.83, midterm_grade=1
+[23-Nov-2025 10:07:42 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 10:07:42 Europe/Berlin] Term calculation: term_pct=78.53, calc_term_grade=2.5
+[23-Nov-2025 10:07:42 Europe/Berlin] Success: {"success":true,"midterm_grade":1,"midterm_percentage":62.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":78.53,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 10:07:52 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 10:07:52 ===
+[23-Nov-2025 10:07:52 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 10:07:52 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763888872474"}
+[23-Nov-2025 10:07:52 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 10:07:52 Europe/Berlin] Role: student
+[23-Nov-2025 10:07:52 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 10:07:52 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 10:07:52 Europe/Berlin] Grade calculation: calc_midterm_pct=62.83, midterm_grade=1
+[23-Nov-2025 10:07:52 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 10:07:52 Europe/Berlin] Term calculation: term_pct=78.53, calc_term_grade=2.5
+[23-Nov-2025 10:07:52 Europe/Berlin] Success: {"success":true,"midterm_grade":1,"midterm_percentage":62.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":78.53,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 10:08:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 10:08:02 ===
+[23-Nov-2025 10:08:02 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 10:08:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763888882468"}
+[23-Nov-2025 10:08:02 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 10:08:02 Europe/Berlin] Role: student
+[23-Nov-2025 10:08:02 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 10:08:02 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 10:08:02 Europe/Berlin] Grade calculation: calc_midterm_pct=62.83, midterm_grade=1
+[23-Nov-2025 10:08:02 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 10:08:02 Europe/Berlin] Term calculation: term_pct=78.53, calc_term_grade=2.5
+[23-Nov-2025 10:08:02 Europe/Berlin] Success: {"success":true,"midterm_grade":1,"midterm_percentage":62.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":78.53,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 10:08:12 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 10:08:12 ===
+[23-Nov-2025 10:08:12 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 10:08:12 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763888892466"}
+[23-Nov-2025 10:08:12 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 10:08:12 Europe/Berlin] Role: student
+[23-Nov-2025 10:08:12 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 10:08:12 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 10:08:12 Europe/Berlin] Grade calculation: calc_midterm_pct=62.83, midterm_grade=1
+[23-Nov-2025 10:08:12 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 10:08:12 Europe/Berlin] Term calculation: term_pct=78.53, calc_term_grade=2.5
+[23-Nov-2025 10:08:12 Europe/Berlin] Success: {"success":true,"midterm_grade":1,"midterm_percentage":62.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":78.53,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 10:08:22 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 10:08:22 ===
+[23-Nov-2025 10:08:22 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 10:08:22 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763888902472"}
+[23-Nov-2025 10:08:22 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 10:08:22 Europe/Berlin] Role: student
+[23-Nov-2025 10:08:22 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 10:08:22 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 10:08:22 Europe/Berlin] Grade calculation: calc_midterm_pct=62.83, midterm_grade=1
+[23-Nov-2025 10:08:22 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 10:08:22 Europe/Berlin] Term calculation: term_pct=78.53, calc_term_grade=2.5
+[23-Nov-2025 10:08:22 Europe/Berlin] Success: {"success":true,"midterm_grade":1,"midterm_percentage":62.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":78.53,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 10:08:32 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 10:08:32 ===
+[23-Nov-2025 10:08:32 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 10:08:32 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763888912460"}
+[23-Nov-2025 10:08:32 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 10:08:32 Europe/Berlin] Role: student
+[23-Nov-2025 10:08:32 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 10:08:32 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 10:08:32 Europe/Berlin] Grade calculation: calc_midterm_pct=62.83, midterm_grade=1
+[23-Nov-2025 10:08:32 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 10:08:32 Europe/Berlin] Term calculation: term_pct=78.53, calc_term_grade=2.5
+[23-Nov-2025 10:08:32 Europe/Berlin] Success: {"success":true,"midterm_grade":1,"midterm_percentage":62.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":78.53,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 10:08:42 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 10:08:42 ===
+[23-Nov-2025 10:08:42 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 10:08:42 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763888922460"}
+[23-Nov-2025 10:08:42 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 10:08:42 Europe/Berlin] Role: student
+[23-Nov-2025 10:08:42 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 10:08:42 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 10:08:42 Europe/Berlin] Grade calculation: calc_midterm_pct=62.83, midterm_grade=1
+[23-Nov-2025 10:08:42 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 10:08:42 Europe/Berlin] Term calculation: term_pct=78.53, calc_term_grade=2.5
+[23-Nov-2025 10:08:42 Europe/Berlin] Success: {"success":true,"midterm_grade":1,"midterm_percentage":62.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":78.53,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 10:09:08 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 10:09:08 ===
+[23-Nov-2025 10:09:08 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 10:09:08 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763888948463"}
+[23-Nov-2025 10:09:08 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 10:09:08 Europe/Berlin] Role: student
+[23-Nov-2025 10:09:08 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 10:09:08 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 10:09:08 Europe/Berlin] Grade calculation: calc_midterm_pct=62.83, midterm_grade=1
+[23-Nov-2025 10:09:08 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 10:09:08 Europe/Berlin] Term calculation: term_pct=78.53, calc_term_grade=2.5
+[23-Nov-2025 10:09:08 Europe/Berlin] Success: {"success":true,"midterm_grade":1,"midterm_percentage":62.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":78.53,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 10:10:08 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 10:10:08 ===
+[23-Nov-2025 10:10:08 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 10:10:08 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763889008465"}
+[23-Nov-2025 10:10:08 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 10:10:08 Europe/Berlin] Role: student
+[23-Nov-2025 10:10:08 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 10:10:08 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 10:10:08 Europe/Berlin] Grade calculation: calc_midterm_pct=62.83, midterm_grade=1
+[23-Nov-2025 10:10:08 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 10:10:08 Europe/Berlin] Term calculation: term_pct=78.53, calc_term_grade=2.5
+[23-Nov-2025 10:10:08 Europe/Berlin] Success: {"success":true,"midterm_grade":1,"midterm_percentage":62.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":78.53,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 12:46:26 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 12:46:26 ===
+[23-Nov-2025 12:46:26 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 12:46:26 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763898386007"}
+[23-Nov-2025 12:46:26 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 12:46:26 Europe/Berlin] Role: student
+[23-Nov-2025 12:46:26 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 12:46:26 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 12:46:26 Europe/Berlin] Grade calculation: calc_midterm_pct=66.83, midterm_grade=1.5
+[23-Nov-2025 12:46:26 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 12:46:26 Europe/Berlin] Term calculation: term_pct=80.13, calc_term_grade=2.5
+[23-Nov-2025 12:46:26 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"midterm_percentage":66.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":80.13,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 12:46:32 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 12:46:32 ===
+[23-Nov-2025 12:46:32 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 12:46:32 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763898392229"}
+[23-Nov-2025 12:46:32 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 12:46:32 Europe/Berlin] Role: student
+[23-Nov-2025 12:46:32 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 12:46:32 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 12:46:32 Europe/Berlin] Grade calculation: calc_midterm_pct=66.83, midterm_grade=1.5
+[23-Nov-2025 12:46:32 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 12:46:32 Europe/Berlin] Term calculation: term_pct=80.13, calc_term_grade=2.5
+[23-Nov-2025 12:46:32 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"midterm_percentage":66.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":80.13,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 12:46:42 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 12:46:42 ===
+[23-Nov-2025 12:46:42 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 12:46:42 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763898402465"}
+[23-Nov-2025 12:46:42 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 12:46:42 Europe/Berlin] Role: student
+[23-Nov-2025 12:46:42 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 12:46:42 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 12:46:42 Europe/Berlin] Grade calculation: calc_midterm_pct=66.83, midterm_grade=1.5
+[23-Nov-2025 12:46:42 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 12:46:42 Europe/Berlin] Term calculation: term_pct=80.13, calc_term_grade=2.5
+[23-Nov-2025 12:46:42 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"midterm_percentage":66.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":80.13,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 12:46:52 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 12:46:52 ===
+[23-Nov-2025 12:46:52 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 12:46:52 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763898412459"}
+[23-Nov-2025 12:46:52 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 12:46:52 Europe/Berlin] Role: student
+[23-Nov-2025 12:46:52 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 12:46:52 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 12:46:52 Europe/Berlin] Grade calculation: calc_midterm_pct=66.83, midterm_grade=1.5
+[23-Nov-2025 12:46:52 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 12:46:52 Europe/Berlin] Term calculation: term_pct=80.13, calc_term_grade=2.5
+[23-Nov-2025 12:46:52 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"midterm_percentage":66.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":80.13,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 12:47:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 12:47:02 ===
+[23-Nov-2025 12:47:02 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 12:47:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763898422470"}
+[23-Nov-2025 12:47:02 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 12:47:02 Europe/Berlin] Role: student
+[23-Nov-2025 12:47:02 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 12:47:02 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 12:47:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"finals_grade":0,"term_grade":0,"term_percentage":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades have not been released yet"}
+[23-Nov-2025 12:47:12 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 12:47:12 ===
+[23-Nov-2025 12:47:12 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 12:47:12 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763898432233"}
+[23-Nov-2025 12:47:12 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 12:47:12 Europe/Berlin] Role: student
+[23-Nov-2025 12:47:12 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 12:47:12 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 12:47:12 Europe/Berlin] Grade calculation: calc_midterm_pct=66.83, midterm_grade=1.5
+[23-Nov-2025 12:47:12 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 12:47:12 Europe/Berlin] Term calculation: term_pct=80.13, calc_term_grade=2.5
+[23-Nov-2025 12:47:12 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"midterm_percentage":66.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":80.13,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 12:47:22 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 12:47:22 ===
+[23-Nov-2025 12:47:22 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 12:47:22 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763898442232"}
+[23-Nov-2025 12:47:22 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 12:47:22 Europe/Berlin] Role: student
+[23-Nov-2025 12:47:22 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 12:47:22 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 12:47:22 Europe/Berlin] Grade calculation: calc_midterm_pct=66.83, midterm_grade=1.5
+[23-Nov-2025 12:47:22 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 12:47:22 Europe/Berlin] Term calculation: term_pct=80.13, calc_term_grade=2.5
+[23-Nov-2025 12:47:22 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"midterm_percentage":66.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":80.13,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 12:47:32 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 12:47:32 ===
+[23-Nov-2025 12:47:32 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 12:47:32 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763898452466"}
+[23-Nov-2025 12:47:32 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 12:47:32 Europe/Berlin] Role: student
+[23-Nov-2025 12:47:32 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 12:47:32 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 12:47:32 Europe/Berlin] Grade calculation: calc_midterm_pct=66.83, midterm_grade=1.5
+[23-Nov-2025 12:47:32 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 12:47:32 Europe/Berlin] Term calculation: term_pct=80.13, calc_term_grade=2.5
+[23-Nov-2025 12:47:32 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"midterm_percentage":66.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":80.13,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 12:47:42 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 12:47:42 ===
+[23-Nov-2025 12:47:42 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 12:47:42 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763898462474"}
+[23-Nov-2025 12:47:42 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 12:47:42 Europe/Berlin] Role: student
+[23-Nov-2025 12:47:42 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 12:47:42 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 12:47:42 Europe/Berlin] Grade calculation: calc_midterm_pct=66.83, midterm_grade=1.5
+[23-Nov-2025 12:47:42 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 12:47:42 Europe/Berlin] Term calculation: term_pct=80.13, calc_term_grade=2.5
+[23-Nov-2025 12:47:42 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"midterm_percentage":66.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":80.13,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 12:47:52 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 12:47:52 ===
+[23-Nov-2025 12:47:52 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 12:47:52 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763898472459"}
+[23-Nov-2025 12:47:52 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 12:47:52 Europe/Berlin] Role: student
+[23-Nov-2025 12:47:52 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 12:47:52 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 12:47:52 Europe/Berlin] Grade calculation: calc_midterm_pct=66.83, midterm_grade=1.5
+[23-Nov-2025 12:47:52 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 12:47:52 Europe/Berlin] Term calculation: term_pct=80.13, calc_term_grade=2.5
+[23-Nov-2025 12:47:52 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"midterm_percentage":66.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":80.13,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 12:48:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 12:48:02 ===
+[23-Nov-2025 12:48:02 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 12:48:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763898482467"}
+[23-Nov-2025 12:48:02 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 12:48:02 Europe/Berlin] Role: student
+[23-Nov-2025 12:48:02 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 12:48:02 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 12:48:02 Europe/Berlin] Grade calculation: calc_midterm_pct=66.83, midterm_grade=1.5
+[23-Nov-2025 12:48:02 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 12:48:02 Europe/Berlin] Term calculation: term_pct=80.13, calc_term_grade=2.5
+[23-Nov-2025 12:48:02 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"midterm_percentage":66.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":80.13,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 12:48:12 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 12:48:12 ===
+[23-Nov-2025 12:48:12 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 12:48:12 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763898492461"}
+[23-Nov-2025 12:48:12 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 12:48:12 Europe/Berlin] Role: student
+[23-Nov-2025 12:48:12 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 12:48:12 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 12:48:12 Europe/Berlin] Grade calculation: calc_midterm_pct=66.83, midterm_grade=1.5
+[23-Nov-2025 12:48:12 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 12:48:12 Europe/Berlin] Term calculation: term_pct=80.13, calc_term_grade=2.5
+[23-Nov-2025 12:48:12 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"midterm_percentage":66.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":80.13,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 12:48:22 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 12:48:22 ===
+[23-Nov-2025 12:48:22 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 12:48:22 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763898502472"}
+[23-Nov-2025 12:48:22 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 12:48:22 Europe/Berlin] Role: student
+[23-Nov-2025 12:48:22 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 12:48:22 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 12:48:22 Europe/Berlin] Grade calculation: calc_midterm_pct=66.83, midterm_grade=1.5
+[23-Nov-2025 12:48:22 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 12:48:22 Europe/Berlin] Term calculation: term_pct=80.13, calc_term_grade=2.5
+[23-Nov-2025 12:48:22 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"midterm_percentage":66.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":80.13,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 12:48:32 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 12:48:32 ===
+[23-Nov-2025 12:48:32 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 12:48:32 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763898512465"}
+[23-Nov-2025 12:48:32 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 12:48:32 Europe/Berlin] Role: student
+[23-Nov-2025 12:48:32 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 12:48:32 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 12:48:32 Europe/Berlin] Grade calculation: calc_midterm_pct=66.83, midterm_grade=1.5
+[23-Nov-2025 12:48:32 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 12:48:32 Europe/Berlin] Term calculation: term_pct=80.13, calc_term_grade=2.5
+[23-Nov-2025 12:48:32 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"midterm_percentage":66.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":80.13,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 12:48:42 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 12:48:42 ===
+[23-Nov-2025 12:48:42 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 12:48:42 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763898522472"}
+[23-Nov-2025 12:48:42 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 12:48:42 Europe/Berlin] Role: student
+[23-Nov-2025 12:48:42 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 12:48:42 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 12:48:42 Europe/Berlin] Grade calculation: calc_midterm_pct=66.83, midterm_grade=1.5
+[23-Nov-2025 12:48:42 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 12:48:42 Europe/Berlin] Term calculation: term_pct=80.13, calc_term_grade=2.5
+[23-Nov-2025 12:48:42 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"midterm_percentage":66.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":80.13,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 12:48:52 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 12:48:52 ===
+[23-Nov-2025 12:48:52 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 12:48:52 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763898532473"}
+[23-Nov-2025 12:48:52 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 12:48:52 Europe/Berlin] Role: student
+[23-Nov-2025 12:48:52 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 12:48:52 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 12:48:52 Europe/Berlin] Grade calculation: calc_midterm_pct=66.83, midterm_grade=1.5
+[23-Nov-2025 12:48:52 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 12:48:52 Europe/Berlin] Term calculation: term_pct=80.13, calc_term_grade=2.5
+[23-Nov-2025 12:48:52 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"midterm_percentage":66.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":80.13,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 12:49:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 12:49:02 ===
+[23-Nov-2025 12:49:02 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 12:49:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763898542465"}
+[23-Nov-2025 12:49:02 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 12:49:02 Europe/Berlin] Role: student
+[23-Nov-2025 12:49:02 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 12:49:02 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 12:49:02 Europe/Berlin] Grade calculation: calc_midterm_pct=66.83, midterm_grade=1.5
+[23-Nov-2025 12:49:02 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 12:49:02 Europe/Berlin] Term calculation: term_pct=80.13, calc_term_grade=2.5
+[23-Nov-2025 12:49:02 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"midterm_percentage":66.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":80.13,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 12:49:12 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 12:49:12 ===
+[23-Nov-2025 12:49:12 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 12:49:12 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763898552462"}
+[23-Nov-2025 12:49:12 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 12:49:12 Europe/Berlin] Role: student
+[23-Nov-2025 12:49:12 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 12:49:12 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 12:49:12 Europe/Berlin] Grade calculation: calc_midterm_pct=66.83, midterm_grade=1.5
+[23-Nov-2025 12:49:12 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 12:49:12 Europe/Berlin] Term calculation: term_pct=80.13, calc_term_grade=2.5
+[23-Nov-2025 12:49:12 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"midterm_percentage":66.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":80.13,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 12:49:22 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 12:49:22 ===
+[23-Nov-2025 12:49:22 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 12:49:22 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763898562469"}
+[23-Nov-2025 12:49:22 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 12:49:22 Europe/Berlin] Role: student
+[23-Nov-2025 12:49:22 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 12:49:22 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 12:49:22 Europe/Berlin] Grade calculation: calc_midterm_pct=66.83, midterm_grade=1.5
+[23-Nov-2025 12:49:22 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 12:49:22 Europe/Berlin] Term calculation: term_pct=80.13, calc_term_grade=2.5
+[23-Nov-2025 12:49:22 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"midterm_percentage":66.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":80.13,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 12:49:32 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 12:49:32 ===
+[23-Nov-2025 12:49:32 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 12:49:32 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763898572228"}
+[23-Nov-2025 12:49:32 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 12:49:32 Europe/Berlin] Role: student
+[23-Nov-2025 12:49:32 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 12:49:32 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 12:49:32 Europe/Berlin] Grade calculation: calc_midterm_pct=66.83, midterm_grade=1.5
+[23-Nov-2025 12:49:32 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 12:49:32 Europe/Berlin] Term calculation: term_pct=80.13, calc_term_grade=2.5
+[23-Nov-2025 12:49:32 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"midterm_percentage":66.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":80.13,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 12:49:33 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 12:49:33 ===
+[23-Nov-2025 12:49:33 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 12:49:33 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763898573231"}
+[23-Nov-2025 12:49:33 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 12:49:33 Europe/Berlin] Role: student
+[23-Nov-2025 12:49:33 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 12:49:33 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 12:49:33 Europe/Berlin] Grade calculation: calc_midterm_pct=66.83, midterm_grade=1.5
+[23-Nov-2025 12:49:33 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 12:49:33 Europe/Berlin] Term calculation: term_pct=80.13, calc_term_grade=2.5
+[23-Nov-2025 12:49:33 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"midterm_percentage":66.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":80.13,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 12:49:43 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 12:49:43 ===
+[23-Nov-2025 12:49:43 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 12:49:43 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763898583474"}
+[23-Nov-2025 12:49:43 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 12:49:43 Europe/Berlin] Role: student
+[23-Nov-2025 12:49:43 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 12:49:43 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 12:49:43 Europe/Berlin] Grade calculation: calc_midterm_pct=66.83, midterm_grade=1.5
+[23-Nov-2025 12:49:43 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 12:49:43 Europe/Berlin] Term calculation: term_pct=80.13, calc_term_grade=2.5
+[23-Nov-2025 12:49:43 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"midterm_percentage":66.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":80.13,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 12:49:53 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 12:49:53 ===
+[23-Nov-2025 12:49:53 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 12:49:53 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763898593463"}
+[23-Nov-2025 12:49:53 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 12:49:53 Europe/Berlin] Role: student
+[23-Nov-2025 12:49:53 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 12:49:53 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 12:49:53 Europe/Berlin] Grade calculation: calc_midterm_pct=66.83, midterm_grade=1.5
+[23-Nov-2025 12:49:53 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 12:49:53 Europe/Berlin] Term calculation: term_pct=80.13, calc_term_grade=2.5
+[23-Nov-2025 12:49:53 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"midterm_percentage":66.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":80.13,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 12:50:03 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 12:50:03 ===
+[23-Nov-2025 12:50:03 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 12:50:03 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763898603472"}
+[23-Nov-2025 12:50:03 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 12:50:03 Europe/Berlin] Role: student
+[23-Nov-2025 12:50:03 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 12:50:03 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 12:50:03 Europe/Berlin] Grade calculation: calc_midterm_pct=66.83, midterm_grade=1.5
+[23-Nov-2025 12:50:03 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 12:50:03 Europe/Berlin] Term calculation: term_pct=80.13, calc_term_grade=2.5
+[23-Nov-2025 12:50:03 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"midterm_percentage":66.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":80.13,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 12:50:13 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 12:50:13 ===
+[23-Nov-2025 12:50:13 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 12:50:13 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763898613470"}
+[23-Nov-2025 12:50:13 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 12:50:13 Europe/Berlin] Role: student
+[23-Nov-2025 12:50:13 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 12:50:13 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 12:50:13 Europe/Berlin] Grade calculation: calc_midterm_pct=66.83, midterm_grade=1.5
+[23-Nov-2025 12:50:13 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 12:50:13 Europe/Berlin] Term calculation: term_pct=80.13, calc_term_grade=2.5
+[23-Nov-2025 12:50:13 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"midterm_percentage":66.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":80.13,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 12:50:23 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 12:50:23 ===
+[23-Nov-2025 12:50:23 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 12:50:23 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763898623465"}
+[23-Nov-2025 12:50:23 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 12:50:23 Europe/Berlin] Role: student
+[23-Nov-2025 12:50:23 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 12:50:23 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 12:50:23 Europe/Berlin] Grade calculation: calc_midterm_pct=66.83, midterm_grade=1.5
+[23-Nov-2025 12:50:23 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 12:50:23 Europe/Berlin] Term calculation: term_pct=80.13, calc_term_grade=2.5
+[23-Nov-2025 12:50:23 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"midterm_percentage":66.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":80.13,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 12:50:33 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 12:50:33 ===
+[23-Nov-2025 12:50:33 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 12:50:33 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763898633471"}
+[23-Nov-2025 12:50:33 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 12:50:33 Europe/Berlin] Role: student
+[23-Nov-2025 12:50:33 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 12:50:33 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 12:50:33 Europe/Berlin] Grade calculation: calc_midterm_pct=66.83, midterm_grade=1.5
+[23-Nov-2025 12:50:33 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 12:50:33 Europe/Berlin] Term calculation: term_pct=80.13, calc_term_grade=2.5
+[23-Nov-2025 12:50:33 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"midterm_percentage":66.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":80.13,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 12:50:43 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 12:50:43 ===
+[23-Nov-2025 12:50:43 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 12:50:43 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763898643471"}
+[23-Nov-2025 12:50:43 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 12:50:43 Europe/Berlin] Role: student
+[23-Nov-2025 12:50:43 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 12:50:43 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 12:50:43 Europe/Berlin] Grade calculation: calc_midterm_pct=66.83, midterm_grade=1.5
+[23-Nov-2025 12:50:43 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 12:50:43 Europe/Berlin] Term calculation: term_pct=80.13, calc_term_grade=2.5
+[23-Nov-2025 12:50:43 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"midterm_percentage":66.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":80.13,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 12:51:08 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 12:51:08 ===
+[23-Nov-2025 12:51:08 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 12:51:08 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763898668475"}
+[23-Nov-2025 12:51:08 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 12:51:08 Europe/Berlin] Role: student
+[23-Nov-2025 12:51:08 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 12:51:08 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 12:51:08 Europe/Berlin] Grade calculation: calc_midterm_pct=66.83, midterm_grade=1.5
+[23-Nov-2025 12:51:08 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 12:51:08 Europe/Berlin] Term calculation: term_pct=80.13, calc_term_grade=2.5
+[23-Nov-2025 12:51:08 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"midterm_percentage":66.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":80.13,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 12:52:08 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 12:52:08 ===
+[23-Nov-2025 12:52:08 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 12:52:08 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763898728462"}
+[23-Nov-2025 12:52:08 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 12:52:08 Europe/Berlin] Role: student
+[23-Nov-2025 12:52:08 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 12:52:08 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 12:52:08 Europe/Berlin] Grade calculation: calc_midterm_pct=66.83, midterm_grade=1.5
+[23-Nov-2025 12:52:08 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 12:52:08 Europe/Berlin] Term calculation: term_pct=80.13, calc_term_grade=2.5
+[23-Nov-2025 12:52:08 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"midterm_percentage":66.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":80.13,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 12:53:08 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 12:53:08 ===
+[23-Nov-2025 12:53:08 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 12:53:08 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763898788466"}
+[23-Nov-2025 12:53:08 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 12:53:08 Europe/Berlin] Role: student
+[23-Nov-2025 12:53:08 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 12:53:08 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 12:53:08 Europe/Berlin] Grade calculation: calc_midterm_pct=66.83, midterm_grade=1.5
+[23-Nov-2025 12:53:08 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 12:53:08 Europe/Berlin] Term calculation: term_pct=80.13, calc_term_grade=2.5
+[23-Nov-2025 12:53:08 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"midterm_percentage":66.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":80.13,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 12:54:08 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 12:54:08 ===
+[23-Nov-2025 12:54:08 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 12:54:08 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763898848461"}
+[23-Nov-2025 12:54:08 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 12:54:08 Europe/Berlin] Role: student
+[23-Nov-2025 12:54:08 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 12:54:08 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 12:54:08 Europe/Berlin] Grade calculation: calc_midterm_pct=66.83, midterm_grade=1.5
+[23-Nov-2025 12:54:08 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 12:54:08 Europe/Berlin] Term calculation: term_pct=80.13, calc_term_grade=2.5
+[23-Nov-2025 12:54:08 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"midterm_percentage":66.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":80.13,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 12:55:08 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 12:55:08 ===
+[23-Nov-2025 12:55:08 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 12:55:08 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763898908470"}
+[23-Nov-2025 12:55:08 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 12:55:08 Europe/Berlin] Role: student
+[23-Nov-2025 12:55:08 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 12:55:08 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 12:55:08 Europe/Berlin] Grade calculation: calc_midterm_pct=66.83, midterm_grade=1.5
+[23-Nov-2025 12:55:08 Europe/Berlin] Finals calculation: calc_finals_pct=89, finals_grade=3.5
+[23-Nov-2025 12:55:08 Europe/Berlin] Term calculation: term_pct=80.13, calc_term_grade=2.5
+[23-Nov-2025 12:55:08 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"midterm_percentage":66.83,"finals_grade":3.5,"finals_percentage":89,"term_percentage":80.13,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[23-Nov-2025 16:00:03 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 16:00:03 ===
+[23-Nov-2025 16:00:03 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 16:00:03 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763910003635"}
+[23-Nov-2025 16:00:03 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 16:00:03 Europe/Berlin] Role: student
+[23-Nov-2025 16:00:03 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 16:00:03 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 16:00:03 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"finals_grade":3.5,"term_grade":2.7,"grade_status":"pending","status":"passed"}
+[23-Nov-2025 16:00:13 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 16:00:13 ===
+[23-Nov-2025 16:00:13 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 16:00:13 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763910013467"}
+[23-Nov-2025 16:00:13 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 16:00:13 Europe/Berlin] Role: student
+[23-Nov-2025 16:00:13 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 16:00:13 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 16:00:13 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"finals_grade":3.5,"term_grade":2.7,"grade_status":"pending","status":"passed"}
+[23-Nov-2025 16:00:23 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 16:00:23 ===
+[23-Nov-2025 16:00:23 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 16:00:23 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763910023472"}
+[23-Nov-2025 16:00:23 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 16:00:23 Europe/Berlin] Role: student
+[23-Nov-2025 16:00:23 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 16:00:23 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 16:00:23 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"finals_grade":3.5,"term_grade":2.7,"grade_status":"pending","status":"passed"}
+[23-Nov-2025 16:00:33 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 16:00:33 ===
+[23-Nov-2025 16:00:33 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 16:00:33 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763910033472"}
+[23-Nov-2025 16:00:33 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 16:00:33 Europe/Berlin] Role: student
+[23-Nov-2025 16:00:33 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 16:00:33 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 16:00:33 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"finals_grade":3.5,"term_grade":2.7,"grade_status":"pending","status":"passed"}
+[23-Nov-2025 16:00:43 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 16:00:43 ===
+[23-Nov-2025 16:00:43 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 16:00:43 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763910043465"}
+[23-Nov-2025 16:00:43 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 16:00:43 Europe/Berlin] Role: student
+[23-Nov-2025 16:00:43 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 16:00:43 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 16:00:43 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"finals_grade":3.5,"term_grade":2.7,"grade_status":"pending","status":"passed"}
+[23-Nov-2025 16:00:53 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 16:00:53 ===
+[23-Nov-2025 16:00:53 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 16:00:53 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763910053465"}
+[23-Nov-2025 16:00:53 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 16:00:53 Europe/Berlin] Role: student
+[23-Nov-2025 16:00:53 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 16:00:53 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 16:00:53 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"finals_grade":3.5,"term_grade":2.7,"grade_status":"pending","status":"passed"}
+[23-Nov-2025 16:01:03 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 16:01:03 ===
+[23-Nov-2025 16:01:03 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 16:01:03 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763910063463"}
+[23-Nov-2025 16:01:03 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 16:01:03 Europe/Berlin] Role: student
+[23-Nov-2025 16:01:03 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 16:01:03 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 16:01:03 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"finals_grade":3.5,"term_grade":2.7,"grade_status":"pending","status":"passed"}
+[23-Nov-2025 16:02:04 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 16:02:04 ===
+[23-Nov-2025 16:02:04 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 16:02:04 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763910124461"}
+[23-Nov-2025 16:02:04 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 16:02:04 Europe/Berlin] Role: student
+[23-Nov-2025 16:02:04 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 16:02:04 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 16:02:04 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"finals_grade":3.5,"term_grade":2.7,"grade_status":"pending","status":"passed"}
+[23-Nov-2025 16:03:05 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 16:03:05 ===
+[23-Nov-2025 16:03:05 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 16:03:05 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763910185462"}
+[23-Nov-2025 16:03:05 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 16:03:05 Europe/Berlin] Role: student
+[23-Nov-2025 16:03:05 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 16:03:05 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 16:03:05 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"finals_grade":3.5,"term_grade":2.7,"grade_status":"pending","status":"passed"}
+[23-Nov-2025 16:04:06 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 16:04:06 ===
+[23-Nov-2025 16:04:06 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 16:04:06 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763910246462"}
+[23-Nov-2025 16:04:06 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 16:04:06 Europe/Berlin] Role: student
+[23-Nov-2025 16:04:06 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 16:04:06 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 16:04:06 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"finals_grade":3.5,"term_grade":2.7,"grade_status":"pending","status":"passed"}
+[23-Nov-2025 16:05:07 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 16:05:07 ===
+[23-Nov-2025 16:05:07 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 16:05:07 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763910307460"}
+[23-Nov-2025 16:05:07 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 16:05:07 Europe/Berlin] Role: student
+[23-Nov-2025 16:05:07 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 16:05:07 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 16:05:07 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"finals_grade":3.5,"term_grade":2.7,"grade_status":"pending","status":"passed"}
+[23-Nov-2025 16:33:42 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 16:33:42 ===
+[23-Nov-2025 16:33:42 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 16:33:42 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763912022150"}
+[23-Nov-2025 16:33:42 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 16:33:42 Europe/Berlin] Role: student
+[23-Nov-2025 16:33:42 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 16:33:42 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 16:33:42 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"finals_grade":3.5,"term_grade":2.7,"grade_status":"pending","status":"passed"}
+[23-Nov-2025 16:33:43 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-23 16:33:43 ===
+[23-Nov-2025 16:33:43 Europe/Berlin] Database and session files loaded
+[23-Nov-2025 16:33:43 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"24_T2_CCPRGG1L_INF222","student_id":"2022-118764","csrf_token":"8b72d1353c96ac8893066527990854fa108befaa504bc4d8cc2f54bbae65b979","_t":"1763912023235"}
+[23-Nov-2025 16:33:43 Europe/Berlin] User ID: 2022-118764
+[23-Nov-2025 16:33:43 Europe/Berlin] Role: student
+[23-Nov-2025 16:33:43 Europe/Berlin] Student ID: 2022-118764
+[23-Nov-2025 16:33:43 Europe/Berlin] Getting summary for class: 24_T2_CCPRGG1L_INF222
+[23-Nov-2025 16:33:43 Europe/Berlin] Success: {"success":true,"midterm_grade":1.5,"finals_grade":3.5,"term_grade":2.7,"grade_status":"pending","status":"passed"}

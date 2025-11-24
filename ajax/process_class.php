@@ -56,6 +56,14 @@ try {
         $room = trim($_POST['room']);
         $faculty_id = intval($_POST['faculty_id']);
         
+        // Validate against placeholder/template values
+        $placeholder_values = ['Section', 'Academic Year', 'Term', 'Course Code', 'Room', 'Select', 'Day', 'Time', 'N/A'];
+        if (in_array($section, $placeholder_values) || in_array($academic_year, $placeholder_values) || 
+            in_array($term, $placeholder_values) || in_array($course_code, $placeholder_values) ||
+            in_array($room, $placeholder_values)) {
+            outputJSON(["success" => false, "message" => "Please select valid values for all fields (no placeholder values allowed)"]);
+        }
+        
         // Handle schedule data - ensure arrays exist
         $days = isset($_POST['day']) && is_array($_POST['day']) ? $_POST['day'] : [];
         $times = isset($_POST['time']) && is_array($_POST['time']) ? $_POST['time'] : [];
@@ -593,18 +601,31 @@ try {
         $academic_year = $_GET['academic_year'] ?? $_POST['academic_year'] ?? '';
         $term = $_GET['term'] ?? $_POST['term'] ?? '';
         $course_code = $_GET['course_code'] ?? $_POST['course_code'] ?? '';
-        $faculty_id = intval($_GET['faculty_id'] ?? $_POST['faculty_id'] ?? 0);
+        $faculty_id = $_GET['faculty_id'] ?? $_POST['faculty_id'] ?? null;
         
-        if (empty($section) || empty($academic_year) || empty($term) || empty($course_code) || $faculty_id <= 0) {
+        // Convert faculty_id to int or null
+        if ($faculty_id !== null && $faculty_id !== '') {
+            $faculty_id = intval($faculty_id);
+        } else {
+            $faculty_id = null;
+        }
+        
+        if (empty($section) || empty($academic_year) || empty($term) || empty($course_code)) {
             outputJSON(["success" => false, "message" => "Missing required parameters for group delete"]);
+            exit;
         }
 
         $conn->begin_transaction();
         
         try {
             // Get all class codes for this group
-            $getClassesStmt = $conn->prepare("SELECT class_code FROM class WHERE section = ? AND academic_year = ? AND term = ? AND course_code = ? AND faculty_id = ?");
-            $getClassesStmt->bind_param('ssssi', $section, $academic_year, $term, $course_code, $faculty_id);
+            if ($faculty_id !== null) {
+                $getClassesStmt = $conn->prepare("SELECT class_code FROM class WHERE section = ? AND academic_year = ? AND term = ? AND course_code = ? AND faculty_id = ?");
+                $getClassesStmt->bind_param('ssssi', $section, $academic_year, $term, $course_code, $faculty_id);
+            } else {
+                $getClassesStmt = $conn->prepare("SELECT class_code FROM class WHERE section = ? AND academic_year = ? AND term = ? AND course_code = ? AND faculty_id IS NULL");
+                $getClassesStmt->bind_param('ssss', $section, $academic_year, $term, $course_code);
+            }
             $getClassesStmt->execute();
             $result = $getClassesStmt->get_result();
             $classes = [];
@@ -647,8 +668,13 @@ try {
             }
             
             // Finally delete all classes in the group
-            $stmt = $conn->prepare("DELETE FROM class WHERE section = ? AND academic_year = ? AND term = ? AND course_code = ? AND faculty_id = ?");
-            $stmt->bind_param('ssssi', $section, $academic_year, $term, $course_code, $faculty_id);
+            if ($faculty_id !== null) {
+                $stmt = $conn->prepare("DELETE FROM class WHERE section = ? AND academic_year = ? AND term = ? AND course_code = ? AND faculty_id = ?");
+                $stmt->bind_param('ssssi', $section, $academic_year, $term, $course_code, $faculty_id);
+            } else {
+                $stmt = $conn->prepare("DELETE FROM class WHERE section = ? AND academic_year = ? AND term = ? AND course_code = ? AND faculty_id IS NULL");
+                $stmt->bind_param('ssss', $section, $academic_year, $term, $course_code);
+            }
             $stmt->execute();
             $deleted_count = $conn->affected_rows;
             $stmt->close();

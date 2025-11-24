@@ -70,6 +70,27 @@ try {
                 exit;
             }
 
+            // First, get the section code
+            $get_code_stmt = $conn->prepare("SELECT section_code FROM sections WHERE section_id = ?");
+            $get_code_stmt->bind_param("i", $section_id);
+            $get_code_stmt->execute();
+            $get_code_stmt->bind_result($section_code);
+            $get_code_stmt->fetch();
+            $get_code_stmt->close();
+
+            // Check if there are any classes using this section
+            $check_classes_stmt = $conn->prepare("SELECT COUNT(*) FROM class WHERE section = ?");
+            $check_classes_stmt->bind_param("s", $section_code);
+            $check_classes_stmt->execute();
+            $check_classes_stmt->bind_result($class_count);
+            $check_classes_stmt->fetch();
+            $check_classes_stmt->close();
+
+            if ($class_count > 0) {
+                echo json_encode(['success' => false, 'message' => "Cannot delete this section. It is currently used by $class_count class" . ($class_count > 1 ? 'es' : '') . ". Please delete or reassign those classes first."]);
+                exit;
+            }
+
             // Delete from sections table
             $stmt = $conn->prepare("DELETE FROM sections WHERE section_id = ?");
             if (!$stmt) {
@@ -170,23 +191,74 @@ try {
                 exit;
             }
 
-            // Update the section
-            $stmt = $conn->prepare("UPDATE sections SET section_code = ?, updated_at = NOW() WHERE section_id = ?");
-            if (!$stmt) {
-                echo json_encode(['success' => false, 'message' => 'Database prepare error']);
-                exit;
-            }
+            // First, get the old section code so we can update related classes
+            $old_code_stmt = $conn->prepare("SELECT section_code FROM sections WHERE section_id = ?");
+            $old_code_stmt->bind_param("i", $section_id);
+            $old_code_stmt->execute();
+            $old_code_stmt->bind_result($old_section_code);
+            $old_code_stmt->fetch();
+            $old_code_stmt->close();
 
-            $stmt->bind_param("si", $section_code, $section_id);
+            // Start transaction to ensure consistency
+            $conn->begin_transaction();
 
-            if ($stmt->execute()) {
-                if ($stmt->affected_rows > 0) {
-                    echo json_encode(['success' => true, 'message' => 'Section updated successfully!']);
-                } else {
-                    echo json_encode(['success' => false, 'message' => 'No changes made or section not found']);
+            try {
+                // Update the section
+                $stmt = $conn->prepare("UPDATE sections SET section_code = ?, updated_at = NOW() WHERE section_id = ?");
+                if (!$stmt) {
+                    $conn->rollback();
+                    echo json_encode(['success' => false, 'message' => 'Database prepare error']);
+                    exit;
                 }
-            } else {
-                echo json_encode(['success' => false, 'message' => 'Update failed']);
+
+                $stmt->bind_param("si", $section_code, $section_id);
+
+                if (!$stmt->execute()) {
+                    $conn->rollback();
+                    echo json_encode(['success' => false, 'message' => 'Update failed']);
+                    exit;
+                }
+
+                if ($stmt->affected_rows == 0) {
+                    $conn->rollback();
+                    echo json_encode(['success' => false, 'message' => 'No changes made or section not found']);
+                    exit;
+                }
+
+                // CASCADE: Update all classes that reference the old section code
+                if (!empty($old_section_code) && $old_section_code !== $section_code) {
+                    $update_classes_stmt = $conn->prepare("UPDATE class SET section = ? WHERE section = ?");
+                    if (!$update_classes_stmt) {
+                        $conn->rollback();
+                        echo json_encode(['success' => false, 'message' => 'Database prepare error for class update']);
+                        exit;
+                    }
+
+                    $update_classes_stmt->bind_param("ss", $section_code, $old_section_code);
+                    
+                    if (!$update_classes_stmt->execute()) {
+                        $conn->rollback();
+                        echo json_encode(['success' => false, 'message' => 'Failed to update related classes']);
+                        exit;
+                    }
+
+                    $classes_affected = $update_classes_stmt->affected_rows;
+                    $update_classes_stmt->close();
+                }
+
+                // Commit the transaction
+                $conn->commit();
+                
+                $message = 'Section updated successfully!';
+                if (!empty($classes_affected) && $classes_affected > 0) {
+                    $message .= " Updated $classes_affected class" . ($classes_affected > 1 ? 'es' : '') . " as well.";
+                }
+
+                echo json_encode(['success' => true, 'message' => $message]);
+
+            } catch (Exception $e) {
+                $conn->rollback();
+                echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
             }
             break;
 

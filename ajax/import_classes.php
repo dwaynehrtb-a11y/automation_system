@@ -61,8 +61,8 @@ try {
     // Start transaction
     $conn->begin_transaction();
 
-    // Skip header row
-    for ($i = 1; $i < count($rows); $i++) {
+    // Skip warning row (index 0) and header row (index 1), start from data row (index 2)
+    for ($i = 2; $i < count($rows); $i++) {
         $row = $rows[$i];
         
         if (count($row) < 7) continue;
@@ -74,7 +74,7 @@ try {
         $day = trim($row[4] ?? '');
         $time = trim($row[5] ?? '');
         $room = trim($row[6] ?? '');
-        $faculty_id = isset($row[7]) ? intval($row[7]) : 0;
+        $faculty_id = isset($row[7]) ? trim((string)$row[7]) : '';
 
         if (empty($section) || empty($course_code)) {
             $skipped++;
@@ -82,15 +82,35 @@ try {
             continue;
         }
 
-        $check_stmt = $conn->prepare("SELECT COUNT(*) as count FROM class WHERE course_code = ? AND section = ? AND academic_year = ? AND term = ?");
-        $check_stmt->bind_param("ssss", $course_code, $section, $academic_year, $term);
+        // Check if this exact schedule already exists (same course, section, day, time)
+        $check_stmt = $conn->prepare("SELECT COUNT(*) as count FROM class WHERE course_code = ? AND section = ? AND academic_year = ? AND term = ? AND day = ? AND time = ?");
+        $check_stmt->bind_param("ssssss", $course_code, $section, $academic_year, $term, $day, $time);
         $check_stmt->execute();
         $check_result = $check_stmt->get_result()->fetch_assoc();
 
         if ($check_result['count'] > 0) {
             $skipped++;
-            $errors[] = "Row " . ($i + 1) . ": Class already exists";
+            $errors[] = "Row " . ($i + 1) . ": Schedule already exists (same course, section, day, and time)";
             continue;
+        }
+
+        // Validate faculty_id exists in users table (only if faculty_id is provided)
+        $validated_faculty_id = null;
+        if (!empty($faculty_id)) {
+            // Look up the faculty user ID by their employee_id
+            $faculty_check = $conn->prepare("SELECT id FROM users WHERE employee_id = ? AND role = 'faculty'");
+            $faculty_check->bind_param("s", $faculty_id);
+            $faculty_check->execute();
+            $faculty_result = $faculty_check->get_result();
+            
+            if ($faculty_result->num_rows === 0) {
+                $skipped++;
+                $errors[] = "Row " . ($i + 1) . ": Faculty with employee ID " . $faculty_id . " not found in system";
+                continue;
+            }
+            
+            $faculty_row = $faculty_result->fetch_assoc();
+            $validated_faculty_id = intval($faculty_row['id']);
         }
 
         $insert_stmt = $conn->prepare("INSERT INTO class (course_code, section, academic_year, term, day, time, room, faculty_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
@@ -101,7 +121,7 @@ try {
             continue;
         }
 
-        $insert_stmt->bind_param("sssssssi", $course_code, $section, $academic_year, $term, $day, $time, $room, $faculty_id);
+        $insert_stmt->bind_param("sssssss" . ($validated_faculty_id ? "i" : "s"), $course_code, $section, $academic_year, $term, $day, $time, $room, $validated_faculty_id);
         
         if ($insert_stmt->execute()) {
             $imported++;

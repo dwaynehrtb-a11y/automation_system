@@ -108,12 +108,17 @@ function getClassesByYearTerm($conn, $faculty_id, $academic_year, $term) {
             c.room,
             s.course_title,
             s.units,
-            COUNT(DISTINCT ce.student_id) as student_count
+            COALESCE(enrollment_counts.student_count, 0) as student_count
         FROM class c
         LEFT JOIN subjects s ON c.course_code = s.course_code
-        LEFT JOIN class_enrollments ce ON c.class_code = ce.class_code AND ce.status = 'enrolled'
+        LEFT JOIN (
+            SELECT class_code, COUNT(*) as student_count
+            FROM class_enrollments
+            WHERE status = 'enrolled'
+            GROUP BY class_code
+        ) enrollment_counts ON c.class_code = enrollment_counts.class_code
         WHERE c.faculty_id = ? AND c.academic_year = ? AND c.term = ?
-        GROUP BY c.class_code, c.section, c.course_code, c.academic_year, c.term, c.room, s.course_title, s.units
+        GROUP BY c.class_code, c.section, c.course_code, c.academic_year, c.term, c.room, s.course_title, s.units, enrollment_counts.student_count
         ORDER BY c.course_code, c.section
     ";
 
@@ -905,17 +910,18 @@ $error = $_GET['error'] ?? '';
                     <input type="text" 
                            id="search-student-input" 
                            class="form-control" 
-                           placeholder="Type student name or ID..."
-                           onkeyup="searchStudentsForEnrollment()">
+                           placeholder="Search by name, student ID, or email..."
+                           onkeyup="searchStudentsForEnrollment()"
+                           onfocus="if(this.value === '') searchStudentsForEnrollment()">
                     <div class="form-help">
-                        <i class="fas fa-info-circle"></i> Search by name or student ID
+                        <i class="fas fa-info-circle"></i> Search by name, student ID, or email. Leave blank to see all available students.
                     </div>
                 </div>
                 
                 <div id="student-search-results" class="search-results-container">
-                <p class="search-placeholder">
-                <i class="fas fa-search"></i>
-                Start typing to search...
+                <p class="search-placeholder" style="text-align: center; color: #666; padding: 40px 20px;">
+                <i class="fas fa-users" style="font-size: 32px; margin-bottom: 10px; display: block; opacity: 0.3;"></i>
+                Click the search box to view all available students
                 </p>
                 </div>
             </div>
@@ -929,12 +935,13 @@ $error = $_GET['error'] ?? '';
     
     <!-- Faculty Dashboard Scripts -->
     <script src="../faculty/assets/js/faculty_dashboard.js?v=2.1"></script>
-    <script src="../faculty/assets/js/student_management.js?v=2.1"></script>
+    <script src="../faculty/assets/js/student_management.js?v=2.4"></script>
     <script src="../faculty/assets/js/grading_integration.js?v=2.1"></script>
     <script src="../faculty/assets/js/flexible_grading.js?v=2.9"></script>
     <script src="../faculty/assets/js/view_grades.js?v=2.1"></script>
     <script src="../faculty/assets/js/car_management.js?v=1.1"></script>
     <script src="../faculty/assets/js/car-pdf-generator.js?v=1.1"></script>
+    <script src="../faculty/assets/js/debug_watcher.js?v=1.0"></script>
     
     <script>
         /**

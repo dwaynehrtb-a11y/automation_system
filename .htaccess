@@ -28,7 +28,7 @@ DirectoryIndex index.php index.html
     </RequireAll>
 </FilesMatch>
 
-# Allow access to assets
+Allow access to assets
 <Directory "assets/">
     <RequireAll>
         Require all granted

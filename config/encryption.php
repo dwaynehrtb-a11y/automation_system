@@ -214,4 +214,22 @@ class Encryption {
 
 // Auto-initialize on include
 Encryption::init();
+
+/**
+ * Backwards-compatible helper to decrypt field values used in older code
+ * Returns original value on failure.
+ */
+if (!function_exists('decryptData')) {
+    function decryptData($value) {
+        try {
+            // Use decryptField which returns null for empty values
+            $decrypted = Encryption::decryptField($value);
+            if ($decrypted === null) return $value;
+            return $decrypted;
+        } catch (Exception $e) {
+            error_log('decryptData() failed: ' . $e->getMessage());
+            return $value;
+        }
+    }
+}
 ?>

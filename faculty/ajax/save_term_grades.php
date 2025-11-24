@@ -45,6 +45,11 @@ if ($action === 'get_lacking_requirements') {
     ob_end_flush();
     exit;
 }
+if ($action === 'update_lacking_requirements') {
+    updateLackingRequirements($conn, $faculty_id);
+    ob_end_flush();
+    exit;
+}
 
 // Get POST data
 $input = json_decode(file_get_contents('php://input'), true);
@@ -187,15 +192,19 @@ function updateGradeStatusOnly($conn, $faculty_id) {
     
     // Get lacking requirements
     $lacking_reqs = $_POST['lacking_requirements'] ?? '';
+    
+    // Only set status_manually_set='yes' if status is passed/failed/dropped, NOT for incomplete
+    // Incomplete should allow automatic recalculation when grades are entered
+    $manually_set = ($grade_status === 'incomplete') ? 'no' : 'yes';
 
     // Use INSERT ON DUPLICATE KEY UPDATE to ensure record is created or updated
     $stmt = $conn->prepare("
         INSERT INTO grade_term (student_id, class_code, grade_status, lacking_requirements, status_manually_set, computed_at)
-        VALUES (?, ?, ?, ?, 'yes', CURRENT_TIMESTAMP)
+        VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
         ON DUPLICATE KEY UPDATE
             grade_status = VALUES(grade_status),
             lacking_requirements = VALUES(lacking_requirements),
-            status_manually_set = 'yes',
+            status_manually_set = VALUES(status_manually_set),
             computed_at = CURRENT_TIMESTAMP
     ");
     
@@ -204,7 +213,7 @@ function updateGradeStatusOnly($conn, $faculty_id) {
         return;
     }
     
-    $stmt->bind_param("ssss", $student_id, $class_code, $grade_status, $lacking_reqs);
+    $stmt->bind_param("sssss", $student_id, $class_code, $grade_status, $lacking_reqs, $manually_set);
     
     if ($stmt->execute()) {
         echo json_encode([
@@ -316,6 +325,85 @@ function getLackingRequirements($conn, $faculty_id) {
             'lacking_requirements' => ''
         ]);
     }
+    $stmt->close();
+}
+
+/**
+ * Update lacking requirements for a student
+ */
+function updateLackingRequirements($conn, $faculty_id) {
+    $class_code = $_POST['class_code'] ?? '';
+    $student_id = $_POST['student_id'] ?? '';
+    $lacking_requirements = $_POST['lacking_requirements'] ?? '';
+    
+    error_log("updateLackingRequirements called: class=$class_code, student=$student_id, lacking=$lacking_requirements");
+    
+    if (empty($class_code) || empty($student_id)) {
+        error_log("❌ Missing parameters");
+        ob_clean();
+        echo json_encode(['success' => false, 'message' => 'Missing required parameters']);
+        return;
+    }
+    
+    error_log("Parameters validated, checking faculty access");
+    
+    // Verify faculty access
+    $stmt = $conn->prepare("SELECT class_code FROM class WHERE class_code = ? AND faculty_id = ?");
+    
+    if (!$stmt) {
+        error_log("❌ Failed to prepare statement: " . $conn->error);
+        ob_clean();
+        echo json_encode(['success' => false, 'message' => 'Database error']);
+        return;
+    }
+    $stmt->bind_param("ss", $class_code, $faculty_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    error_log("Faculty verification: rows=" . $result->num_rows . ", faculty_id=$faculty_id");
+    
+    if ($result->num_rows === 0) {
+        ob_clean();
+        echo json_encode(['success' => false, 'message' => 'Class not found or access denied']);
+        $stmt->close();
+        error_log("❌ Access denied for faculty $faculty_id to class $class_code");
+        return;
+    }
+    $stmt->close();
+    
+    error_log("✅ Faculty access verified, proceeding with update");
+    
+    // Update or insert lacking requirements in grade_term
+    $stmt = $conn->prepare("
+        INSERT INTO grade_term (student_id, class_code, lacking_requirements, computed_at)
+        VALUES (?, ?, ?, NOW())
+        ON DUPLICATE KEY UPDATE 
+            lacking_requirements = VALUES(lacking_requirements),
+            computed_at = NOW()
+    ");
+    
+    $stmt->bind_param("sss", $student_id, $class_code, $lacking_requirements);
+    
+    error_log("Executing query with: student=$student_id, class=$class_code, lacking='$lacking_requirements'");
+    
+    if ($stmt->execute()) {
+        error_log("✅ Query executed, affected rows: " . $stmt->affected_rows);
+        ob_clean();
+        echo json_encode([
+            'success' => true,
+            'message' => 'Lacking requirements updated successfully'
+        ]);
+        error_log("✅ Lacking requirements saved successfully for $student_id");
+    } else {
+        error_log("❌ Query failed: " . $stmt->error);
+        ob_clean();
+        echo json_encode([
+            'success' => false,
+            'message' => 'Failed to update lacking requirements: ' . $stmt->error
+        ]);
+        error_log("❌ Failed to save lacking requirements: " . $stmt->error);
+    }
+    
     $stmt->close();
 }
 ?>

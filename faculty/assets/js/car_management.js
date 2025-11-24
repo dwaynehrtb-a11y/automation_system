@@ -60,7 +60,7 @@ const CARManager = {
      */
     async checkCARDataExists() {
         try {
-            const response = await fetch(`/faculty/ajax/car_handler.php?action=check&class_code=${this.currentClassCode}`);
+            const response = await fetch(`${window.APP?.apiPath || '/faculty/ajax/'}car_handler.php?action=check&class_code=${this.currentClassCode}`);
             const data = await response.json();
             
             if (data.success && data.exists) {
@@ -549,7 +549,7 @@ if (step === this.totalSteps) {
     });
     
     try {
-        const response = await fetch('/faculty/ajax/car_handler.php', {
+        const response = await fetch(`${window.APP?.apiPath || '/faculty/ajax/'}car_handler.php`, {
             method: 'POST',
             body: fd
         });
@@ -729,6 +729,254 @@ function previousWizardStep() {
 
 function saveCARDraft() {
     CARManager.saveDraft();
+}
+
+/**
+ * COA (Course Outcomes Assessment Summary) Preview & Download
+ */
+function openCOAPreparation() {
+    // Try multiple ways to get the class code
+    let classCode = document.querySelector('[data-class-code]')?.dataset.classCode;
+    
+    if (!classCode) {
+        classCode = document.getElementById('flex_grading_class')?.value;
+    }
+    
+    if (!classCode) {
+        classCode = document.querySelector('#classSelect')?.value;
+    }
+    
+    if (!classCode && typeof FGS !== 'undefined') {
+        classCode = FGS.currentClassCode;
+    }
+    
+    if (!classCode) {
+        Swal.fire('Error', 'Please select a class first', 'error');
+        return;
+    }
+
+    // Fetch COA HTML
+    fetch(`${window.APP?.apiPath || '/faculty/ajax/'}generate_coa_html.php?class_code=${encodeURIComponent(classCode)}`)
+        .then(res => {
+            if (!res.ok) {
+                return res.text().then(text => {
+                    try {
+                        return Promise.reject(JSON.parse(text));
+                    } catch (e) {
+                        return Promise.reject({ message: `HTTP ${res.status}: ${text}` });
+                    }
+                });
+            }
+            return res.json();
+        })
+        .then(data => {
+            if (!data.success) {
+                throw new Error(data.message || 'Failed to generate COA');
+            }
+
+            // Show preview modal
+            showCOAPreview(data.html, classCode);
+        })
+        .catch(err => {
+            console.error('COA Error:', err);
+            const errorMsg = err.message || JSON.stringify(err);
+            Swal.fire('Error', 'Failed to generate COA: ' + errorMsg, 'error');
+        });
+}
+
+function showCOAPreview(html, classCode) {
+    try {
+        // Create modal for preview - SAME APPROACH AS CAR PREVIEW
+        const modal = document.createElement('div');
+        modal.id = 'coa-preview-modal';
+        modal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10001;
+            padding: 20px;
+        `;
+        
+        // A4 Portrait dimensions: 210mm × 297mm (8.27" × 11.69")
+        const aspect = 210/297; // ≈0.707
+        const scaledWidth = Math.min(window.innerWidth - 80, 900);
+        const scaledHeight = Math.round(scaledWidth / aspect); // maintain portrait ratio
+        
+        // Store HTML for download button
+        window.currentCOAHtml = html;
+        window.currentCOAClassCode = classCode;
+        
+        modal.innerHTML = `
+            <div style="
+                background: white;
+                width: ${scaledWidth}px;
+                max-width: 95vw;
+                height: ${scaledHeight}px;
+                max-height: 90vh;
+                border-radius: 8px;
+                display: flex;
+                flex-direction: column;
+                box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+                overflow: hidden;
+                box-sizing: border-box;
+            ">
+                <div style="
+                    padding: 15px 20px;
+                    border-bottom: 1px solid #ddd;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    background: #f5f5f5;
+                    flex-shrink: 0;
+                ">
+                    <h3 style="margin: 0; color: #333; font-size: 16px;">COA Report - ${classCode}</h3>
+                    <div>
+                        <button onclick="document.getElementById('coa-preview-modal').remove()" style="
+                            background: #dc3545;
+                            color: white;
+                            border: none;
+                            padding: 8px 16px;
+                            border-radius: 4px;
+                            cursor: pointer;
+                            font-size: 14px;
+                            margin-left: 10px;
+                            white-space: nowrap;
+                        ">Close</button>
+                        <button onclick="downloadCOAPDF(window.currentCOAHtml, window.currentCOAClassCode); document.getElementById('coa-preview-modal').remove();" style="
+                            background: #28a745;
+                            color: white;
+                            border: none;
+                            padding: 8px 16px;
+                            border-radius: 4px;
+                            cursor: pointer;
+                            font-size: 14px;
+                            margin-left: 10px;
+                            white-space: nowrap;
+                        ">Download PDF</button>
+                    </div>
+                </div>
+                <div style="
+                    flex: 1;
+                    overflow: auto;
+                    padding: 10px;
+                    background: #e8e8e8;
+                    box-sizing: border-box;
+                ">
+                    <div style="
+                        background: white;
+                        padding: 20px;
+                        border: 1px solid #999;
+                        margin: 0;
+                        width: 100%;
+                        height: 100%;
+                        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+                        overflow: auto;
+                        box-sizing: border-box;
+                    ">
+                        ${html}
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Close on background click
+        modal.onclick = (e) => {
+            if (e.target === modal) {
+                modal.remove();
+            }
+        };
+        
+        console.log('COA Preview modal opened successfully');
+    } catch (error) {
+        console.error('COA Preview Error:', error);
+        Swal.fire('Error', 'Failed to display COA report: ' + error.message, 'error');
+    }
+}
+
+function downloadCOAPDF(html, classCode) {
+    const { jsPDF } = window.jspdf;
+    const html2canvas = window.html2canvas;
+
+    if (!html2canvas || !jsPDF) {
+        Swal.fire('Error', 'PDF libraries not loaded', 'error');
+        return;
+    }
+
+    Swal.fire({
+        title: 'Generating PDF...',
+        html: 'Please wait while we create your Course Outcomes Assessment Summary.',
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
+    const container = document.createElement('div');
+    container.innerHTML = html;
+    container.style.cssText = `
+        position: absolute;
+        left: -9999px;
+        width: 1000px;
+        background: white;
+        padding: 20px;
+    `;
+    document.body.appendChild(container);
+
+    html2canvas(container, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true
+    }).then(canvas => {
+        const pdf = new jsPDF({
+            orientation: 'portrait',
+            unit: 'mm',
+            format: 'a4'
+        });
+
+        const imgData = canvas.toDataURL('image/png');
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
+        const imgWidth = pdfWidth - 20;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        let yPosition = 10;
+        let remainingHeight = imgHeight;
+
+        while (remainingHeight > 0) {
+            const canvasHeight = Math.min(remainingHeight, pdfHeight - 20);
+            const sourceYOffset = imgHeight - remainingHeight;
+
+            pdf.addImage(imgData, 'PNG', 10, yPosition, imgWidth, canvasHeight);
+            remainingHeight -= (pdfHeight - 20);
+
+            if (remainingHeight > 0) {
+                pdf.addPage();
+                yPosition = 10;
+            }
+        }
+
+        const filename = `COA_${classCode}_${new Date().getTime()}.pdf`;
+        pdf.save(filename);
+
+        document.body.removeChild(container);
+        Swal.close();
+
+        Swal.fire('Success', 'COA PDF downloaded successfully!', 'success');
+    }).catch(err => {
+        console.error('Error generating PDF:', err);
+        document.body.removeChild(container);
+        Swal.fire('Error', 'Failed to generate PDF: ' + err.message, 'error');
+    });
 }
 
 /**

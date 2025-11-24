@@ -86,12 +86,17 @@ try {
             $component_id = $_POST['component_id'] ?? '';
             $component_name = $_POST['component_name'] ?? '';
             $percentage = $_POST['percentage'] ?? '';
+            $apply_co_mappings = $_POST['apply_co_mappings'] ?? 'no';
+            $co_mappings = $_POST['co_mappings'] ?? '[]';
+            $apply_summative = $_POST['apply_summative'] ?? 'no';
+            $is_summative = $_POST['is_summative'] ?? 'no';
+            $performance_target = $_POST['performance_target'] ?? '60';
             
             if (empty($component_id) || empty($component_name) || $percentage === '') {
                 throw new Exception('All fields required');
             }
             
-            $result = updateComponent($conn, $component_id, $component_name, $percentage, $faculty_id);
+            $result = updateComponent($conn, $component_id, $component_name, $percentage, $faculty_id, $apply_co_mappings, $co_mappings, $apply_summative, $is_summative, $performance_target);
             break;
             
         case 'delete_component':
@@ -583,7 +588,7 @@ function addComponent($conn, $class_code, $term_type, $component_name, $percenta
 /**
  * Update a component
  */
-function updateComponent($conn, $component_id, $component_name, $percentage, $faculty_id) {
+function updateComponent($conn, $component_id, $component_name, $percentage, $faculty_id, $apply_co_mappings = 'no', $co_mappings_json = '[]', $apply_summative = 'no', $is_summative = 'no', $performance_target = '60') {
     // Verify faculty owns this component's class
     $verify = $conn->prepare("
         SELECT gc.id 
@@ -611,10 +616,11 @@ function updateComponent($conn, $component_id, $component_name, $percentage, $fa
         return ['success' => false, 'message' => 'Percentage must be between 0 and 100'];
     }
     
-    // Update component
+    // Update component basic info
     $stmt = $conn->prepare("
         UPDATE grading_components 
-        SET component_name = ?, percentage = ?
+        SET component_name = ?, 
+            percentage = ?
         WHERE id = ?
     ");
     
@@ -624,17 +630,56 @@ function updateComponent($conn, $component_id, $component_name, $percentage, $fa
     
     $stmt->bind_param("sdi", $component_name, $pct, $component_id);
     
-    if ($stmt->execute()) {
-        $stmt->close();
-        return [
-            'success' => true,
-            'message' => 'Component updated successfully'
-        ];
-    } else {
+    if (!$stmt->execute()) {
         $error = $stmt->error;
         $stmt->close();
         throw new Exception('Failed to update component: ' . $error);
     }
+    $stmt->close();
+    
+    // Apply CO mappings to all items if requested
+    if ($apply_co_mappings === 'yes') {
+        $co_array = json_decode($co_mappings_json, true);
+        if ($co_array === null) {
+            $co_array = [];
+        }
+        $co_json = !empty($co_array) ? json_encode($co_array) : NULL;
+        
+        $update_items = $conn->prepare("
+            UPDATE grading_component_columns 
+            SET co_mappings = ?
+            WHERE component_id = ?
+        ");
+        
+        if ($update_items) {
+            $update_items->bind_param("si", $co_json, $component_id);
+            $update_items->execute();
+            $update_items->close();
+        }
+    }
+    
+    // Apply summative assessment to all items if requested
+    if ($apply_summative === 'yes') {
+        $perf_target = floatval($performance_target);
+        
+        $update_summative = $conn->prepare("
+            UPDATE grading_component_columns 
+            SET is_summative = ?,
+                performance_target = ?
+            WHERE component_id = ?
+        ");
+        
+        if ($update_summative) {
+            $update_summative->bind_param("sdi", $is_summative, $perf_target, $component_id);
+            $update_summative->execute();
+            $update_summative->close();
+        }
+    }
+    
+    return [
+        'success' => true,
+        'message' => 'Component updated successfully'
+    ];
 }
 
 /**

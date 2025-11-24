@@ -532,20 +532,22 @@ class SectionManager {
             <td><strong>${newItem.section_code}</strong></td>
             <td>${currentDate}</td>
             <td>
-                <button data-action="edit-section" 
-                        data-section-id="${newItem.section_id}" 
-                        data-section-code="${newItem.section_code}"
-                        class="btn btn-warning btn-sm">
-                    <i class="fas fa-edit"></i>
-                    Edit
-                </button>
-                <button data-action="delete-section" 
-                        data-section-id="${newItem.section_id}" 
-                        data-section-code="${newItem.section_code}"
-                        class="btn btn-danger btn-sm">
-                    <i class="fas fa-trash"></i>
-                    Delete
-                </button>
+                <div class="action-buttons">
+                    <button data-action="edit-section" 
+                            data-section-id="${newItem.section_id}" 
+                            data-section-code="${newItem.section_code}"
+                            class="btn btn-sm btn-warning btn-icon"
+                            title="Edit Section">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button data-action="delete-section" 
+                            data-section-id="${newItem.section_id}" 
+                            data-section-code="${newItem.section_code}"
+                            class="btn btn-sm btn-danger btn-icon"
+                            title="Delete Section">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
             </td>
         `;
         

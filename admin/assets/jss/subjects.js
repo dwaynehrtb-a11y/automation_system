@@ -194,8 +194,8 @@ class SubjectManager {
     }
     
     updateRowInTable(data) {
-        // Find the subjects table specifically
-        const subjectsTable = document.querySelector('#subjects .table tbody');
+        // Find the subjects table specifically using the new ID
+        const subjectsTable = document.getElementById('subjectsTableBody');
         
         if (!subjectsTable) {
             console.log('Subjects table not found for update');
@@ -615,7 +615,7 @@ class SubjectManager {
 }
 
     addRowToTable(newItem) {
-        const subjectsTable = document.querySelector('#subjects .table tbody');
+        const subjectsTable = document.getElementById('subjectsTableBody');
         
         if (!subjectsTable) {
             console.log('Subjects table not found for adding');
@@ -636,13 +636,12 @@ class SubjectManager {
             <td>${newItem.course_desc || 'No description'}</td>
             <td><span class="badge badge-primary">${newItem.units} unit${newItem.units > 1 ? 's' : ''}</span></td>
             <td>
-                <div class="d-flex gap-3">
-                    <button onclick="editSubject('${newItem.course_code}', '${newItem.course_title}', '${newItem.course_desc || ''}', '${newItem.units}')" class="btn btn-sm btn-outline" style="color: var(--warning-600); border-color: var(--warning-300);">
-                        Edit
+                <div class="action-buttons">
+                    <button onclick="editSubject('${newItem.course_code}', '${newItem.course_title}', '${newItem.course_desc || ''}', '${newItem.units}')" class="btn btn-sm btn-warning btn-icon" title="Edit Subject">
+                        <i class="fas fa-edit"></i>
                     </button>
-                    <button onclick="deleteSubject('${newItem.course_code}')" class="btn btn-danger btn-sm">
+                    <button onclick="deleteSubject('${newItem.course_code}')" class="btn btn-sm btn-danger btn-icon" title="Delete Subject">
                         <i class="fas fa-trash"></i>
-                        Delete
                     </button>
                 </div>
             </td>
@@ -757,8 +756,8 @@ function deleteSubject(courseCode) {
 }
 
 function removeSubjectRow(courseCode) {
-    // Find the subjects table specifically
-    const subjectsTable = document.querySelector('#subjects .table tbody');
+    // Find the subjects table specifically using the new ID
+    const subjectsTable = document.getElementById('subjectsTableBody');
     
     if (!subjectsTable) {
         console.log('Subjects table not found');

@@ -509,26 +509,22 @@ class StudentManager {
             <small style="color: var(--text-muted);">0 classes</small>
         </td>
         <td>
-            <div class="d-flex gap-2">
+            <div class="action-buttons">
                 <button onclick="resendStudentCredentials('${newItem.student_id}', '${fullName.replace(/'/g, "\\'")}', '${newItem.email}')" 
-                        class="btn btn-info btn-sm">
+                        class="btn btn-sm btn-info btn-icon" title="Resend Email">
                     <i class="fas fa-envelope"></i>
-                    Resend Email
                 </button>
                 <button onclick="viewStudentDetails('${newItem.student_id}')" 
-                        class="btn btn-sm btn-info">
+                        class="btn btn-sm btn-info btn-icon" title="View Student">
                     <i class="fas fa-eye"></i>
-                    View
                 </button>
                 <button onclick="editStudent('${newItem.student_id}', '${newItem.first_name}', '${newItem.last_name}', '${newItem.middle_initial || ''}', '${newItem.email}', '${newItem.birthday}', 'active')" 
-                        class="btn btn-sm btn-warning">
+                        class="btn btn-sm btn-warning btn-icon" title="Edit Student">
                     <i class="fas fa-edit"></i>
-                    Edit
                 </button>
                 <button onclick="deleteStudent('${newItem.student_id}')" 
-                        class="btn btn-danger btn-sm">
+                        class="btn btn-sm btn-danger btn-icon" title="Delete Student">
                     <i class="fas fa-trash"></i>
-                    Delete
                 </button>
             </div>
         </td>
@@ -838,14 +834,157 @@ function editStudent(studentId, firstName, lastName, middleInitial, email, birth
 
 // Placeholder view function
 function viewStudentDetails(studentId) {
-    if (window.Toast) {
-        Toast.fire({
-            icon: 'info',
-            title: 'View details for student: ' + studentId + ' (Coming soon)'
+    // Show loading
+    Swal.fire({
+        title: '<i class="fas fa-spinner fa-spin"></i> Loading Student Details',
+        html: '<div style="color: #6b7280; font-weight: 500;">Please wait...</div>',
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+    
+    // Fetch student details
+    fetch(`ajax/get_student_details.php?student_id=${encodeURIComponent(studentId)}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const student = data.student;
+                
+                // Build enrolled classes HTML
+                let classesHTML = '';
+                if (data.classes && data.classes.length > 0) {
+                    classesHTML = '<div style="max-height: 250px; overflow-y: auto; margin-top: 10px;">';
+                    data.classes.forEach(cls => {
+                        classesHTML += `
+                            <div style="padding: 10px; margin-bottom: 8px; background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); border-radius: 8px; border-left: 3px solid #003082; transition: all 0.2s ease;">
+                                <strong style="color: #1f2937; font-size: 0.95rem;">${cls.course_code}</strong> - <span style="color: #6b7280;">${cls.course_title || 'N/A'}</span><br>
+                                <small style="color: #6b7280; margin-top: 4px; display: block;"><i class="fas fa-sitemap" style="color: #003082;"></i> Section: <strong>${cls.section}</strong> | <i class="fas fa-bookmark" style="color: #003082;"></i> Term: <strong>${cls.term}</strong></small>
+                            </div>
+                        `;
+                    });
+                    classesHTML += '</div>';
+                } else {
+                    classesHTML = '<p style="color: #9ca3af; text-align: center; margin-top: 10px; font-style: italic;">No enrolled classes</p>';
+                }
+                
+                // Show student details modal
+                Swal.fire({
+                    title: `<div style="display: flex; align-items: center; gap: 0.75rem; justify-content: center;">
+                        <i class="fas fa-user-graduate" style="color: #003082; font-size: 1.5rem;"></i>
+                        <span style="color: #003082; font-weight: 700; font-size: 1.5rem;">Student Details</span>
+                    </div>`,
+                    html: `
+                        <div style="text-align: left; padding: 0;">
+                            <!-- Student Header -->
+                            <div style="background: linear-gradient(135deg, #003082 0%, #002768 100%); color: white; padding: 24px; border-radius: 12px; margin-bottom: 24px; box-shadow: 0 4px 12px rgba(0, 48, 130, 0.2);">
+                                <h3 style="margin: 0 0 12px 0; font-size: 1.25rem; font-weight: 700; color: white;">${student.full_name}</h3>
+                                <div style="display: flex; align-items: center; gap: 0.5rem; opacity: 0.95;">
+                                    <i class="fas fa-id-card" style="color: #D4AF37;"></i>
+                                    <span style="font-size: 0.95rem; font-weight: 500;">${student.student_id}</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Student Information Grid -->
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px;">
+                                <!-- Email -->
+                                <div style="background: white; padding: 14px; border-radius: 8px; border: 1px solid #e5e7eb;">
+                                    <label style="color: #6b7280; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 8px;">
+                                        <i class="fas fa-envelope" style="color: #003082;"></i>
+                                        Email
+                                    </label>
+                                    <p style="margin: 0; color: #1f2937; font-weight: 500; font-size: 0.9rem; word-break: break-all;">${student.email ? student.email : 'N/A'}</p>
+                                </div>
+                                
+                                <!-- Birthday -->
+                                <div style="background: white; padding: 14px; border-radius: 8px; border: 1px solid #e5e7eb;">
+                                    <label style="color: #6b7280; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 8px;">
+                                        <i class="fas fa-calendar" style="color: #003082;"></i>
+                                        Birthday
+                                    </label>
+                                    <p style="margin: 0; color: #1f2937; font-weight: 500; font-size: 0.9rem;">${student.birthday}</p>
+                                </div>
+                                
+                                <!-- Status -->
+                                <div style="background: white; padding: 14px; border-radius: 8px; border: 1px solid #e5e7eb;">
+                                    <label style="color: #6b7280; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 8px;">
+                                        <i class="fas fa-circle" style="color: ${student.status === 'active' ? '#10b981' : '#f59e0b'}; font-size: 0.6rem;"></i>
+                                        Status
+                                    </label>
+                                    <p style="margin: 0;"><span class="badge badge-${student.status === 'active' ? 'success' : 'warning'}" style="padding: 6px 12px; font-size: 0.8rem; text-transform: uppercase; font-weight: 600;">${student.status}</span></p>
+                                </div>
+                                
+                                <!-- Account Status -->
+                                <div style="background: white; padding: 14px; border-radius: 8px; border: 1px solid #e5e7eb;">
+                                    <label style="color: #6b7280; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 8px;">
+                                        <i class="fas fa-circle" style="color: ${student.account_status === 'active' ? '#10b981' : '#6b7280'}; font-size: 0.6rem;"></i>
+                                        Account Status
+                                    </label>
+                                    <p style="margin: 0;"><span class="badge badge-${student.account_status === 'active' ? 'success' : 'secondary'}" style="padding: 6px 12px; font-size: 0.8rem; text-transform: uppercase; font-weight: 600;">${student.account_status}</span></p>
+                                </div>
+                            </div>
+                            
+                            <!-- Enrollment Date -->
+                            <div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 14px; border-radius: 8px; border-left: 4px solid #003082; margin-bottom: 24px;">
+                                <label style="color: #6b7280; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 8px;">
+                                    <i class="fas fa-calendar-plus" style="color: #003082;"></i>
+                                    Enrollment Date
+                                </label>
+                                <p style="margin: 0; color: #003082; font-weight: 600; font-size: 0.9rem;">${student.enrollment_date || 'N/A'}</p>
+                            </div>
+                            
+                            <!-- Enrolled Classes -->
+                            <div>
+                                <label style="color: #1f2937; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; display: flex; align-items: center; gap: 0.5rem;">
+                                    <i class="fas fa-book" style="color: #003082;"></i>
+                                    Enrolled Classes (${data.classes ? data.classes.length : 0})
+                                </label>
+                                ${classesHTML}
+                            </div>
+                        </div>
+                    `,
+                    width: '750px',
+                    customClass: {
+                        container: 'swal-professional',
+                        popup: 'swal-popup-professional'
+                    },
+                    confirmButtonText: '<i class="fas fa-times"></i> Close',
+                    confirmButtonColor: '#003082',
+                    showCancelButton: true,
+                    cancelButtonText: '<i class="fas fa-edit"></i> Edit Student',
+                    cancelButtonColor: '#D4AF37'
+                }).then((result) => {
+                    if (result.dismiss === Swal.DismissReason.cancel) {
+                        // Edit button clicked
+                        editStudent(
+                            student.student_id,
+                            student.first_name,
+                            student.last_name,
+                            student.middle_initial,
+                            student.email,
+                            student.birthday,
+                            student.status
+                        );
+                    }
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: data.message || 'Failed to load student details',
+                    confirmButtonColor: '#003082'
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to load student details',
+                confirmButtonColor: '#003082'
+            });
         });
-    } else {
-        alert('View details for student: ' + studentId + ' (Coming soon)');
-    }
 }
 // Resend student credentials function
 async function resendStudentCredentials(studentId, name, email) {

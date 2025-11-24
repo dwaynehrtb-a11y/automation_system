@@ -299,38 +299,42 @@ th {
 </table>';
     $html .= '<table style="width: 100%; border-collapse: collapse; font-size: 8pt; margin: 5px 0;">
 <tr>
-    <td colspan="2" style="background-color: #C0C0C0; font-weight: bold; padding: 4px 6px; border: 1px solid #000; font-size: 8pt; width: 18%;">ACADEMIC TERM/ SCHOOL YEAR:</td>
-    <td colspan="2" style="background-color: #C0C0C0; font-weight: bold; padding: 4px 6px; border: 1px solid #000; font-size: 8pt; width: 42%;">COURSE CODE:</td>
-    <td style="background-color: #C0C0C0; font-weight: bold; padding: 4px 6px; border: 1px solid #000; vertical-align: top; font-size: 8pt; text-align: left; width: 3%;">COPIES ISSUED<br>TO:</td>
+    <td style="background-color: #C0C0C0; font-weight: bold; padding: 4px 6px; border: 1px solid #000; font-size: 8pt; width: 18%;">ACADEMIC TERM/ SCHOOL YEAR:</td>
+    <td style="background-color: #C0C0C0; font-weight: bold; padding: 4px 6px; border: 1px solid #000; font-size: 8pt; width: 42%;">COURSE CODE:</td>
+    <td colspan="3" style="background-color: #C0C0C0; font-weight: bold; padding: 4px 6px; border: 1px solid #000; vertical-align: top; font-size: 8pt; text-align: left; width: 3%;">COPIES ISSUED<br>TO:</td>
 </tr>
 <tr>
-    <td colspan="2" style="text-align: center; padding: 4px 6px; border: 1px solid #000; font-weight: bold; font-size: 8pt;">' . strtoupper($class['term']) . ', AY ' . htmlspecialchars($class['academic_year']) . '</td>
-    <td colspan="2" style="text-align: center; padding: 4px 6px; border: 1px solid #000; font-weight: bold; font-size: 8pt;">' . strtoupper(htmlspecialchars($class['course_code'])) . '</td>
-    <td rowspan="5" style="text-align: left; padding: 4px 6px; border: 1px solid #000; vertical-align: top; font-size: 8pt; line-height: 1.3;">PROGRAM<br>CHAIR<br>ACADEMIC<br>DIRECTOR</td>
+    <td style="text-align: center; padding: 4px 6px; border: 1px solid #000; font-weight: bold; font-size: 8pt;">' . strtoupper($class['term']) . ', AY ' . htmlspecialchars($class['academic_year']) . '</td>
+    <td style="text-align: center; padding: 4px 6px; border: 1px solid #000; font-weight: bold; font-size: 8pt;">' . strtoupper(htmlspecialchars($class['course_code'])) . '</td>
+    <td colspan="3" rowspan="3" style="text-align: left; padding: 4px 6px; border: 1px solid #000; vertical-align: top; font-size: 8pt; line-height: 1.3;">PROGRAM<br>CHAIR<br>ACADEMIC<br>DIRECTOR</td>
 </tr>
 <tr>
     <td style="background-color: #C0C0C0; font-weight: bold; padding: 4px 6px; border: 1px solid #000; font-size: 8pt; width: 9%;">SECTION</td>
     <td style="background-color: #C0C0C0; font-weight: bold; padding: 4px 6px; border: 1px solid #000; font-size: 8pt; width: 9%;">CLASS SIZE</td>
-    <td colspan="2" style="background-color: #C0C0C0; font-weight: bold; padding: 4px 6px; border: 1px solid #000; font-size: 8pt;">COURSE TITLE:</td>
 </tr>
 <tr>
     <td style="text-align: center; padding: 4px 6px; border: 1px solid #000; font-weight: bold; font-size: 8pt;">' . htmlspecialchars($class['section']) . '</td>
     <td style="text-align: center; padding: 4px 6px; border: 1px solid #000; font-weight: bold; font-size: 8pt;">' . $studentCount . '</td>
-    <td colspan="2" rowspan="2" style="text-align: center; padding: 2px 4px; border: 1px solid #000; vertical-align: middle; font-weight: bold; font-size: 8pt; line-height: 1.1;">' . htmlspecialchars($subject['course_title'] ?? '') . '</td>
 </tr>
 <tr>
-    <td colspan="2" style="background-color: #C0C0C0; font-weight: bold; padding: 4px 6px; border: 1px solid #000; font-size: 8pt;">INSTRUCTOR:</td>
-</tr>
-<tr>
-    <td colspan="2" style="text-align: center; padding: 4px 6px; border: 1px solid #000; font-weight: bold; font-size: 8pt;">' . strtoupper(htmlspecialchars($faculty['name'])) . '</td>
+    <td style="background-color: #C0C0C0; font-weight: bold; padding: 4px 6px; border: 1px solid #000; font-size: 8pt;">COURSE TITLE:</td>
     <td colspan="4" style="background-color: #C0C0C0; font-weight: bold; padding: 4px 6px; border: 1px solid #000; font-size: 8pt;">COURSE DESCRIPTION:</td>
 </tr>
 <tr>
-    <td colspan="2" style="background-color: #C0C0C0; font-weight: bold; padding: 4px 6px; border: 1px solid #000; font-size: 8pt;">SIGNATURE:</td>
+    <td style="text-align: center; padding: 2px 4px; border: 1px solid #000; vertical-align: middle; font-weight: bold; font-size: 8pt; line-height: 1.1;">' . htmlspecialchars($subject['course_title'] ?? '') . '</td>
     <td colspan="4" rowspan="4" style="padding: 6px; border: 1px solid #000; font-size: 8pt; line-height: 1.25; vertical-align: top;">' . htmlspecialchars($subject['course_desc'] ?? '') . '</td>
 </tr>
 <tr>
-    <td colspan="2" style="padding: 20px 6px; border: 1px solid #000; vertical-align: top;">&nbsp;</td>
+    <td style="background-color: #C0C0C0; font-weight: bold; padding: 4px 6px; border: 1px solid #000; font-size: 8pt;">INSTRUCTOR:</td>
+</tr>
+<tr>
+    <td style="text-align: center; padding: 4px 6px; border: 1px solid #000; font-weight: bold; font-size: 8pt;">' . strtoupper(htmlspecialchars($faculty['name'])) . '</td>
+</tr>
+<tr>
+    <td style="background-color: #C0C0C0; font-weight: bold; padding: 4px 6px; border: 1px solid #000; font-size: 8pt;">SIGNATURE:</td>
+</tr>
+<tr>
+    <td style="padding: 20px 6px; border: 1px solid #000; vertical-align: top;">&nbsp;</td>
 </tr>
 <tr>
 </tr>

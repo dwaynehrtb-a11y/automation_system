@@ -141,13 +141,14 @@ try {
         if (!$stmt) {
             throw new Exception("Prepare failed: " . $conn->error);
         }
-        $stmt->bind_param('siiss', $student_id, $column_id, $component_id, $class_code, $grade);
+        // Bind types: student_id (s), column_id (i), component_id (i), class_code (s), raw_score (d)
+        $stmt->bind_param('siisd', $student_id, $column_id, $component_id, $class_code, $grade);
     }
     
     $updated = false;
     if ($stmt->execute()) { 
         $updated = true;
-        error_log("Statement executed successfully");
+        error_log("Statement executed successfully — saved raw_score={$grade} for student={$student_id}, column={$column_id}");
     } else {
         error_log("Statement execute failed: " . $stmt->error);
     }
@@ -163,6 +164,48 @@ try {
     $recomputed = null;
     if ($student_id !== '' && $class_code !== '') {
         error_log("Starting recomputation for $student_id in $class_code");
+        
+        // Check if there are any remaining INC items for this student
+        $checkIncStmt = $conn->prepare("
+            SELECT COUNT(*) as inc_count 
+            FROM student_flexible_grades sfg
+            JOIN grading_component_columns gcc ON sfg.column_id = gcc.id
+            JOIN grading_components gc ON gcc.component_id = gc.id
+            WHERE sfg.student_id = ? 
+            AND sfg.class_code = ? 
+            AND sfg.status = 'inc'
+        ");
+        $checkIncStmt->bind_param('ss', $student_id, $class_code);
+        $checkIncStmt->execute();
+        $incResult = $checkIncStmt->get_result()->fetch_assoc();
+        $checkIncStmt->close();
+        
+        $hasRemainingInc = $incResult['inc_count'] > 0;
+        error_log("Remaining INC items for $student_id: " . $incResult['inc_count']);
+        
+        // If no INC items remain, clear the INC status and lacking requirements
+        if (!$hasRemainingInc) {
+            $checkStatusStmt = $conn->prepare("SELECT grade_status FROM grade_term WHERE student_id = ? AND class_code = ?");
+            $checkStatusStmt->bind_param('ss', $student_id, $class_code);
+            $checkStatusStmt->execute();
+            $statusResult = $checkStatusStmt->get_result()->fetch_assoc();
+            $checkStatusStmt->close();
+            
+            if ($statusResult && $statusResult['grade_status'] === 'incomplete') {
+                error_log("✅ No more INC items - clearing INC status and lacking requirements for $student_id");
+                
+                // Clear the lacking requirements and manual freeze so status gets recalculated
+                $clearIncStmt = $conn->prepare("
+                    UPDATE grade_term 
+                    SET lacking_requirements = '', 
+                        status_manually_set = 'no'
+                    WHERE student_id = ? AND class_code = ?
+                ");
+                $clearIncStmt->bind_param('ss', $student_id, $class_code);
+                $clearIncStmt->execute();
+                $clearIncStmt->close();
+            }
+        }
         
         // Fetch term weights
         $wStmt = $conn->prepare("SELECT midterm_weight, finals_weight FROM class_term_weights WHERE class_code=? LIMIT 1");
@@ -338,7 +381,7 @@ try {
     }
 
     ob_end_clean();
-    $response = ['success'=>true,'message'=>'Grade updated successfully!','recomputed'=>$recomputed];
+    $response = ['success'=>true,'message'=>'Grade updated successfully!','saved_raw'=>$grade,'recomputed'=>$recomputed];
     error_log("Sending response: " . json_encode($response));
     echo json_encode($response);
 } catch (Exception $e) {

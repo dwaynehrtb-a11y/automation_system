@@ -416,7 +416,7 @@ try {
         addRowToTable(newItem) {
             console.log('Adding row to table:', newItem);
             
-            const classTable = document.querySelector('#classes .table tbody');
+        const classTable = document.getElementById('classesTableBody');
             
             if (!classTable) {
                 console.log('Classes table not found, reloading page...');
@@ -462,18 +462,15 @@ try {
                     </div>
                 </td>
                 <td>
-                    <div class="d-flex">
-                        <button onclick="viewClassSchedules('${escapeQuotes(newItem.section)}', '${escapeQuotes(newItem.course_code)}', '${escapeQuotes(newItem.academic_year)}', '${escapeQuotes(newItem.term)}')" class="btn btn-info btn-sm">
+                    <div class="action-buttons">
+                        <button onclick="viewClassSchedules('${escapeQuotes(newItem.section)}', '${escapeQuotes(newItem.course_code)}', '${escapeQuotes(newItem.academic_year)}', '${escapeQuotes(newItem.term)}')" class="btn btn-sm btn-info btn-icon" title="View Schedules (${scheduleCount})">
                             <i class="fas fa-eye"></i>
-                            View (${scheduleCount})
                         </button>
-                        <button onclick="editClassGroup('${escapeQuotes(newItem.section)}', '${escapeQuotes(newItem.academic_year)}', '${escapeQuotes(newItem.term)}', '${escapeQuotes(newItem.course_code)}', ${newItem.faculty_id || 'null'}, '${escapeQuotes(newItem.room)}', '${escapeQuotes(newItem.schedule_data || '')}')" class="btn btn-warning btn-sm">
+                        <button onclick="editClassGroup('${escapeQuotes(newItem.section)}', '${escapeQuotes(newItem.academic_year)}', '${escapeQuotes(newItem.term)}', '${escapeQuotes(newItem.course_code)}', ${newItem.faculty_id || 'null'}, '${escapeQuotes(newItem.room)}', '${escapeQuotes(newItem.schedule_data || '')}')" class="btn btn-sm btn-warning btn-icon" title="Edit Class">
                             <i class="fas fa-edit"></i>
-                            Edit
                         </button>
-                        <button onclick="confirmDeleteClassGroup('${escapeQuotes(newItem.section)}', '${escapeQuotes(newItem.academic_year)}', '${escapeQuotes(newItem.term)}', '${escapeQuotes(newItem.course_code)}', ${newItem.faculty_id || 'null'}, '${escapeQuotes(newItem.room)}')" class="btn btn-danger btn-sm">
+                        <button onclick="confirmDeleteClassGroup('${escapeQuotes(newItem.section)}', '${escapeQuotes(newItem.academic_year)}', '${escapeQuotes(newItem.term)}', '${escapeQuotes(newItem.course_code)}', ${newItem.faculty_id || 'null'}, '${escapeQuotes(newItem.room)}')" class="btn btn-sm btn-danger btn-icon" title="Delete Class">
                             <i class="fas fa-trash"></i>
-                            Delete
                         </button>
                     </div>
                 </td>
@@ -1178,7 +1175,7 @@ try {
     function removeClassGroupRow(section, academic_year, term, course_code, faculty_id) {
         console.log('Removing row for class group:', section, course_code);
         
-        const classTable = document.querySelector('#classes .table tbody');
+        const classTable = document.getElementById('classesTableBody');
         
         if (!classTable) {
             console.log('Classes table not found');

@@ -103,7 +103,7 @@ function editFaculty(id, name, employee_id, email) {
 
 // Update faculty row in table after edit
 function updateFacultyInTable(id, updatedData) {
-    const tables = document.querySelectorAll('#faculty .table tbody tr');
+    const tables = document.querySelectorAll('#facultyTableBody tr');
     tables.forEach(row => {
         const editButton = row.querySelector(`button[onclick*="editFaculty(${id}"]`);
         if (editButton) {
@@ -189,31 +189,45 @@ function confirmDeleteFaculty(facultyId, facultyName) {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    Swal.fire({
-                        title: 'Deleted!',
-                        text: data.message || 'Faculty member deleted successfully.',
-                        icon: 'success',
-                        timer: 2000,
-                        showConfirmButton: false
-                    });
+                    // Close the loading dialog first
+                    Swal.close();
+                    
+                    // Show Toast success message for delete (standardized)
+                    if (window.Toast) {
+                        Toast.fire({ 
+                            icon: 'success', 
+                            title: 'Faculty member deleted successfully!' 
+                        });
+                    } else {
+                        alert('Faculty member deleted successfully!');
+                    }
                     
                     // Remove row from table
                     removeFacultyRow(facultyId);
                 } else {
-                    Swal.fire({
-                        title: 'Error!',
-                        text: data.message || 'An error occurred while deleting.',
-                        icon: 'error'
-                    });
+                    // Show Toast error message (standardized)
+                    if (window.Toast) {
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'Error: ' + (data.message || 'An error occurred while deleting.')
+                        });
+                    } else {
+                        alert('Error: ' + (data.message || 'An error occurred while deleting.'));
+                    }
                 }
             })
             .catch(error => {
                 console.error('Delete error:', error);
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'An unexpected error occurred.',
-                    icon: 'error'
-                });
+                
+                // Show Toast error message (standardized)
+                if (window.Toast) {
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'Error: An unexpected error occurred.'
+                    });
+                } else {
+                    alert('Error: An unexpected error occurred.');
+                }
             });
         }
     });
@@ -221,7 +235,7 @@ function confirmDeleteFaculty(facultyId, facultyName) {
 
 // Remove faculty row from table with animation
 function removeFacultyRow(facultyId) {
-    const facultyTable = document.querySelector('#faculty .table tbody');
+    const facultyTable = document.getElementById('facultyTableBody');
     
     if (!facultyTable) {
         setTimeout(() => window.location.reload(), 1000);
@@ -464,7 +478,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Add new faculty row to table dynamically
 function addNewFacultyRow(faculty) {
-    const facultyTableBody = document.querySelector('#faculty .table tbody');
+    const facultyTableBody = document.getElementById('facultyTableBody');
     
     if (!facultyTableBody) {
         console.error('Faculty table body not found');
@@ -499,26 +513,22 @@ function addNewFacultyRow(faculty) {
             </span>
         </td>
         <td>
-            <div class="d-flex gap-3">
+            <div class="action-buttons">
                 <button onclick="resendCredentials(${faculty.id}, '${escapeHtml(faculty.name)}', '${escapeHtml(faculty.email)}')" 
-                        class="btn btn-info btn-sm">
+                        class="btn btn-sm btn-info btn-icon" title="Resend Email">
                     <i class="fas fa-envelope"></i>
-                    Resend Email
                 </button>
                 <button onclick="viewFacultyClasses(${faculty.id}, '${escapeHtml(faculty.name)}')" 
-                        class="btn btn-info btn-sm">
+                        class="btn btn-sm btn-info btn-icon" title="View Classes">
                     <i class="fas fa-eye"></i>
-                    View Classes
                 </button>
                 <button onclick="editFaculty(${faculty.id}, '${escapeHtml(faculty.name)}', '${escapeHtml(faculty.employee_id)}', '${escapeHtml(faculty.email)}')" 
-                        class="btn btn-warning btn-sm">
+                        class="btn btn-sm btn-warning btn-icon" title="Edit Faculty">
                     <i class="fas fa-edit"></i>
-                    Edit
                 </button>
                 <button onclick="confirmDeleteFaculty(${faculty.id}, '${escapeHtml(faculty.name)}')" 
-                        class="btn btn-danger btn-sm">
+                        class="btn btn-sm btn-danger btn-icon" title="Delete Faculty">
                     <i class="fas fa-trash"></i>
-                    Delete
                 </button>
             </div>
         </td>
