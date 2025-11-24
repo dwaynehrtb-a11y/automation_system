@@ -185,13 +185,41 @@ $error = $_GET['error'] ?? '';
             </div>
         </div>
         
-        <div class="user-info">
-            <div class="user-avatar">
-                <?= strtoupper(substr($faculty_name, 0, 2)) ?>
-            </div>
-            <div class="user-details">
-                <div class="user-name"><?= htmlspecialchars($faculty_name) ?></div>
-                <div class="user-role">Faculty</div>
+        <div class="user-dropdown-container" style="position: relative; margin-right: 2rem;">
+            <button class="user-dropdown-trigger" onclick="toggleUserDropdown()" style="background: linear-gradient(135deg, rgba(0, 48, 130, 0.08) 0%, rgba(0, 71, 171, 0.08) 100%); border: 1.5px solid rgba(255, 255, 255, 0.25); display: flex; align-items: center; gap: 1.25rem; color: white; cursor: pointer; padding: 1rem 1.5rem; border-radius: 16px; transition: all 0.3s;" onmouseover="this.style.background='linear-gradient(135deg, rgba(0, 48, 130, 0.15) 0%, rgba(0, 71, 171, 0.15) 100%)'; this.style.borderColor='rgba(255, 255, 255, 0.35)'" onmouseout="this.style.background='linear-gradient(135deg, rgba(0, 48, 130, 0.08) 0%, rgba(0, 71, 171, 0.08) 100%)'; this.style.borderColor='rgba(255, 255, 255, 0.25)'">
+                <div class="user-avatar" style="width: 48px; height: 48px; background: #D4AF37; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #003082; font-size: 18px; flex-shrink: 0; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);">
+                    <?= strtoupper(substr($faculty_name, 0, 2)) ?>
+                </div>
+                <div class="user-details" style="display: flex; flex-direction: column; text-align: left;">
+                    <div class="user-name" style="font-size: 16px; font-weight: 600; color: white;"><?= htmlspecialchars($faculty_name) ?></div>
+                    <div class="user-role" style="font-size: 12px; color: rgba(255,255,255,0.8);">Faculty</div>
+                </div>
+            </button>
+
+            <!-- Dropdown Menu -->
+            <div class="user-dropdown-menu" id="userDropdownMenu" style="position: absolute; top: calc(100% + 0.75rem); right: 0; background: white; border-radius: 12px; box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12); min-width: 260px; display: none; overflow: hidden; z-index: 1001;">
+                <!-- Profile Info Card -->
+                <div class="dropdown-profile-card" style="padding: 1.25rem; background: linear-gradient(135deg, rgba(0, 48, 130, 0.05) 0%, rgba(0, 71, 171, 0.05) 100%); border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; gap: 1rem;">
+                    <div class="user-avatar" style="width: 48px; height: 48px; background: #D4AF37; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #003082; font-size: 18px; flex-shrink: 0;">
+                        <?= strtoupper(substr($faculty_name, 0, 2)) ?>
+                    </div>
+                    <div class="user-details" style="display: flex; flex-direction: column;">
+                        <div class="user-name" style="font-size: 16px; font-weight: 600; color: #003082;"><?= htmlspecialchars($faculty_name) ?></div>
+                        <div class="user-role" style="font-size: 12px; color: #6b7280;">Faculty</div>
+                    </div>
+                </div>
+
+                <!-- Profile Option -->
+                <a onclick="showSection('profile'); toggleUserDropdown();" class="dropdown-profile-btn" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem 1.25rem; color: #374151; text-decoration: none; transition: all 0.3s; cursor: pointer;" onmouseover="this.style.background='#f9fafb'; this.style.color='#003082'" onmouseout="this.style.background='transparent'; this.style.color='#374151'">
+                    <i class="fas fa-user" style="width: 16px;"></i>
+                    <span>My Profile</span>
+                </a>
+
+                <!-- Logout Option -->
+                <a href="../auth/logout.php" class="dropdown-logout-btn" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem 1.25rem; color: #374151; text-decoration: none; transition: all 0.3s; border: none;" onmouseover="this.style.background='#f9fafb'; this.style.color='#003082'" onmouseout="this.style.background='transparent'; this.style.color='#374151'">
+                    <i class="fas fa-sign-out-alt" style="width: 16px;"></i>
+                    <span>Logout</span>
+                </a>
             </div>
         </div>
     </div>
@@ -216,23 +244,6 @@ $error = $_GET['error'] ?? '';
         </div>
 
             <div class="sidebar-nav">
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" onclick="toggleProfileDropdown(event)">
-                        <i class="fas fa-user-circle"></i>
-                        <span>Profile</span>
-                        <i class="fas fa-chevron-down dropdown-icon"></i>
-                    </a>
-                    <div class="dropdown-menu" id="profile-dropdown">
-                        <a href="#profile" class="dropdown-item" onclick="event.preventDefault(); showSection('profile');">
-                            <i class="fas fa-user"></i>
-                            <span>My Profile</span>
-                        </a>
-                        <a href="../auth/logout.php" class="dropdown-item" data-external="true">
-                            <i class="fas fa-sign-out-alt"></i>
-                            <span>Logout</span>
-                        </a>
-                    </div>
-                </div>
                 <div class="nav-item">
                     <a href="#dashboard" class="nav-link active" onclick="event.preventDefault(); showSection('dashboard');">
                         <i class="fas fa-chart-bar"></i>
@@ -1222,32 +1233,6 @@ $error = $_GET['error'] ?? '';
         // Backward compatibility
         window.csrfToken = APP.csrfToken;
         
-        // Profile Dropdown Toggle
-        function toggleProfileDropdown(event) {
-            event.preventDefault();
-            const dropdown = document.getElementById('profile-dropdown');
-            const icon = event.currentTarget.querySelector('.dropdown-icon');
-            
-            if (dropdown.style.display === 'block') {
-                dropdown.style.display = 'none';
-                icon.style.transform = 'rotate(0deg)';
-            } else {
-                dropdown.style.display = 'block';
-                icon.style.transform = 'rotate(180deg)';
-            }
-        }
-        
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(event) {
-            const dropdown = document.querySelector('.dropdown');
-            const dropdownMenu = document.getElementById('profile-dropdown');
-            if (dropdown && dropdownMenu && !dropdown.contains(event.target)) {
-                dropdownMenu.style.display = 'none';
-                const icon = dropdown.querySelector('.dropdown-icon');
-                if (icon) icon.style.transform = 'rotate(0deg)';
-            }
-        });
-        
         // Toast Notification (used by all modules)
         const Toast = Swal.mixin({
             toast: true,
@@ -1811,5 +1796,25 @@ async function loadInitialPreferences(){
         </div>
     </div>
 </div>   
+
+<script>
+function toggleUserDropdown() {
+    const menu = document.getElementById('userDropdownMenu');
+    if (menu.style.display === 'none' || menu.style.display === '') {
+        menu.style.display = 'block';
+    } else {
+        menu.style.display = 'none';
+    }
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(event) {
+    const dropdown = document.querySelector('.user-dropdown-container');
+    if (dropdown && !dropdown.contains(event.target)) {
+        document.getElementById('userDropdownMenu').style.display = 'none';
+    }
+});
+</script>
+
 </body>
 </html>
