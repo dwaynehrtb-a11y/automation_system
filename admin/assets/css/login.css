@@ -67,7 +67,7 @@ body {
   font-size: 0.875rem;
   line-height: var(--line-height);
   color: var(--gray-900);
-  background: url('/admin/auth/assets/images/nu-lipa-background.jpg') no-repeat center center fixed;
+  background: url('/admin/assets/images/nu-lipa-background.jpg') no-repeat center center fixed;
   background-size: cover;
   min-height: 100vh;
   display: flex;
