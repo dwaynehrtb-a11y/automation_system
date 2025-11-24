@@ -138,6 +138,9 @@ function renderGradePreview(element, data) {
     const midtermGrade = data.midterm_grade || 0;
     const finalsGrade = data.finals_grade || 0;
     const termGrade = data.term_grade || 0;
+    const midtermPercentage = data.midterm_percentage || 0;
+    const finalsPercentage = data.finals_percentage || 0;
+    const termPercentage = data.term_percentage || 0;
     const grade_status = data.grade_status || 'pending';
     
     // Determine what to display in term grade box based on status
@@ -170,19 +173,19 @@ function renderGradePreview(element, data) {
             <div class="grade-item" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 120px;">
                 <div style="font-size: 11px; color: #6b7280; font-weight: 600; margin-bottom: 0.75rem; letter-spacing: 0.5px;">MIDTERM</div>
                 <div style="font-size: 13px; color: #9ca3af; font-weight: 500; margin-bottom: 0.5rem;">(40%)</div>
-                <div class="midterm-percentage" style="font-size: 16px; font-weight: 700; color: #003082; margin-bottom: 0.25rem;">${data.midterm_percentage.toFixed(2)}%</div>
+                <div class="midterm-percentage" style="font-size: 16px; font-weight: 700; color: #003082; margin-bottom: 0.25rem;">${parseFloat(midtermPercentage).toFixed(2)}%</div>
                 <div class="midterm-grade" style="font-size: 13px; font-weight: 600; color: #6b7280;">${midtermGrade.toFixed(1)}</div>
             </div>
             <div class="grade-item" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 120px;">
                 <div style="font-size: 11px; color: #6b7280; font-weight: 600; margin-bottom: 0.75rem; letter-spacing: 0.5px;">FINALS</div>
                 <div style="font-size: 13px; color: #9ca3af; font-weight: 500; margin-bottom: 0.5rem;">(60%)</div>
-                <div class="finals-percentage" style="font-size: 16px; font-weight: 700; color: #003082; margin-bottom: 0.25rem;">${data.finals_percentage.toFixed(2)}%</div>
+                <div class="finals-percentage" style="font-size: 16px; font-weight: 700; color: #003082; margin-bottom: 0.25rem;">${parseFloat(finalsPercentage).toFixed(2)}%</div>
                 <div class="finals-grade" style="font-size: 13px; font-weight: 600; color: #6b7280;">${finalsGrade.toFixed(1)}</div>
             </div>
             <div class="grade-item" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 120px;">
                 <div style="font-size: 11px; color: #6b7280; font-weight: 600; margin-bottom: 0.75rem; letter-spacing: 0.5px;">TERM GRADE</div>
                 <div class="term-grade-status" style="font-size: 13px; color: ${badgeColor}; font-weight: 700; margin-bottom: 0.5rem;">${badgeText}</div>
-                <div class="term-grade-percentage" style="font-size: 16px; font-weight: 700; color: #003082; margin-bottom: 0.25rem;">${data.term_percentage.toFixed(2)}%</div>
+                <div class="term-grade-percentage" style="font-size: 16px; font-weight: 700; color: #003082; margin-bottom: 0.25rem;">${parseFloat(termPercentage).toFixed(2)}%</div>
                 <div class="term-grade-value" style="font-size: 13px; font-weight: 600; color: #6b7280;">${termGrade.toFixed(1)}</div>
             </div>
         </div>
