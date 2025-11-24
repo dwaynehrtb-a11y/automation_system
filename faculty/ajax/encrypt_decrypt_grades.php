@@ -73,12 +73,15 @@ try {
         echo json_encode(['success'=>true,'message'=>"Encrypted $count grade row(s).",'count'=>$count,'errors'=>$errors]);
         exit;
     } elseif ($action === 'decrypt_all') {
+        error_log("DECRYPT_ALL: Starting decryption for class $class_code");
         $conn->begin_transaction();
         $select = $conn->prepare("SELECT id, term_grade, midterm_percentage, finals_percentage, term_percentage FROM grade_term WHERE class_code = ? AND is_encrypted = 1");
         $select->bind_param('s', $class_code);
         $select->execute();
         $res = $select->get_result();
         $count = 0; $errors = [];
+        error_log("DECRYPT_ALL: Found " . $res->num_rows . " encrypted records");
+        
         while ($row = $res->fetch_assoc()) {
             try {
                 $dec = [];
@@ -93,9 +96,12 @@ try {
                 if (!$upd->execute()) { throw new Exception($upd->error); }
                 $upd->close();
                 $count++;
-            } catch (Exception $ie) { $errors[] = 'ID '.$row['id'].': '.$ie->getMessage(); }
+                error_log("DECRYPT_ALL: Decrypted record id=" . $row['id']);
+            } catch (Exception $ie) { $errors[] = 'ID '.$row['id'].': '.$ie->getMessage(); error_log("DECRYPT_ALL ERROR: " . $ie->getMessage()); }
         }
         $select->close();
+        error_log("DECRYPT_ALL: Successfully decrypted $count records, " . count($errors) . " errors");
+        
         $students = $conn->prepare("SELECT DISTINCT student_id FROM class_enrollments WHERE class_code = ?");
         $students->bind_param('s',$class_code); $students->execute(); $sr = $students->get_result();
         while ($s = $sr->fetch_assoc()) {
@@ -104,6 +110,7 @@ try {
         }
         $students->close();
         $conn->commit();
+        error_log("DECRYPT_ALL: Transaction committed");
         echo json_encode(['success'=>true,'message'=>"Decrypted $count grade row(s).",'count'=>$count,'errors'=>$errors]);
         exit;
     } elseif ($action === 'check_status') {

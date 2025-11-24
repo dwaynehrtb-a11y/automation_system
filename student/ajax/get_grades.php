@@ -280,95 +280,96 @@ function calculateTermGradePercentage($conn, $student_id, $class_code, $term_typ
 function getStudentGradeSummary($conn, $student_id, $class_code) {
     global $_SESSION;
     
+    error_log("===== getStudentGradeSummary CALLED for $student_id, $class_code =====");
+    
     try {
-        // Check if grades are hidden using the grade_visibility_status table
-        $visibility_stmt = $conn->prepare(
-            "SELECT grade_visibility FROM grade_visibility_status 
-             WHERE student_id = ? AND class_code = ? LIMIT 1"
-        );
-        
-        if ($visibility_stmt) {
-            $visibility_stmt->bind_param("ss", $student_id, $class_code);
-            $visibility_stmt->execute();
-            $visibility_result = $visibility_stmt->get_result();
-            if ($visibility_result->num_rows > 0) {
-                $visibility_row = $visibility_result->fetch_assoc();
-                if ($visibility_row['grade_visibility'] === 'hidden') {
-                    $visibility_stmt->close();
-                    return [
-                        'success' => true,
-                        'midterm_grade' => 0,
-                        'finals_grade' => 0,
-                        'term_grade' => 0,
-                        'term_percentage' => 0,
-                        'grade_status' => 'pending',
-                        'term_grade_hidden' => true,
-                        'message' => 'Grades have not been released yet'
-                    ];
-                }
-            }
-            $visibility_stmt->close();
-        }
-        
-        // Use GradesModel for auto-decryption and access control
-        $gradesModel = new GradesModel($conn);
-        
+        // Get grade data first to check encryption status
         $stmt = $conn->prepare("SELECT midterm_percentage, finals_percentage, term_percentage, term_grade, grade_status, is_encrypted FROM grade_term WHERE student_id = ? AND class_code = ? LIMIT 1");
         $stmt->bind_param('ss', $student_id, $class_code);
         $stmt->execute();
         $row = $stmt->get_result()->fetch_assoc();
         $stmt->close();
-        if ($row) {
-            $is_encrypted = intval($row['is_encrypted']) === 1;
-            if ($is_encrypted) {
-                return [
-                    'success' => true,
-                    'midterm_grade' => 0,
-                    'midterm_percentage' => 0,
-                    'finals_grade' => 0,
-                    'finals_percentage' => 0,
-                    'term_percentage' => 0,
-                    'term_grade' => 0,
-                    'grade_status' => $row['grade_status'] ?? 'pending',
-                    'term_grade_hidden' => true,
-                    'message' => 'Grades are not yet released'
-                ];
-            }
-            $midterm_pct = floatval($row['midterm_percentage'] ?? 0);
-            $finals_pct = floatval($row['finals_percentage'] ?? 0);
-            $term_pct = floatval($row['term_percentage'] ?? 0);
-            $term_grade = ($row['term_grade'] !== null && $row['term_grade'] !== '') ? floatval($row['term_grade']) : 0;
-            
-            // Use stored percentages directly from database (faculty system already calculated these)
-            // Do NOT recalculate from components as it may give different results
-            $calc_midterm_pct = $midterm_pct;
-            $calc_finals_pct = $finals_pct;
-            
-            // Convert percentages to grades
-            $midterm_grade = percentageToGrade($calc_midterm_pct);
-            $finals_grade = percentageToGrade($calc_finals_pct);
-            
-            // Use the stored term_grade from database directly (already calculated by faculty system)
-            // Do NOT recalculate it - use the value stored by the grading system
-            $final_term_grade = $term_grade;
-            
-            error_log("Grade display: midterm_pct=$calc_midterm_pct%, midterm_grade=$midterm_grade");
-            error_log("Grade display: finals_pct=$calc_finals_pct%, finals_grade=$finals_grade");
-            error_log("Grade display: term_pct=$term_pct%, term_grade=$final_term_grade");
-            
+        
+        // If no grade record exists, return not available
+        if (!$row) {
+            error_log("No grade record found for $student_id, $class_code");
             return [
                 'success' => true,
-                'midterm_grade' => $midterm_grade,
-                'midterm_percentage' => $calc_midterm_pct,
-                'finals_grade' => $finals_grade,
-                'finals_percentage' => $calc_finals_pct,
-                'term_percentage' => $term_pct,
-                'term_grade' => $final_term_grade,
-                'grade_status' => $row['grade_status'] ?? 'pending',
-                'term_grade_hidden' => false,
-                'message' => 'Grades have been released'
+                'midterm_grade' => 0,
+                'finals_grade' => 0,
+                'term_grade' => 0,
+                'term_percentage' => 0,
+                'grade_status' => 'pending',
+                'term_grade_hidden' => true,
+                'message' => 'Grades have not been released yet'
             ];
         }
+        
+        error_log("Grade record found. is_encrypted = " . ($row['is_encrypted'] ?? 'NULL'));
+        
+        // Check if grades are hidden using the is_encrypted flag (primary check)
+        $is_encrypted = intval($row['is_encrypted']) === 1;
+        
+        if ($is_encrypted) {
+            // Grades are encrypted - definitely hidden
+            error_log("Grade hidden: is_encrypted = 1 for $student_id, $class_code");
+            $response = [
+                'success' => true,
+                'midterm_grade' => 0,
+                'midterm_percentage' => 0,
+                'finals_grade' => 0,
+                'finals_percentage' => 0,
+                'term_percentage' => 0,
+                'term_grade' => 0,
+                'grade_status' => $row['grade_status'] ?? 'pending',
+                'term_grade_hidden' => true,
+                'message' => 'Grades are not yet released'
+            ];
+            error_log("RETURNING HIDDEN GRADES: " . json_encode($response));
+            return $response;
+        }
+        
+        // Grades are NOT encrypted, so they should be visible
+        // Log this for debugging
+        error_log("Grade visible: is_encrypted = 0 for $student_id, $class_code");
+        
+        $midterm_pct = floatval($row['midterm_percentage'] ?? 0);
+        $finals_pct = floatval($row['finals_percentage'] ?? 0);
+        $term_pct = floatval($row['term_percentage'] ?? 0);
+        $term_grade = ($row['term_grade'] !== null && $row['term_grade'] !== '') ? floatval($row['term_grade']) : 0;
+        
+        // Use stored percentages directly from database (faculty system already calculated these)
+        // Do NOT recalculate from components as it may give different results
+        $calc_midterm_pct = $midterm_pct;
+        $calc_finals_pct = $finals_pct;
+        
+        // Convert percentages to grades
+        $midterm_grade = percentageToGrade($calc_midterm_pct);
+        $finals_grade = percentageToGrade($calc_finals_pct);
+        
+        // Use the stored term_grade from database directly (already calculated by faculty system)
+        // Do NOT recalculate it - use the value stored by the grading system
+        $final_term_grade = $term_grade;
+        
+        error_log("Grade display: midterm_pct=$calc_midterm_pct%, midterm_grade=$midterm_grade");
+        error_log("Grade display: finals_pct=$calc_finals_pct%, finals_grade=$finals_grade");
+        error_log("Grade display: term_pct=$term_pct%, term_grade=$final_term_grade");
+        
+        $response = [
+            'success' => true,
+            'midterm_grade' => $midterm_grade,
+            'midterm_percentage' => $calc_midterm_pct,
+            'finals_grade' => $finals_grade,
+            'finals_percentage' => $calc_finals_pct,
+            'term_percentage' => $term_pct,
+            'term_grade' => $final_term_grade,
+            'grade_status' => $row['grade_status'] ?? 'pending',
+            'term_grade_hidden' => false,
+            'message' => 'Grades have been released'
+        ];
+        
+        error_log("RETURNING VISIBLE GRADES: " . json_encode($response));
+        return $response;
     } catch (Exception $e) {
         error_log("GradesModel error: " . $e->getMessage());
         // Fall back to direct query if model fails
