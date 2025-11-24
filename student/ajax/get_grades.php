@@ -118,20 +118,14 @@ try {
  */
 function percentageToGrade($percentage) {
     $p = floatval($percentage);
-    // Adjusted scale to match your institution
-    if ($p >= 98) return 4.0;
-    if ($p >= 95) return 4.0;
-    if ($p >= 92) return 3.5;
-    if ($p >= 89) return 3.5;
-    if ($p >= 86) return 3.0;
-    if ($p >= 83) return 3.0;
-    if ($p >= 80) return 2.5;
-    if ($p >= 77) return 2.5;
-    if ($p >= 74) return 2.0;
-    if ($p >= 71) return 2.0;
-    if ($p >= 68) return 1.5;
-    if ($p >= 65) return 1.5;
-    if ($p >= 60) return 1.0;
+    // Scale must match faculty grading system in compute_term_grades.php
+    if ($p >= 96.0) return 4.0;
+    if ($p >= 90.0) return 3.5;
+    if ($p >= 84.0) return 3.0;
+    if ($p >= 78.0) return 2.5;
+    if ($p >= 72.0) return 2.0;
+    if ($p >= 66.0) return 1.5;
+    if ($p >= 60.0) return 1.0;
     return 0.0;
 }
 
