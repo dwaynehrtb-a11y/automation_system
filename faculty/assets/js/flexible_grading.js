@@ -545,7 +545,7 @@ function renderTable() {
                             fd.append('class_code', FGS.currentClassCode);
                             fd.append('csrf_token', window.csrfToken || APP.csrfToken);
 
-                            const res = await fetch('/automation_system/ajax/update_grade.php', { method: 'POST', body: fd });
+                            const res = await fetch('/ajax/update_grade.php', { method: 'POST', body: fd });
                             const data = await res.json();
                             if (data.success) {
                                 console.log(`    ✅ Database corrected: ${student.student_id} column ${col.id} = ${correctedRawVal.toFixed(2)}`);
@@ -2510,7 +2510,7 @@ async function saveRawScore(inputEl) {
         if (typeof raw === 'string' && raw.includes('%')) {
             console.debug(`DEBUG: Input contains '%' before sending for ${studentId}_${columnId} -> '${raw}'`);
         }
-        const res = await fetch('/automation_system/ajax/update_grade.php', { method:'POST', body: fd });
+        const res = await fetch('/ajax/update_grade.php', { method:'POST', body: fd });
         if (!res.ok) {
             console.error(`💾 HTTP Error: ${res.status}`);
             return;
@@ -3385,7 +3385,7 @@ async function markComponentStatus(event, studentId, columnId, status) {
     fd.append('csrf_token', window.csrfToken || APP.csrfToken);
     
     try {
-        const response = await fetch('/automation_system/ajax/update_grade.php', {
+        const response = await fetch('/ajax/update_grade.php', {
             method: 'POST',
             body: fd
         });
