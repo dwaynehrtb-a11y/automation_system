@@ -1,14 +1,11 @@
 <?php
 
-
 require_once '../config/session.php';
 
 // Check if user is logged in before logging out
 if (isAuthenticated()) {
-// Log the logout action for audit trail
-$current_user = getCurrentUser();
-
-
+    // Log the logout action for audit trail
+    $current_user = getCurrentUser();
 }
 
 // Use the secure session destroy function
@@ -16,7 +13,7 @@ destroySession();
 
 // Clear any additional cookies if they exist
 if (isset($_COOKIE['remember_token'])) {
-setcookie('remember_token', '', time() - 3600, '/', '', false, true);
+    setcookie('remember_token', '', time() - 3600, '/', '', false, true);
 }
 
 // Prevent caching of this page
@@ -25,7 +22,12 @@ header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 header("Expires: 0");
 
+// Build the redirect URL dynamically based on the current server
+$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+$host = $_SERVER['HTTP_HOST'];
+$redirect_url = $protocol . '://' . $host . '/auth/login.php?success=Logged out successfully';
+
 // Redirect to login page with success message
-header("Location: http://localhost/automation_system/auth/login.php?success=");
+header("Location: " . $redirect_url);
 exit();
 ?>
