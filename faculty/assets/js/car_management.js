@@ -162,7 +162,7 @@ const CARManager = {
             // Extract course code from class code (e.g., "CTAPROJ1-INF231-24-T1" -> "CTAPROJ1")
             const courseCode = this.currentClassCode.split('-')[0];
             
-            const response = await fetch(`../../ajax/get_subject_outcomes.php?code=${courseCode}`);
+            const response = await fetch(`ajax/get_subject_outcomes.php?code=${courseCode}`);
             const data = await response.json();
             
             if (data.success && data.outcomes) {

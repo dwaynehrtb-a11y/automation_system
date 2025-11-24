@@ -1483,7 +1483,7 @@ generateMappingMatrix() {
     
     try {
         // Fetch outcomes and mappings from API
-        const response = await fetch(`../../ajax/get_subject_outcomes.php?code=${encodeURIComponent(courseCode)}`);
+        const response = await fetch(`ajax/get_subject_outcomes.php?code=${encodeURIComponent(courseCode)}`);
         const data = await response.json();
         
         console.log(' API Response:', data);
