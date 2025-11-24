@@ -62,16 +62,6 @@ try {
         // ============================================
         // COMPONENTS
         // ============================================
-        case 'get_component_details':
-            $component_id = $_POST['component_id'] ?? '';
-            
-            if (empty($component_id)) {
-                throw new Exception('Component ID required');
-            }
-            
-            $result = getComponentDetails($conn, $component_id, $faculty_id);
-            break;
-            
         case 'get_components':
             $class_code = $_POST['class_code'] ?? '';
             $term_type = $_POST['term_type'] ?? '';
@@ -389,70 +379,6 @@ function updateTermWeights($conn, $class_code, $midterm_weight, $finals_weight, 
 // ============================================
 // COMPONENT FUNCTIONS
 // ============================================
-
-/**
- * Get component details including columns
- */
-function getComponentDetails($conn, $component_id, $faculty_id) {
-    // Verify faculty owns this component's class
-    $verify = $conn->prepare("
-        SELECT gc.id 
-        FROM grading_components gc
-        INNER JOIN class c ON gc.class_code = c.class_code
-        WHERE gc.id = ? AND c.faculty_id = ?
-        LIMIT 1
-    ");
-    
-    if (!$verify) {
-        throw new Exception('Database error: ' . $conn->error);
-    }
-    
-    $verify->bind_param("ii", $component_id, $faculty_id);
-    $verify->execute();
-    
-    if ($verify->get_result()->num_rows === 0) {
-        return ['success' => false, 'message' => 'Component not found or access denied'];
-    }
-    $verify->close();
-    
-    // Get component basic info
-    $query = "
-        SELECT 
-            id,
-            component_name,
-            percentage,
-            term_type,
-            order_index,
-            created_at
-        FROM grading_components
-        WHERE id = ?
-    ";
-    
-    $stmt = $conn->prepare($query);
-    if (!$stmt) {
-        throw new Exception('Query preparation failed: ' . $conn->error);
-    }
-    
-    $stmt->bind_param("i", $component_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    
-    if ($result->num_rows === 0) {
-        $stmt->close();
-        return ['success' => false, 'message' => 'Component not found'];
-    }
-    
-    $component = $result->fetch_assoc();
-    $stmt->close();
-    
-    // Get columns for this component
-    $component['columns'] = getComponentColumns($conn, $component_id);
-    
-    return [
-        'success' => true,
-        'component' => $component
-    ];
-}
 
 /**
  * Get components for a class and term
