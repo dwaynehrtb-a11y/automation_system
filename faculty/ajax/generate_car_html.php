@@ -225,7 +225,7 @@ try {
     $html .= '<div class="page">';
     $html .= '<div class="header-container">'
         . '<div class="logo-section">'
-        . '<img src="/automation_system/assets/images/nu_logo.png" style="width:60px;height:63px">'
+        . '<img src="/faculty/assets/images/nu_logo.png" style="width:60px;height:63px">'
         . '<span style="font-weight:bold;font-size:16pt;color:#003087">NU LIPA</span>'
         . '</div>'
         . '<div class="header-info">'
@@ -288,7 +288,7 @@ try {
     $html .= '<div class="page">';
     $html .= '<div class="header-container">'
         . '<div class="logo-section">'
-        . '<img src="/automation_system/assets/images/nu_logo.png" style="width:60px;height:63px">'
+        . '<img src="/faculty/assets/images/nu_logo.png" style="width:60px;height:63px">'
         . '<span style="font-weight:bold;font-size:16pt;color:#003087">NU LIPA</span>'
         . '</div>'
         . '<div class="header-info">'
@@ -321,7 +321,7 @@ try {
     $html .= '<div class="page">';
     $html .= '<div class="header-container">'
         . '<div class="logo-section">'
-        . '<img src="/automation_system/assets/images/nu_logo.png" style="width:60px;height:63px">'
+        . '<img src="/faculty/assets/images/nu_logo.png" style="width:60px;height:63px">'
         . '<span style="font-weight:bold;font-size:16pt;color:#003087">NU LIPA</span>'
         . '</div>'
         . '<div class="header-info">'
