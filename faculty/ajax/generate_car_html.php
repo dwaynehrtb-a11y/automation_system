@@ -240,7 +240,7 @@ try {
         . '<tr><td class="gray-header" style="width:25%">SECTION</td><td class="gray-header" style="width:25%">CLASS SIZE</td></tr>'
         . '<tr><td style="text-align:center"><strong>' . htmlspecialchars($class['section'] ?? '') . '</strong></td><td style="text-align:center"><strong>' . $studentCount . '</strong></td></tr>'
         . '<tr><td class="gray-header">COURSE TITLE:</td><td class="gray-header" colspan="4">COURSE DESCRIPTION:</td></tr>'
-        . '<tr><td style="text-align:center"><strong>' . htmlspecialchars($subject['course_title'] ?? '') . '</strong></td><td colspan="4" rowspan="4" style="padding:10px;vertical-align:top">' . nl2br(htmlspecialchars($subject['course_desc'] ?? '')) . '</td></tr>'
+        . '<tr><td style="text-align:center"><strong>' . htmlspecialchars($subject['course_title'] ?? '') . '</strong></td><td colspan="4" rowspan="5" style="padding:10px;vertical-align:top">' . nl2br(htmlspecialchars($subject['course_desc'] ?? '')) . '</td></tr>'
         . '<tr><td class="gray-header">INSTRUCTOR:</td></tr>'
         . '<tr><td><strong>' . htmlspecialchars($faculty['name'] ?? '') . '</strong></td></tr>'
         . '<tr><td class="gray-header">SIGNATURE:</td></tr>'
