@@ -319,7 +319,14 @@ function getStudentGradeSummary($conn, $student_id, $class_code) {
         // Use GradesModel for auto-decryption and access control
         $gradesModel = new GradesModel($conn);
         
-        $stmt = $conn->prepare("SELECT midterm_percentage, finals_percentage, term_percentage, term_grade, grade_status, is_encrypted FROM grade_term WHERE student_id = ? AND class_code = ? LIMIT 1");
+        // Get the MOST RECENT grade entry by looking for the latest updated_at or created_at
+        $stmt = $conn->prepare("
+            SELECT midterm_percentage, finals_percentage, term_percentage, term_grade, grade_status, is_encrypted, updated_at 
+            FROM grade_term 
+            WHERE student_id = ? AND class_code = ? 
+            ORDER BY updated_at DESC 
+            LIMIT 1
+        ");
         $stmt->bind_param('ss', $student_id, $class_code);
         $stmt->execute();
         $row = $stmt->get_result()->fetch_assoc();
@@ -340,63 +347,31 @@ function getStudentGradeSummary($conn, $student_id, $class_code) {
                     'message' => 'Grades are not yet released'
                 ];
             }
+            
+            // Use stored percentages directly from grade_term (faculty already calculated these correctly)
             $midterm_pct = floatval($row['midterm_percentage'] ?? 0);
             $finals_pct = floatval($row['finals_percentage'] ?? 0);
             $term_pct = floatval($row['term_percentage'] ?? 0);
             $term_grade = ($row['term_grade'] !== null && $row['term_grade'] !== '') ? floatval($row['term_grade']) : 0;
             
-            // ALWAYS recalculate percentages from components to get accurate grades
-            // This ensures student view matches faculty view
-            $midterm_details = calculateTermGradePercentage($conn, $student_id, $class_code, 'midterm');
-            $finals_details = calculateTermGradePercentage($conn, $student_id, $class_code, 'finals');
+            // Convert percentages to grades using the same conversion as faculty
+            $midterm_grade = percentageToGrade($midterm_pct);
+            $finals_grade = percentageToGrade($finals_pct);
+            $term_grade_calculated = percentageToGrade($term_pct);
             
-            // Always use calculated percentages if available (don't fall back to stored values)
-            $calc_midterm_pct = $midterm_details['percentage'] > 0 ? $midterm_details['percentage'] : $midterm_pct;
-            $calc_finals_pct = $finals_details['percentage'] > 0 ? $finals_details['percentage'] : $finals_pct;
-            
-            // Get term weights from database
-            $weights_query = "SELECT midterm_weight, finals_weight FROM class_term_weights WHERE class_code = ? LIMIT 1";
-            $weights_stmt = $conn->prepare($weights_query);
-            if ($weights_stmt) {
-                $weights_stmt->bind_param("s", $class_code);
-                $weights_stmt->execute();
-                $weights_result = $weights_stmt->get_result();
-                if ($weights_result->num_rows > 0) {
-                    $weights_row = $weights_result->fetch_assoc();
-                    $midterm_weight = floatval($weights_row['midterm_weight'] ?? 40);
-                    $finals_weight = floatval($weights_row['finals_weight'] ?? 60);
-                } else {
-                    $midterm_weight = 40.0;
-                    $finals_weight = 60.0;
-                }
-                $weights_stmt->close();
-            } else {
-                $midterm_weight = 40.0;
-                $finals_weight = 60.0;
-            }
-            
-            // RECALCULATE term percentage from weighted components (matches faculty calculation exactly)
-            $calculated_term_pct = ($calc_midterm_pct * ($midterm_weight / 100)) + ($calc_finals_pct * ($finals_weight / 100));
-            
-            // Convert percentages to grades
-            $midterm_grade = percentageToGrade($calc_midterm_pct);
-            $finals_grade = percentageToGrade($calc_finals_pct);
-            
-            // Convert calculated term percentage to grade
-            $calc_term_grade = percentageToGrade($calculated_term_pct);
-            
-            error_log("Student Grade calculation: calc_midterm_pct=$calc_midterm_pct, midterm_grade=$midterm_grade");
-            error_log("Student Finals calculation: calc_finals_pct=$calc_finals_pct, finals_grade=$finals_grade");
-            error_log("Student Term calculation: calculated_term_pct=$calculated_term_pct, calc_term_grade=$calc_term_grade (using weights: midterm=$midterm_weight%, finals=$finals_weight%)");
+            error_log("Student view - Grade summary: Student=$student_id, Class=$class_code");
+            error_log("Midterm: $midterm_pct% -> Grade $midterm_grade");
+            error_log("Finals: $finals_pct% -> Grade $finals_grade");
+            error_log("Term: $term_pct% -> Grade $term_grade_calculated (stored term_grade=$term_grade)");
             
             return [
                 'success' => true,
                 'midterm_grade' => $midterm_grade,
-                'midterm_percentage' => $calc_midterm_pct,
+                'midterm_percentage' => $midterm_pct,
                 'finals_grade' => $finals_grade,
-                'finals_percentage' => $calc_finals_pct,
-                'term_percentage' => $calculated_term_pct,
-                'term_grade' => $calc_term_grade,
+                'finals_percentage' => $finals_pct,
+                'term_percentage' => $term_pct,
+                'term_grade' => $term_grade_calculated,
                 'grade_status' => $row['grade_status'] ?? 'pending',
                 'term_grade_hidden' => false,
                 'message' => 'Grades have been released'
