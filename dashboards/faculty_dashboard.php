@@ -228,17 +228,18 @@ $error = $_GET['error'] ?? '';
                         <span>Grading System</span>
                     </a>
                 </div>
-                <div class="nav-item">
-                    <a href="#profile" class="nav-link" onclick="event.preventDefault(); showSection('profile');">
+                <div class="nav-item has-submenu">
+                    <a href="#profile" class="nav-link" onclick="event.preventDefault(); showSection('profile'); toggleSubmenu(this)">
                         <i class="fas fa-user"></i>
                         <span>Profile</span>
+                        <i class="fas fa-chevron-down submenu-arrow"></i>
                     </a>
-                </div>
-                <div class="nav-item logout-nav">
-                    <a href="../auth/logout.php" class="nav-link" data-external="true">
-                        <i class="fas fa-sign-out-alt"></i>
-                        <span>Logout</span>
-                    </a>
+                    <div class="submenu">
+                        <a href="../auth/logout.php" class="submenu-link" data-external="true">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -952,6 +953,13 @@ $error = $_GET['error'] ?? '';
          * All functions have been moved to separate JS files for better organization
          * Ensure global APP object exists with apiPath fallback.
          */
+        
+        // Sidebar submenu toggle
+        function toggleSubmenu(element) {
+            const navItem = element.closest('.nav-item');
+            navItem.classList.toggle('active');
+        }
+
         window.APP = window.APP || {};
         if(!window.APP.apiPath){
             // Fallback relative to dashboards directory

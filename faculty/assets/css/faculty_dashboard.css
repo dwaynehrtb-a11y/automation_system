@@ -483,6 +483,61 @@ body {
     color: white;
 }
 
+/* Submenu Styles */
+.has-submenu {
+    position: relative;
+}
+
+.submenu-arrow {
+    margin-left: auto;
+    transition: transform var(--transition-normal);
+    font-size: var(--font-size-sm);
+}
+
+.has-submenu.active .submenu-arrow {
+    transform: rotate(180deg);
+}
+
+.submenu {
+    display: none;
+    margin-top: var(--space-2);
+    margin-left: var(--space-4);
+    border-left: 2px solid rgba(255, 255, 255, 0.2);
+    padding-left: var(--space-4);
+}
+
+.has-submenu.active .submenu {
+    display: block;
+}
+
+.submenu-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    color: rgba(255, 255, 255, 0.7);
+    border-radius: var(--border-radius-md);
+    transition: all var(--transition-normal);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-xs);
+    text-decoration: none;
+    cursor: pointer;
+    min-height: 36px;
+}
+
+.submenu-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    transform: translateX(2px);
+}
+
+.submenu-link i {
+    font-size: var(--font-size-base);
+    width: 16px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
 /* ===== MAIN LAYOUT ===== */
 .dashboard-container {
     display: flex;
