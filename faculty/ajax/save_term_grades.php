@@ -277,13 +277,13 @@ function getGradeStatuses($conn, $faculty_id) {
             // Decrypt values if they are encrypted
             if (!empty($row['is_encrypted'])) {
                 try {
-                    // Use GradesModel's getStudentGrades method to get decrypted data
-                    $decryptedRow = $gradesModel->getStudentGrades($row['student_id'], $class_code, $faculty_id, 'faculty');
+                    // Use GradesModel's decryptFieldsPublic method to decrypt the row
+                    $decryptedRow = $gradesModel->decryptFieldsPublic($row);
                     if ($decryptedRow) {
-                        $row['midterm_percentage'] = $decryptedRow['midterm_percentage'];
-                        $row['finals_percentage'] = $decryptedRow['finals_percentage'];
-                        $row['term_percentage'] = $decryptedRow['term_percentage'];
-                        $row['term_grade'] = $decryptedRow['term_grade'];
+                        $row = $decryptedRow;
+                        error_log("Successfully decrypted grades for student {$row['student_id']}");
+                    } else {
+                        error_log("decryptFieldsPublic returned null for student {$row['student_id']}");
                     }
                 } catch (Exception $e) {
                     error_log('Error decrypting grades for student ' . $row['student_id'] . ': ' . $e->getMessage());

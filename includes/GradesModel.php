@@ -141,6 +141,10 @@ class GradesModel {
         return $encrypted;
     }
 
+    public function decryptFieldsPublic($data) {
+        return $this->decryptFields($data);
+    }
+
     private function decryptFields($data) {
         $decrypted = $data;
         $rowEncrypted = isset($data['is_encrypted']) && (int)$data['is_encrypted'] === 1;
