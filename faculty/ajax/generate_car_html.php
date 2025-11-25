@@ -75,7 +75,7 @@ try {
     // 40% Midterm + 60% Finals
     // Grade conversion: 60-65.99=>1.0 | 66-71.99=>1.5 | 72-77.99=>2.0 | 78-83.99=>2.5 | 84-89.99=>3.0 | 90-95.99=>3.5 | 96-100=>4.0 | <60=>0.0
     $gradeDistQuery = "
-    SELECT ce.student_id,
+    SELECT ce.student_id, ce.status,
         ROUND(
             (
                 COALESCE(AVG(CASE WHEN gc.term_type='midterm' THEN (COALESCE(sfg.raw_score,0)/gcc.max_score*100) ELSE NULL END), 0)
@@ -90,8 +90,8 @@ try {
     LEFT JOIN grading_components gc ON gc.class_code = ce.class_code
     LEFT JOIN grading_component_columns gcc ON gc.id = gcc.component_id
     LEFT JOIN student_flexible_grades sfg ON gcc.id = sfg.column_id AND ce.student_id = sfg.student_id
-    WHERE ce.class_code = ? AND ce.status = 'enrolled'
-    GROUP BY ce.student_id";
+    WHERE ce.class_code = ? AND ce.status IN ('enrolled', 'dropped')
+    GROUP BY ce.student_id, ce.status";
     
     $stmt = $conn->prepare($gradeDistQuery); 
     if (!$stmt) {
@@ -106,25 +106,30 @@ try {
             $gradeDist = ['4.00' => 0, '3.50' => 0, '3.00' => 0, '2.50' => 0, '2.00' => 0, '1.50' => 0, '1.00' => 0, 'INC' => 0, 'DRP' => 0, 'R' => 0, 'FAILED' => 0, 'IP' => 0];
             $res = $stmt->get_result(); 
             while($row = $res->fetch_assoc()) { 
-                $termPct = floatval($row['term_percentage']);
-                
-                // Use exact conversion ladder from toGrade() in flexible_grading.js
-                if ($termPct < 60) {
-                    $gradeDist['FAILED']++;
-                } elseif ($termPct < 66) {
-                    $gradeDist['1.00']++;
-                } elseif ($termPct < 72) {
-                    $gradeDist['1.50']++;
-                } elseif ($termPct < 78) {
-                    $gradeDist['2.00']++;
-                } elseif ($termPct < 84) {
-                    $gradeDist['2.50']++;
-                } elseif ($termPct < 90) {
-                    $gradeDist['3.00']++;
-                } elseif ($termPct < 96) {
-                    $gradeDist['3.50']++;
+                $status = $row['status'];
+                if ($status === 'dropped') {
+                    $gradeDist['DRP']++;
                 } else {
-                    $gradeDist['4.00']++;
+                    $termPct = floatval($row['term_percentage']);
+                    
+                    // Use exact conversion ladder from toGrade() in flexible_grading.js
+                    if ($termPct < 60) {
+                        $gradeDist['FAILED']++;
+                    } elseif ($termPct < 66) {
+                        $gradeDist['1.00']++;
+                    } elseif ($termPct < 72) {
+                        $gradeDist['1.50']++;
+                    } elseif ($termPct < 78) {
+                        $gradeDist['2.00']++;
+                    } elseif ($termPct < 84) {
+                        $gradeDist['2.50']++;
+                    } elseif ($termPct < 90) {
+                        $gradeDist['3.00']++;
+                    } elseif ($termPct < 96) {
+                        $gradeDist['3.50']++;
+                    } else {
+                        $gradeDist['4.00']++;
+                    }
                 }
             }
         }
