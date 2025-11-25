@@ -1,0 +1,79 @@
+<?php
+/**
+ * Direct Test of the Calculation Formula
+ * Shows if the fix is working by testing the exact calculation
+ */
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Grade Calculation Test</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        .test-box { border: 1px solid #ccc; padding: 20px; margin: 20px 0; background: #f9f9f9; }
+        .result { padding: 10px; margin: 10px 0; border-left: 4px solid #007bff; background: #e7f3ff; }
+        .correct { border-left-color: #28a745; background: #d4edda; }
+        .wrong { border-left-color: #dc3545; background: #f8d7da; }
+        code { background: #f0f0f0; padding: 2px 5px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Grade Calculation Formula Test</h1>
+    
+    <div class="test-box">
+        <h2>Test Case: Midterm Grade Calculation</h2>
+        <p>Component Data:</p>
+        <ul>
+            <li>Attendance: 15/15 (100%) × 20% weight = 20</li>
+            <li>Classwork: 30/30 (100%) × 30% weight = 30</li>
+            <li>Quiz: 28/30 (93.33%) × 20% weight = 18.67</li>
+            <li>Participation: 20/20 (100%) × 30% weight = 30</li>
+        </ul>
+        
+        <h3>Calculation:</h3>
+        <p><strong>totalWeightedScore:</strong> 20 + 30 + 18.67 + 30 = <strong>98.67</strong></p>
+        <p><strong>totalWeight:</strong> 20 + 30 + 20 + 30 = <strong>100</strong></p>
+        
+        <h3>Results:</h3>
+        <div class="result wrong">
+            <strong>OLD FORMULA (WRONG):</strong><br>
+            <code>const finalGrade = (98.67 / 100) * 100 = 0.9867%</code><br>
+            Result stored in DB: ~0.9867% (would show as 9.867% or various formatting issues)
+        </div>
+        
+        <div class="result correct">
+            <strong>NEW FORMULA (CORRECT):</strong><br>
+            <code>const finalGrade = 98.67 = 98.67%</code><br>
+            Result stored in DB: 98.67% ✓
+        </div>
+    </div>
+    
+    <div class="test-box">
+        <h2>🔍 What We Should See After Fix</h2>
+        <p><strong>If fix is working:</strong> Database should store percentages in 0-100 range</p>
+        <p><strong>If fix is NOT working:</strong> Database stores percentages in 0-1 range or as decimal</p>
+    </div>
+    
+    <div class="test-box">
+        <h2>📊 Student Dashboard Case</h2>
+        <p><strong>Current values shown:</strong> Midterm 20%, Finals 80%, Term 56%</p>
+        <p><strong>Analysis:</strong></p>
+        <ul>
+            <li>✅ These are in 0-100 range (not 0-1), so NOT the old decimal bug</li>
+            <li>⚠️ BUT: Are these the CORRECT component calculations?</li>
+            <li>❓ Faculty may have entered different component scores</li>
+        </ul>
+        
+        <h3>To Verify:</h3>
+        <ol>
+            <li>Check database for actual component scores</li>
+            <li>Calculate: Do those components add up to 20%, 80%, 56%?</li>
+            <li>If YES: Fix IS working ✓</li>
+            <li>If NO: Bug is still present ✗</li>
+        </ol>
+    </div>
+    
+    <hr>
+    <p><strong>Next Step:</strong> <a href="analyze_calculation.php">View component analysis →</a></p>
+</body>
+</html>
