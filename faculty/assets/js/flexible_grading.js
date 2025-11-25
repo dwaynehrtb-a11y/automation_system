@@ -264,7 +264,7 @@ async function renderSummary() {
         const rowsByStudent = {};
         data.rows.forEach(r => { rowsByStudent[r.student_id] = r; });
         const statusColors = { passed: '#10b981', failed: '#ef4444', incomplete: '#f59e0b', dropped: '#6b7280' };
-        const statusLabels = { passed: 'Passed', failed: 'Failed', incomplete: 'INC', DRP: 'DRP' };
+        const statusLabels = { passed: 'Passed', failed: 'Failed', incomplete: 'INC', dropped: 'DRP' };
         let html = `<div class="fgs-summary-container"><div class="fgs-summary-header"><h3 class="fgs-summary-title">Grade Summary</h3><p class="fgs-summary-subtitle">Midterm ${data.midterm_weight}% | Finals ${data.finals_weight}%</p></div><div class="fgs-summary-scroll"><table class="fgs-summary-table"><thead><tr><th>Student</th><th>Midterm %</th><th>Finals %</th><th>Term %</th><th>Discrete</th><th>Status</th><th>Freeze</th></tr></thead><tbody>`;
         FGS.students.forEach(stu => {
             const r = rowsByStudent[stu.student_id] || {};
@@ -799,7 +799,7 @@ async function switchToMidtermSummary() {
             'passed': 'Passed',
             'failed': 'Failed',
             'incomplete': 'INC',
-            'DRP': 'DRP',
+            'dropped': 'DRP',
             'pending': 'Pending'
         };
         
@@ -1911,7 +1911,7 @@ const statusLabels = {
     'passed': 'Passed',
     'failed': 'Failed',
     'incomplete': 'INC',
-    'DRP': 'DRP'
+    'dropped': 'DRP'
 };
 
 html += `
@@ -2322,7 +2322,7 @@ if (currentStatus === 'passed' && termGrade < 1.0) {
                         <option value="passed" ${suggestedStatus === 'passed' ? 'selected' : ''}>✓ Passed</option>
                         <option value="failed" ${suggestedStatus === 'failed' ? 'selected' : ''}>✗ Failed (0.0) - No Removals</option>
                         <option value="incomplete" ${suggestedStatus === 'incomplete' ? 'selected' : ''}>⚠ Incomplete (INC) - Can Take Removals</option>
-                        <option value="DRP" ${suggestedStatus === 'DRP' ? 'selected' : ''}>⊗ Dropped (DRP)</option>
+                        <option value="dropped" ${suggestedStatus === 'dropped' ? 'selected' : ''}>⊗ Dropped (DRP)</option>
                     </select>
                 </div>
                 
@@ -2426,7 +2426,7 @@ async function updateGradeStatus(studentId, status, studentName, lackingReqs, se
                     'passed': 'Passed',
                     'failed': 'Failed',
                     'incomplete': 'INC',
-                    'DRP': 'DRP'
+                    'dropped': 'DRP'
                 };
                 
                 statusBadge.style.background = statusColors[status];

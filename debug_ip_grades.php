@@ -20,7 +20,7 @@ while($row = $result->fetch_assoc()) {
     
     // Determine display status
     if($status == 'incomplete') $display = "INC";
-    elseif($status == 'DRP') $display = "DRP";
+    elseif($status == 'dropped') $display = "DRP";
     elseif($status == 'repeat') $display = "R";
     elseif($status == 'failed') $display = "FAILED";
     elseif($status == 'passed' && $grade == 4.0) $display = "4.00";

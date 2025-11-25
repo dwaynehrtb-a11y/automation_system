@@ -189,22 +189,6 @@ function getClassStudents($conn, $class_code, $faculty_id) {
     }
     $stmt->close();
     
-    // Get grade statuses
-    $gradeStatuses = [];
-    if (!empty($studentIds)) {
-        $placeholders = str_repeat('?,', count($studentIds) - 1) . '?';
-        $query = "SELECT student_id, grade_status FROM grade_term WHERE class_code = ? AND student_id IN ($placeholders)";
-        $stmt = $conn->prepare($query);
-        $params = [$class_code, ...$studentIds];
-        $stmt->bind_param(str_repeat('s', count($params)), ...$params);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        while ($row = $result->fetch_assoc()) {
-            $gradeStatuses[$row['student_id']] = $row['grade_status'];
-        }
-        $stmt->close();
-    }
-    
     // Initialize encryption
     Encryption::init();
     
@@ -276,9 +260,6 @@ function getClassStudents($conn, $class_code, $faculty_id) {
                 }
                 
                 $row['status'] = $enrollmentData[$studentId]['status'];
-                if (isset($gradeStatuses[$studentId]) && $gradeStatuses[$studentId] === 'DRP') {
-                    $row['status'] = 'dropped';
-                }
                 $row['enrollment_date'] = $enrollmentData[$studentId]['enrollment_date'];
                 $row['full_name'] = trim($row['last_name'] . ', ' . $row['first_name'] . 
                     (isset($row['middle_initial']) && $row['middle_initial'] ? ' ' . $row['middle_initial'] : ''));
@@ -296,9 +277,6 @@ function getClassStudents($conn, $class_code, $faculty_id) {
                 'status' => $enrollmentData[$studentId]['status'] ?? 'enrolled',
                 'enrollment_date' => $enrollmentData[$studentId]['enrollment_date'] ?? null
             ];
-            if (isset($gradeStatuses[$studentId]) && $gradeStatuses[$studentId] === 'DRP') {
-                $students[count($students)-1]['status'] = 'dropped';
-            }
         }
     }
     

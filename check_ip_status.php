@@ -12,7 +12,7 @@ $result = $conn->query("
     SELECT tg.student_id, s.last_name, s.first_name, tg.class_code, tg.grade_status, tg.term_grade, 
            CASE 
                WHEN tg.grade_status='incomplete' THEN 'INC'
-               WHEN tg.grade_status='DRP' THEN 'DRP'
+               WHEN tg.grade_status='dropped' THEN 'DRP'
                WHEN tg.grade_status='repeat' THEN 'R'
                WHEN tg.grade_status='failed' THEN 'FAILED'
                WHEN tg.grade_status='passed' AND tg.term_grade=4.0 THEN '4.00'
