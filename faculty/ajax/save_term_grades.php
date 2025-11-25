@@ -171,7 +171,7 @@ function updateGradeStatusOnly($conn, $faculty_id) {
     }
     
     // Validate grade_status is one of the allowed values
-    $allowed_statuses = ['passed', 'failed', 'incomplete', 'dropped'];
+    $allowed_statuses = ['passed', 'failed', 'incomplete', 'DRP'];
     if (!in_array($grade_status, $allowed_statuses)) {
         echo json_encode(['success' => false, 'message' => 'Invalid grade status']);
         return;

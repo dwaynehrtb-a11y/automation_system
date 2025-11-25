@@ -189,7 +189,7 @@ try {
         
         if ($status === 'incomplete') {
             $distribution['INC'] += $count;
-        } elseif ($status === 'dropped') {
+        } elseif ($status === 'DRP') {
             $distribution['DRP'] += $count;
         } elseif ($status === 'failed' || $grade < 1.0) {
             $distribution['FAILED'] += $count;

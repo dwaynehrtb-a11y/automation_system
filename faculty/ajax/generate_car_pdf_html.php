@@ -122,7 +122,7 @@ try {
     SELECT 
     CASE 
     WHEN tg.grade_status = 'incomplete' THEN 'incomplete'
-    WHEN tg.grade_status = 'dropped' THEN 'dropped'
+    WHEN tg.grade_status = 'DRP' THEN 'DRP'
     WHEN tg.grade_status = 'repeat' THEN 'repeat'
     WHEN tg.grade_status = 'failed' THEN 'failed'
     WHEN tg.grade_status = 'passed' AND tg.term_grade = 4.0 THEN '4.00'
@@ -138,7 +138,7 @@ try {
     FROM grade_term tg
     WHERE tg.class_code = ?
     GROUP BY grade
-    ORDER BY FIELD(grade, '4.00', '3.50', '3.00', '2.50', '2.00', '1.50', '1.00', 'in-progress', 'incomplete', 'dropped', 'repeat', 'failed')
+    ORDER BY FIELD(grade, '4.00', '3.50', '3.00', '2.50', '2.00', '1.50', '1.00', 'in-progress', 'incomplete', 'repeat', 'DRP', 'failed')
     ";
 
     $stmt = $conn->prepare($gradeDistQuery);
@@ -354,7 +354,7 @@ th {
     <th style="width: 40%; background-color: #D9D9D9; font-weight: bold; text-align: center;">NO. OF STU.</th>
     </tr>';
 
-    $gradeLabels = ['4.00', '3.50', '3.00', '2.50', '2.00', '1.50', '1.00', 'in-progress', 'incomplete', 'repeat', 'dropped', 'failed'];
+    $gradeLabels = ['4.00', '3.50', '3.00', '2.50', '2.00', '1.50', '1.00', 'in-progress', 'incomplete', 'repeat', 'DRP', 'failed'];
     $gradeFullLabels = ['4.00', '3.50', '3.00', '2.50', '2.00', '1.50', '1.00', 'IN PROGRESS', 'INC', 'REPEAT', 'DROPPED', 'FAILED'];
 
     foreach ($gradeLabels as $idx => $key) {
@@ -498,7 +498,7 @@ th {
         foreach ($incStudents as $student) {
             $html .= '<tr>
         <td style="font-weight: bold; font-size: 8pt; padding: 3px;">' . htmlspecialchars($student['name']) . '</td>
-        <td style="font-size: 8pt; padding: 3px;">' . htmlspecialchars($student['lacking_requirements'] ?: ($student['grade_status'] === 'dropped' ? 'Officially Dropped' : 'N/A')) . '</td>
+        <td style="font-size: 8pt; padding: 3px;">' . htmlspecialchars($student['lacking_requirements'] ?: ($student['grade_status'] === 'DRP' ? 'Officially Dropped' : 'N/A')) . '</td>
         </tr>';
         }
     } else {

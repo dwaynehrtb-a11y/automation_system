@@ -86,7 +86,7 @@ try {
     if ($status === 'incomplete') {
         $distribution['INC'] += $count;
         $total_students += $count;
-    } elseif ($status === 'dropped') {
+    } elseif ($status === 'DRP') {
         $distribution['DRP'] += $count;
         $total_students += $count;
     } elseif ($status === 'in_progress') {
