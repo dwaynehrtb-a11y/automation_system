@@ -70,28 +70,28 @@ try {
         if (isset($metadata['proposed_actions']) && !isset($metadata['proposed_improvements'])) { $metadata['proposed_improvements']=$metadata['proposed_actions']; }
     }
 
-    // Grade distribution - calculate from grade_term and flexible grading
-    // Grade distribution - calculate from flexible grading components (same as Summary display)
-    // 40% Midterm + 60% Finals
-    // Grade conversion: 60-65.99=>1.0 | 66-71.99=>1.5 | 72-77.99=>2.0 | 78-83.99=>2.5 | 84-89.99=>3.0 | 90-95.99=>3.5 | 96-100=>4.0 | <60=>0.0
+    // Grade distribution - from grade_term table
     $gradeDistQuery = "
-    SELECT ce.student_id, ce.status,
-        ROUND(
-            (
-                COALESCE(AVG(CASE WHEN gc.term_type='midterm' THEN (COALESCE(sfg.raw_score,0)/gcc.max_score*100) ELSE NULL END), 0)
-                * (40.0 / 100.0)
-            ) +
-            (
-                COALESCE(AVG(CASE WHEN gc.term_type='finals' THEN (COALESCE(sfg.raw_score,0)/gcc.max_score*100) ELSE NULL END), 0)
-                * (60.0 / 100.0)
-            )
-        , 2) as term_percentage
-    FROM class_enrollments ce
-    LEFT JOIN grading_components gc ON gc.class_code = ce.class_code
-    LEFT JOIN grading_component_columns gcc ON gc.id = gcc.component_id
-    LEFT JOIN student_flexible_grades sfg ON gcc.id = sfg.column_id AND ce.student_id = sfg.student_id
-    WHERE ce.class_code = ? AND ce.status IN ('enrolled', 'dropped')
-    GROUP BY ce.student_id, ce.status";
+    SELECT 
+    CASE 
+    WHEN grade_status = 'incomplete' THEN 'INC'
+    WHEN grade_status = 'dropped' THEN 'DRP'
+    WHEN grade_status = 'repeat' THEN 'R'
+    WHEN grade_status = 'in_progress' THEN 'IP'
+    WHEN grade_status = 'failed' THEN 'FAILED'
+    WHEN grade_status = 'passed' AND term_grade = 4.0 THEN '4.00'
+    WHEN grade_status = 'passed' AND term_grade = 3.5 THEN '3.50'
+    WHEN grade_status = 'passed' AND term_grade = 3.0 THEN '3.00'
+    WHEN grade_status = 'passed' AND term_grade = 2.5 THEN '2.50'
+    WHEN grade_status = 'passed' AND term_grade = 2.0 THEN '2.00'
+    WHEN grade_status = 'passed' AND term_grade = 1.5 THEN '1.50'
+    WHEN grade_status = 'passed' AND term_grade = 1.0 THEN '1.00'
+    ELSE 'FAILED'
+    END as grade,
+    COUNT(*) as count
+    FROM grade_term
+    WHERE class_code = ?
+    GROUP BY grade";
     
     $stmt = $conn->prepare($gradeDistQuery); 
     if (!$stmt) {
@@ -106,30 +106,10 @@ try {
             $gradeDist = ['4.00' => 0, '3.50' => 0, '3.00' => 0, '2.50' => 0, '2.00' => 0, '1.50' => 0, '1.00' => 0, 'INC' => 0, 'DRP' => 0, 'R' => 0, 'FAILED' => 0, 'IP' => 0];
             $res = $stmt->get_result(); 
             while($row = $res->fetch_assoc()) { 
-                $status = $row['status'];
-                if ($status === 'dropped') {
-                    $gradeDist['DRP']++;
-                } else {
-                    $termPct = floatval($row['term_percentage']);
-                    
-                    // Use exact conversion ladder from toGrade() in flexible_grading.js
-                    if ($termPct < 60) {
-                        $gradeDist['FAILED']++;
-                    } elseif ($termPct < 66) {
-                        $gradeDist['1.00']++;
-                    } elseif ($termPct < 72) {
-                        $gradeDist['1.50']++;
-                    } elseif ($termPct < 78) {
-                        $gradeDist['2.00']++;
-                    } elseif ($termPct < 84) {
-                        $gradeDist['2.50']++;
-                    } elseif ($termPct < 90) {
-                        $gradeDist['3.00']++;
-                    } elseif ($termPct < 96) {
-                        $gradeDist['3.50']++;
-                    } else {
-                        $gradeDist['4.00']++;
-                    }
+                $grade = $row['grade'];
+                $count = (int)$row['count'];
+                if (array_key_exists($grade, $gradeDist)) {
+                    $gradeDist[$grade] += $count;
                 }
             }
         }
