@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URGENT: Clear Browser Cache - Grade Calculation Fix</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 900px;
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+            margin: 0;
+        }
+        
+        .content {
+            padding: 40px 30px;
+        }
+        
+        .alert {
+            background: #fef2f2;
+            border: 2px solid #fca5a5;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            color: #991b1b;
+        }
+        
+        .alert strong {
+            color: #dc2626;
+        }
+        
+        h2 {
+            color: #1e40af;
+            font-size: 1.5em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        h2:first-of-type {
+            margin-top: 0;
+        }
+        
+        .browser-section {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .browser-section h3 {
+            color: #0c4a6e;
+            font-size: 1.2em;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .browser-section ol {
+            margin-left: 20px;
+            color: #0c4a6e;
+            line-height: 1.8;
+        }
+        
+        .browser-section li {
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+        
+        .browser-section code {
+            background: #ffffff;
+            border: 1px solid #bae6fd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #0c4a6e;
+        }
+        
+        .keyboard-shortcut {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 8px 12px;
+            border-radius: 4px;
+            display: inline-block;
+            font-family: monospace;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        
+        .verify-section {
+            background: #f0fdf4;
+            border-left: 4px solid #16a34a;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .verify-section h3 {
+            color: #166534;
+            font-size: 1.1em;
+            margin-bottom: 12px;
+        }
+        
+        .verify-steps {
+            margin-left: 20px;
+            color: #166534;
+            line-height: 1.8;
+        }
+        
+        .verify-steps li {
+            margin-bottom: 10px;
+        }
+        
+        .success-indicator {
+            background: #dcfce7;
+            border: 2px solid #86efac;
+            padding: 12px;
+            border-radius: 4px;
+            margin: 10px 0;
+            color: #166534;
+            font-weight: 500;
+        }
+        
+        .important {
+            background: #fffbeb;
+            border: 2px solid #fcd34d;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+            color: #92400e;
+        }
+        
+        .important strong {
+            color: #b45309;
+            display: block;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            font-size: 1em;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: #0284c7;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #0369a1;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+        }
+        
+        .btn-success {
+            background: #16a34a;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #15803d;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
+        }
+        
+        footer {
+            background: #f1f5f9;
+            border-top: 1px solid #e2e8f0;
+            padding: 20px 30px;
+            text-align: center;
+            color: #64748b;
+            font-size: 0.9em;
+        }
+        
+        .icon {
+            font-size: 1.2em;
+        }
+        
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .content {
+                padding: 20px 15px;
+            }
+            
+            h2 {
+                font-size: 1.2em;
+            }
+            
+            .browser-section {
+                margin: 15px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>
+                <span class="icon">⚠️</span>
+                URGENT: Clear Browser Cache
+            </h1>
+            <p>Grade Calculation Fix Requires Cache Clearing</p>
+        </div>
+        
+        <div class="content">
+            <div class="alert">
+                <strong>Critical Issue Found:</strong> Your grades are displaying incorrectly because your browser is using an old version of the grading system code. We have fixed the issue on the server, but your browser is still showing the cached (old) broken version.
+            </div>
+            
+            <div class="important">
+                <strong>ACTION REQUIRED:</strong>
+                You MUST clear your browser cache and reload the Faculty Dashboard to load the fixed code. Without this step, grades will continue showing incorrect values.
+            </div>
+            
+            <h2>🔍 What's the Problem?</h2>
+            <p style="color: #475569; line-height: 1.8; margin-bottom: 15px;">
+                The Faculty Dashboard uses JavaScript code to calculate student grades. We recently discovered and fixed a bug in the grade calculation formula. However, your browser has cached (stored) the old buggy code. Even though we fixed it on the server, your browser won't download the fixed version until you clear the cache.
+            </p>
+            
+            <h2>✅ How to Fix It - Choose Your Browser</h2>
+            
+            <!-- Windows 10/11 & Chrome/Chromium -->
+            <div class="browser-section">
+                <h3>🌐 Google Chrome / Microsoft Edge (Windows/Mac)</h3>
+                <ol>
+                    <li>In the Faculty Dashboard, press this keyboard shortcut: <span class="keyboard-shortcut">Ctrl + Shift + Delete</span> (Windows) or <span class="keyboard-shortcut">Cmd + Shift + Delete</span> (Mac)</li>
+                    <li>The "Clear Browsing Data" window will open</li>
+                    <li>Make sure these are checked:
+                        <ul style="margin-top: 10px; margin-left: 20px;">
+                            <li>✓ Cookies and other site data</li>
+                            <li>✓ Cached images and files</li>
+                        </ul>
+                    </li>
+                    <li>Select timeframe: <strong>"All time"</strong></li>
+                    <li>Click <strong>"Clear data"</strong> button</li>
+                    <li>Close the tab and go back to the Faculty Dashboard</li>
+                    <li>Press <span class="keyboard-shortcut">Ctrl + Shift + R</span> (hard refresh) to reload the page</li>
+                </ol>
+            </div>
+            
+            <!-- Firefox -->
+            <div class="browser-section">
+                <h3>🦊 Mozilla Firefox (Windows/Mac)</h3>
+                <ol>
+                    <li>In the Faculty Dashboard, press: <span class="keyboard-shortcut">Ctrl + Shift + Delete</span> (Windows) or <span class="keyboard-shortcut">Cmd + Shift + Delete</span> (Mac)</li>
+                    <li>The "Clear Recent History" window will open</li>
+                    <li>Select timeframe: <strong>"Everything"</strong></li>
+                    <li>Make sure these are checked:
+                        <ul style="margin-top: 10px; margin-left: 20px;">
+                            <li>✓ Cookies</li>
+                            <li>✓ Cache</li>
+                        </ul>
+                    </li>
+                    <li>Click <strong>"Clear Now"</strong> button</li>
+                    <li>Go back to the Faculty Dashboard</li>
+                    <li>Press <span class="keyboard-shortcut">Ctrl + Shift + R</span> to hard refresh</li>
+                </ol>
+            </div>
+            
+            <!-- Safari -->
+            <div class="browser-section">
+                <h3>🧭 Apple Safari (Mac)</h3>
+                <ol>
+                    <li>Click <strong>Safari</strong> menu → <strong>Preferences</strong></li>
+                    <li>Go to <strong>Privacy</strong> tab</li>
+                    <li>Click <strong>"Manage Website Data..."</strong></li>
+                    <li>Search for your university website domain</li>
+                    <li>Select it and click <strong>"Remove"</strong></li>
+                    <li>Click <strong>"Done"</strong></li>
+                    <li>Go back to Faculty Dashboard and press <span class="keyboard-shortcut">Cmd + Shift + R</span> (hard refresh)</li>
+                </ol>
+            </div>
+            
+            <h2>🔬 Verify the Fix is Loaded</h2>
+            <div class="verify-section">
+                <h3>After clearing cache and reloading, verify the fix:</h3>
+                <ol class="verify-steps">
+                    <li><strong>Open Developer Tools:</strong> Press <span class="keyboard-shortcut">F12</span></li>
+                    <li><strong>Go to Console tab:</strong> Click the "Console" tab at the top</li>
+                    <li><strong>Look for the success message:</strong> 
+                        <div class="success-indicator">
+                            ✓ FIXED FORMULA ACTIVE: [number]%
+                        </div>
+                        If you see this message, the fix is loaded correctly!
+                    </li>
+                    <li><strong>Enter grades:</strong> Go back to the Faculty Dashboard grading section and try entering a test grade</li>
+                    <li><strong>Check the result:</strong> The calculated percentage should be logical (not suspiciously low)</li>
+                </ol>
+            </div>
+            
+            <h2>📊 What Should Happen</h2>
+            <p style="color: #475569; line-height: 1.8;">
+                <strong>BEFORE:</strong> Grades showed as very low (8%, 20%, 30%, etc.) even when components looked correct<br>
+                <strong>AFTER:</strong> Grades calculate correctly from the component values (e.g., 40% Midterm × 40% weight + 90% Finals × 60% weight = 69% Term Grade)
+            </p>
+            
+            <div class="important" style="margin-top: 30px; background: #ecfdf5; border-color: #86efac; color: #166534;">
+                <strong style="color: #059669;">✓ Once Complete:</strong>
+                After clearing cache and hard-refreshing, the grading system should work correctly. Try entering a test grade to verify everything is calculating properly.
+            </div>
+            
+            <div class="button-group">
+                <a href="dashboards/faculty_dashboard.php" class="btn btn-primary">
+                    ➡️ Return to Faculty Dashboard
+                </a>
+            </div>
+        </div>
+        
+        <footer>
+            <p><strong>Need Help?</strong> If after clearing cache the grades still show incorrectly, contact your system administrator.</p>
+            <p>Last Updated: November 25, 2025 | Grade Calculation Fix v4.0</p>
+        </footer>
+    </div>
+</body>
+</html>
