@@ -1,0 +1,50 @@
+# QUICK REFERENCE - GRADE DISPLAY BUG FIX
+
+## 🎯 The Problem
+Student 2025-276819 sees "Failed" instead of grade 1.5 (Passed)
+
+## ✅ What's Fixed
+- PHP code: `student/ajax/get_grades.php` line 324 ✅
+
+## ⏳ What's Left
+- Database flag: Set `is_encrypted = 0` for released grades
+
+## 🚀 3 Ways to Fix Database
+
+### Way 1: Click Button (Easiest)
+```
+1. Open: http://localhost/fix_grade_display_issue.php
+2. Click: "Apply Database Fix"
+3. Done!
+```
+
+### Way 2: Run PHP
+```
+php apply_grade_fix.php
+```
+
+### Way 3: Run SQL
+```sql
+UPDATE grade_term SET is_encrypted = 0 WHERE is_encrypted = 1;
+```
+
+## ✓ Verify
+1. Hard refresh: Ctrl+Shift+Delete
+2. Login: 2025-276819
+3. Check: Grade should show 1.5 ✅
+
+## 📊 Current Status
+- Total Records: 1
+- Encrypted: 1 (needs fix)
+- PHP Code: ✅ FIXED
+- Database: ⏳ READY
+
+## 🆘 File Locations
+- Web Fix: `/fix_grade_display_issue.php`
+- PHP Fix: `/apply_grade_fix.php`
+- SQL Fix: `/grade_fix.sql`
+- Full Guide: `/FIX_GUIDE.md`
+
+---
+
+**Pick any method above and you're done in < 2 minutes!** ⏱️
