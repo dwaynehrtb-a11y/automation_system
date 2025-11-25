@@ -255,9 +255,9 @@ function getGradeStatuses($conn, $faculty_id) {
     }
     $stmt->close();
     
-    // Get all grade statuses AND stored term percentages
+    // Get all grade statuses AND stored term percentages (including is_encrypted flag)
     $stmt = $conn->prepare("
-        SELECT student_id, grade_status, midterm_percentage, finals_percentage, term_percentage, term_grade
+        SELECT student_id, grade_status, midterm_percentage, finals_percentage, term_percentage, term_grade, is_encrypted
         FROM grade_term
         WHERE class_code = ?
     ");
@@ -265,10 +265,19 @@ function getGradeStatuses($conn, $faculty_id) {
     $stmt->execute();
     $result = $stmt->get_result();
     
+    // Use GradesModel for decryption
+    $gradesModel = new GradesModel($conn);
+    
     $statuses = [];
     $termGrades = [];  // Store computed term grades from database
     while ($row = $result->fetch_assoc()) {
         $statuses[$row['student_id']] = $row['grade_status'];
+        
+        // Decrypt values if they are encrypted
+        if (!empty($row['is_encrypted'])) {
+            $row = $gradesModel->decryptGradeData($row);
+        }
+        
         // Include stored term percentages for faculty summary display
         $termGrades[$row['student_id']] = [
             'midterm_percentage' => floatval(str_replace('%', '', $row['midterm_percentage'] ?? '0')),
