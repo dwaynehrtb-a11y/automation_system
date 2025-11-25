@@ -164,7 +164,7 @@ function renderUI() {
             // Add MIDTERM SUMMARY card at the beginning (only for midterm tab)
             if (FGS.currentTermType === 'midterm') {
                 const summaryActive = FGS.currentComponentId === null;
-                html += `<div class="fgs-component-card${summaryActive?' active':''}" onclick="switchToMidtermSummary()">\n                    <div style="font-weight:700; font-size:14px; margin-bottom:4px; display:flex; align-items:center; gap:6px;">\n                        <i class="fas fa-chart-line"></i> Midterm Summary\n                    </div>\n                    <div style="font-size:11px; opacity:.85; margin-bottom:0;">Class overview & status</div>\n                </div>`;
+                html += `<div class="fgs-component-card${summaryActive?' active':''}" onclick="switchToMidtermSummary().catch(console.error)">\n                    <div style="font-weight:700; font-size:14px; margin-bottom:4px; display:flex; align-items:center; gap:6px;">\n                        <i class="fas fa-chart-line"></i> Midterm Summary\n                    </div>\n                    <div style="font-size:11px; opacity:.85; margin-bottom:0;">Class overview & status</div>\n                </div>`;
             }
             
             FGS.components.forEach(c => {
@@ -696,7 +696,7 @@ function renderTable() {
 /**
  * Switch to Midterm Summary view - Shows midterm grades with status and actions
  */
-function switchToMidtermSummary() {
+async function switchToMidtermSummary() {
     FGS.currentComponentId = null;  // Clear component selection
     renderUI();  // Re-render cards to show Midterm Summary as active
     const isMidterm = FGS.currentTermType === 'midterm';
@@ -717,6 +717,14 @@ function switchToMidtermSummary() {
             </div>
         `;
         return;
+    }
+    
+    // Ensure grade statuses are loaded (includes stored term grades)
+    if (!FGS.gradeStatuses || !FGS.storedTermGrades) {
+        console.log('Loading grade statuses for midterm summary...');
+        await loadGradeStatuses();
+        console.log('Loaded grade statuses:', FGS.gradeStatuses);
+        console.log('Loaded stored term grades:', FGS.storedTermGrades);
     }
     
     // Get components for midterm
@@ -747,23 +755,35 @@ function switchToMidtermSummary() {
                     <tbody>`;
     
     FGS.students.forEach(student => {
-        // Calculate midterm percentage from all midterm components
-        let totalScore = 0, totalMax = 0;
+        // Use stored midterm percentage if available, otherwise calculate from components
+        const storedGrade = FGS.storedTermGrades?.[student.student_id];
+        let midtermPct;
         
-        midtermComponents.forEach(comp => {
-            const columns = comp.columns || [];
-            columns.forEach(col => {
-                const key = `${student.student_id}_${col.id}`;
-                const gradeObj = FGS.grades[key] || {};
-                const score = parseFloat(gradeObj.score) || 0;
-                if (score > 0) {
-                    totalScore += score;
-                    totalMax += parseFloat(col.max_score);
-                }
+        if (storedGrade && (storedGrade.midterm_percentage !== undefined && storedGrade.midterm_percentage !== null && storedGrade.midterm_percentage >= 0)) {
+            // Use stored midterm percentage from database
+            midtermPct = storedGrade.midterm_percentage;
+            console.log(`Using stored midterm percentage for ${student.student_id}: ${midtermPct}%`);
+        } else {
+            // Calculate midterm percentage from all midterm components
+            let totalScore = 0, totalMax = 0;
+            
+            midtermComponents.forEach(comp => {
+                const columns = comp.columns || [];
+                columns.forEach(col => {
+                    const key = `${student.student_id}_${col.id}`;
+                    const gradeObj = FGS.grades[key] || {};
+                    const score = parseFloat(gradeObj.score) || 0;
+                    if (score > 0) {
+                        totalScore += score;
+                        totalMax += parseFloat(col.max_score);
+                    }
+                });
             });
-        });
+            
+            midtermPct = totalMax > 0 ? (totalScore / totalMax) * 100 : 0;
+            console.log(`Calculated midterm percentage for ${student.student_id}: ${midtermPct}% (stored: ${storedGrade?.midterm_percentage})`);
+        }
         
-        const midtermPct = totalMax > 0 ? (totalScore / totalMax) * 100 : 0;
         const midtermGrade = toGrade(midtermPct);
         
         // Get current status
