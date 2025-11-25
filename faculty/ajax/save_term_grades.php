@@ -235,64 +235,85 @@ function updateGradeStatusOnly($conn, $faculty_id) {
  * Get all grade statuses for a class
  */
 function getGradeStatuses($conn, $faculty_id) {
-    $class_code = $_GET['class_code'] ?? $_POST['class_code'] ?? '';
-    
-    if (empty($class_code)) {
-        echo json_encode(['success' => false, 'message' => 'Class code required']);
-        return;
-    }
-    
-    // Verify faculty owns this class
-    $stmt = $conn->prepare("SELECT class_id FROM class WHERE class_code = ? AND faculty_id = ?");
-    $stmt->bind_param("si", $class_code, $faculty_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    
-    if ($result->num_rows === 0) {
-        echo json_encode(['success' => false, 'message' => 'Class not found or access denied']);
-        $stmt->close();
-        return;
-    }
-    $stmt->close();
-    
-    // Get all grade statuses AND stored term percentages (including is_encrypted flag)
-    $stmt = $conn->prepare("
-        SELECT student_id, grade_status, midterm_percentage, finals_percentage, term_percentage, term_grade, is_encrypted
-        FROM grade_term
-        WHERE class_code = ?
-    ");
-    $stmt->bind_param("s", $class_code);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    
-    // Use GradesModel for decryption
-    $gradesModel = new GradesModel($conn);
-    
-    $statuses = [];
-    $termGrades = [];  // Store computed term grades from database
-    while ($row = $result->fetch_assoc()) {
-        $statuses[$row['student_id']] = $row['grade_status'];
+    try {
+        $class_code = $_GET['class_code'] ?? $_POST['class_code'] ?? '';
         
-        // Decrypt values if they are encrypted
-        if (!empty($row['is_encrypted'])) {
-            $row = $gradesModel->decryptGradeData($row);
+        if (empty($class_code)) {
+            echo json_encode(['success' => false, 'message' => 'Class code required']);
+            return;
         }
         
-        // Include stored term percentages for faculty summary display
-        $termGrades[$row['student_id']] = [
-            'midterm_percentage' => floatval(str_replace('%', '', $row['midterm_percentage'] ?? '0')),
-            'finals_percentage' => floatval(str_replace('%', '', $row['finals_percentage'] ?? '0')),
-            'term_percentage' => floatval(str_replace('%', '', $row['term_percentage'] ?? '0')),
-            'term_grade' => floatval($row['term_grade'] ?? '0')
-        ];
+        // Verify faculty owns this class
+        $stmt = $conn->prepare("SELECT class_id FROM class WHERE class_code = ? AND faculty_id = ?");
+        $stmt->bind_param("si", $class_code, $faculty_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows === 0) {
+            echo json_encode(['success' => false, 'message' => 'Class not found or access denied']);
+            $stmt->close();
+            return;
+        }
+        $stmt->close();
+        
+        // Get all grade statuses AND stored term percentages (including is_encrypted flag)
+        $stmt = $conn->prepare("
+            SELECT student_id, grade_status, midterm_percentage, finals_percentage, term_percentage, term_grade, is_encrypted
+            FROM grade_term
+            WHERE class_code = ?
+        ");
+        $stmt->bind_param("s", $class_code);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        // Use GradesModel for decryption
+        $gradesModel = new GradesModel($conn);
+        
+        $statuses = [];
+        $termGrades = [];  // Store computed term grades from database
+        while ($row = $result->fetch_assoc()) {
+            $statuses[$row['student_id']] = $row['grade_status'];
+            
+            // Decrypt values if they are encrypted
+            if (!empty($row['is_encrypted'])) {
+                try {
+                    // Use GradesModel's getStudentGrades method to get decrypted data
+                    $decryptedRow = $gradesModel->getStudentGrades($row['student_id'], $class_code, $faculty_id, 'faculty');
+                    if ($decryptedRow) {
+                        $row['midterm_percentage'] = $decryptedRow['midterm_percentage'];
+                        $row['finals_percentage'] = $decryptedRow['finals_percentage'];
+                        $row['term_percentage'] = $decryptedRow['term_percentage'];
+                        $row['term_grade'] = $decryptedRow['term_grade'];
+                    }
+                } catch (Exception $e) {
+                    error_log('Error decrypting grades for student ' . $row['student_id'] . ': ' . $e->getMessage());
+                    // Continue with encrypted values if decryption fails
+                }
+            }
+            
+            // Include stored term percentages for faculty summary display
+            $termGrades[$row['student_id']] = [
+                'midterm_percentage' => floatval(str_replace('%', '', $row['midterm_percentage'] ?? '0')),
+                'finals_percentage' => floatval(str_replace('%', '', $row['finals_percentage'] ?? '0')),
+                'term_percentage' => floatval(str_replace('%', '', $row['term_percentage'] ?? '0')),
+                'term_grade' => floatval($row['term_grade'] ?? '0')
+            ];
+        }
+        $stmt->close();
+        
+        echo json_encode([
+            'success' => true,
+            'statuses' => $statuses,
+            'termGrades' => $termGrades  // Add stored term grades for faculty display
+        ]);
+    } catch (Exception $e) {
+        error_log('getGradeStatuses error: ' . $e->getMessage());
+        echo json_encode([
+            'success' => false,
+            'message' => 'Internal server error',
+            'error' => $e->getMessage()
+        ]);
     }
-    $stmt->close();
-    
-    echo json_encode([
-        'success' => true,
-        'statuses' => $statuses,
-        'termGrades' => $termGrades  // Add stored term grades for faculty display
-    ]);
 }
 /**
  * Get lacking requirements for a student
