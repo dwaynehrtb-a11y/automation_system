@@ -2032,7 +2032,9 @@ function calculateTermGrade(studentId, termData) {
         }
     });
     
-    const finalGrade = totalWeight > 0 ? (totalWeightedScore / totalWeight) * 100 : 0;
+    // FIX: totalWeightedScore is already in 0-100 range because weighted scores are added
+    // Don't divide by totalWeight again - that causes double-weighting bug!
+    const finalGrade = totalWeight > 0 ? totalWeightedScore : 0;
     console.log(`🔍 Final: ${finalGrade.toFixed(2)}% (Total Weight: ${totalWeight}%)`);
     
     return finalGrade;
