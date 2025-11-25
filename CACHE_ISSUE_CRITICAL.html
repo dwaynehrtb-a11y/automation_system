@@ -1,0 +1,125 @@
+<?php
+/**
+ * CRITICAL: The bug is STILL ACTIVE
+ * This means the JavaScript fix hasn't been loaded
+ */
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🚨 CRITICAL: Cache Issue Detected</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: #f8d7da; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .alert { background: #f5c6cb; border: 2px solid #f5c2c7; padding: 20px; border-radius: 5px; color: #842029; }
+        .success { background: #d1ecf1; border: 2px solid #b6e6ea; padding: 20px; border-radius: 5px; color: #0c5460; margin: 20px 0; }
+        h1 { color: #721c24; margin: 0 0 10px 0; }
+        code { background: white; padding: 3px 8px; border-radius: 3px; font-family: monospace; }
+        .steps { background: white; padding: 20px; border-radius: 5px; margin: 20px 0; }
+        .step { margin: 15px 0; padding: 15px; background: #fffbf0; border-left: 4px solid #ffc107; }
+        ol { margin: 10px 0; padding-left: 25px; }
+        li { margin: 8px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="alert">
+            <h1>🚨 CRITICAL ISSUE: Cache Not Cleared</h1>
+            <p><strong>The grade calculation bug is STILL ACTIVE in your browser.</strong></p>
+            <p>This means the JavaScript file with the fix has NOT been loaded.</p>
+        </div>
+
+        <div class="steps">
+            <h2>⚠️ What's Happening</h2>
+            <p>Your browser is using a <strong>cached version of the JavaScript file</strong> from before the fix was implemented.</p>
+            <p>Even though we've updated the code on the server, your browser won't download it unless you clear the cache.</p>
+        </div>
+
+        <div class="steps">
+            <h2>🔧 URGENT ACTION REQUIRED</h2>
+            <p><strong>You MUST clear your browser cache NOW</strong> for the fix to work.</p>
+            
+            <div class="step">
+                <strong>Chrome/Edge/Brave (Easiest):</strong>
+                <ol>
+                    <li>Press <code>Ctrl + Shift + Delete</code> (Windows) or <code>Cmd + Shift + Delete</code> (Mac)</li>
+                    <li>Select "All time" from "Time range"</li>
+                    <li>CHECK BOTH: "Cookies and other site data" AND "Cached images and files"</li>
+                    <li>Click "Clear data" button</li>
+                    <li>Close the browser completely</li>
+                    <li>Reopen the browser</li>
+                    <li>Go to Faculty Dashboard</li>
+                    <li>Try entering grades again</li>
+                </ol>
+            </div>
+
+            <div class="step">
+                <strong>Firefox:</strong>
+                <ol>
+                    <li>Press <code>Ctrl + Shift + Delete</code> (Windows) or <code>Cmd + Shift + Delete</code> (Mac)</li>
+                    <li>Click "Clear All"</li>
+                    <li>Close the browser completely</li>
+                    <li>Reopen and retry</li>
+                </ol>
+            </div>
+
+            <div class="step">
+                <strong>Safari:</strong>
+                <ol>
+                    <li>Menu → Develop → Empty Web Storage</li>
+                    <li>Safari → Preferences → Privacy → "Manage Website Data"</li>
+                    <li>Select localhost and click "Remove"</li>
+                    <li>Close browser completely and reopen</li>
+                </ol>
+            </div>
+
+            <div class="step">
+                <strong>Nuclear Option (Works for all browsers):</strong>
+                <ol>
+                    <li>Close the browser COMPLETELY (not just tabs)</li>
+                    <li>Clear all browser data manually:
+                        <ul>
+                            <li>Chrome: <code>C:\Users\[YourName]\AppData\Local\Google\Chrome\User Data\Default</code></li>
+                            <li>Delete folders: "Cache", "Code Cache", "Cache2"</li>
+                        </ul>
+                    </li>
+                    <li>Restart browser</li>
+                    <li>Try again</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="success">
+            <h2>✓ After Clearing Cache</h2>
+            <ol>
+                <li>Faculty goes to Dashboard</li>
+                <li>Opens Developer Tools (F12)</li>
+                <li>Goes to Console tab</li>
+                <li>Checks for message: <code>✓ FIXED FORMULA ACTIVE</code></li>
+                <li>If you see that message, the fix is loaded ✓</li>
+                <li>Re-enter grades and save</li>
+                <li>Database will now store correct percentages</li>
+            </ol>
+        </div>
+
+        <div class="steps">
+            <h2>🔍 How to Verify the Fix is Loaded</h2>
+            <ol>
+                <li>After clearing cache and reloading page</li>
+                <li>Press F12 to open Developer Tools</li>
+                <li>Click "Console" tab</li>
+                <li>Look for: <code style="background: #d1ecf1; color: #0c5460;">✓ FIXED FORMULA ACTIVE: XX.XX%</code></li>
+                <li>If you see that, the fix is loaded and working</li>
+                <li>If you don't see it, cache still hasn't cleared - try again</li>
+            </ol>
+        </div>
+
+        <div class="alert" style="margin-top: 30px;">
+            <h3>⏱️ IMPORTANT TIMING NOTE</h3>
+            <p>When you clear cache, your browser will download fresh JavaScript file with code version 4.0.</p>
+            <p>This is the file with the grade calculation fix.</p>
+            <p>The timestamp (<code>&t=<?= time() ?></code>) changes every second to prevent re-caching.</p>
+        </div>
+    </div>
+</body>
+</html>

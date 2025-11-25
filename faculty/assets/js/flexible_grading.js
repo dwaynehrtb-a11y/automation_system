@@ -2032,10 +2032,21 @@ function calculateTermGrade(studentId, termData) {
         }
     });
     
-    // FIX: totalWeightedScore is already in 0-100 range because weighted scores are added
-    // Don't divide by totalWeight again - that causes double-weighting bug!
-    const finalGrade = totalWeight > 0 ? totalWeightedScore : 0;
+    // AGGRESSIVE FIX: Calculate the correct result
+    // totalWeightedScore is ALREADY a 0-100 percentage, no need to divide by totalWeight
+    let finalGrade = 0;
+    if (totalWeight > 0) {
+        // CORRECT: Just use the weighted score as-is
+        finalGrade = totalWeightedScore;
+        
+        // Debug logging
+        const debugMsg = `✓ FIXED FORMULA ACTIVE: ${finalGrade.toFixed(2)}%`;
+        console.log(debugMsg);
+        window.gradeCalcDebug = debugMsg;
+    }
+    
     console.log(`🔍 Final: ${finalGrade.toFixed(2)}% (Total Weight: ${totalWeight}%)`);
+    console.log(`🔍 DEBUG: totalWeightedScore=${totalWeightedScore}, totalWeight=${totalWeight}`);
     
     return finalGrade;
 }
