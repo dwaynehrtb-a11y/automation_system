@@ -255,9 +255,9 @@ function getGradeStatuses($conn, $faculty_id) {
     }
     $stmt->close();
     
-    // Get all grade statuses
+    // Get all grade statuses AND stored term percentages
     $stmt = $conn->prepare("
-        SELECT student_id, grade_status
+        SELECT student_id, grade_status, midterm_percentage, finals_percentage, term_percentage, term_grade
         FROM grade_term
         WHERE class_code = ?
     ");
@@ -266,14 +266,23 @@ function getGradeStatuses($conn, $faculty_id) {
     $result = $stmt->get_result();
     
     $statuses = [];
+    $termGrades = [];  // Store computed term grades from database
     while ($row = $result->fetch_assoc()) {
         $statuses[$row['student_id']] = $row['grade_status'];
+        // Include stored term percentages for faculty summary display
+        $termGrades[$row['student_id']] = [
+            'midterm_percentage' => floatval(str_replace('%', '', $row['midterm_percentage'] ?? '0')),
+            'finals_percentage' => floatval(str_replace('%', '', $row['finals_percentage'] ?? '0')),
+            'term_percentage' => floatval(str_replace('%', '', $row['term_percentage'] ?? '0')),
+            'term_grade' => floatval($row['term_grade'] ?? '0')
+        ];
     }
     $stmt->close();
     
     echo json_encode([
         'success' => true,
-        'statuses' => $statuses
+        'statuses' => $statuses,
+        'termGrades' => $termGrades  // Add stored term grades for faculty display
     ]);
 }
 /**

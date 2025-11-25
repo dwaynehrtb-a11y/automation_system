@@ -1849,9 +1849,24 @@ async function renderSummary() {
         `;
         
         FGS.students.forEach((student, idx) => {
-            const midtermPct = calculateTermGrade(student.student_id, midtermData);
-            const finalsPct = calculateTermGrade(student.student_id, finalsData);
-            const termPct = (midtermPct * (FGS.midtermWeight / 100)) + (finalsPct * (FGS.finalsWeight / 100));
+            // Use stored term grades from database if available (accurate computed values)
+            // Otherwise fall back to recalculating (for new grades not yet saved)
+            const storedGrade = FGS.storedTermGrades?.[student.student_id];
+            
+            let midtermPct, finalsPct, termPct;
+            if (storedGrade && (storedGrade.term_percentage > 0 || storedGrade.midterm_percentage > 0 || storedGrade.finals_percentage > 0)) {
+                // Use stored database values for accurate display
+                midtermPct = storedGrade.midterm_percentage;
+                finalsPct = storedGrade.finals_percentage;
+                termPct = storedGrade.term_percentage;
+                console.log(`Using stored grades for ${student.student_id}: Mid=${midtermPct}%, Fin=${finalsPct}%, Term=${termPct}%`);
+            } else {
+                // Recalculate only if no stored values exist
+                midtermPct = calculateTermGrade(student.student_id, midtermData);
+                finalsPct = calculateTermGrade(student.student_id, finalsData);
+                termPct = (midtermPct * (FGS.midtermWeight / 100)) + (finalsPct * (FGS.finalsWeight / 100));
+                console.log(`Recalculated grades for ${student.student_id}: Mid=${midtermPct}%, Fin=${finalsPct}%, Term=${termPct}%`);
+            }
             
             const midtermGrade = toGrade(midtermPct);
             const finalsGrade = toGrade(finalsPct);
@@ -2071,6 +2086,7 @@ async function loadGradeStatuses() {
         if (!contentType || !contentType.includes('application/json')) {
             console.warn('Response is not JSON, received:', contentType);
             FGS.gradeStatuses = {};
+            FGS.storedTermGrades = {};  // Clear stored term grades
             return {};
         }
         
@@ -2079,6 +2095,7 @@ async function loadGradeStatuses() {
         if (!text || text.trim() === '') {
             console.warn('Empty response from loadGradeStatuses');
             FGS.gradeStatuses = {};
+            FGS.storedTermGrades = {};  // Clear stored term grades
             return {};
         }
         
@@ -2088,14 +2105,19 @@ async function loadGradeStatuses() {
         if (data.success) {
             const statuses = data.statuses || {};
             FGS.gradeStatuses = statuses;  // Store in global FGS object
+            // Store the pre-computed term grades from database for summary display
+            FGS.storedTermGrades = data.termGrades || {};
+            console.log('Loaded stored term grades:', FGS.storedTermGrades);
             return statuses;
         }
         
         FGS.gradeStatuses = {};
+        FGS.storedTermGrades = {};  // Clear stored term grades
         return {};
     } catch (e) {
         console.error('Error loading grade statuses:', e);
         FGS.gradeStatuses = {};
+        FGS.storedTermGrades = {};  // Clear stored term grades
         return {};
     }
 }
