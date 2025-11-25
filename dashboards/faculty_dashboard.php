@@ -975,14 +975,14 @@ $error = $_GET['error'] ?? '';
         <script src="../faculty/assets/js/nu_swal_theme.js?v=1.0"></script>
     
     <!-- Faculty Dashboard Scripts -->
-    <script src="../faculty/assets/js/faculty_dashboard.js?v=2.1"></script>
-    <script src="../faculty/assets/js/student_management.js?v=2.4"></script>
-    <script src="../faculty/assets/js/grading_integration.js?v=2.1"></script>
-    <script src="../faculty/assets/js/flexible_grading.js?v=3.0"></script>
-    <script src="../faculty/assets/js/view_grades.js?v=2.1"></script>
-    <script src="../faculty/assets/js/car_management.js?v=1.1"></script>
-    <script src="../faculty/assets/js/car-pdf-generator.js?v=1.1"></script>
-    <script src="../faculty/assets/js/debug_watcher.js?v=1.0"></script>
+    <script src="../faculty/assets/js/faculty_dashboard.js?v=2.1&t=<?= time() ?>"></script>
+    <script src="../faculty/assets/js/student_management.js?v=2.4&t=<?= time() ?>"></script>
+    <script src="../faculty/assets/js/grading_integration.js?v=2.1&t=<?= time() ?>"></script>
+    <script src="../faculty/assets/js/flexible_grading.js?v=3.0&t=<?= time() ?>"></script>
+    <script src="../faculty/assets/js/view_grades.js?v=2.1&t=<?= time() ?>"></script>
+    <script src="../faculty/assets/js/car_management.js?v=1.1&t=<?= time() ?>"></script>
+    <script src="../faculty/assets/js/car-pdf-generator.js?v=1.1&t=<?= time() ?>"></script>
+    <script src="../faculty/assets/js/debug_watcher.js?v=1.0&t=<?= time() ?>"></script>
     
     <script>
         /**
