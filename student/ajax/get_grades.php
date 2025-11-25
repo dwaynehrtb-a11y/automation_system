@@ -321,7 +321,7 @@ function getStudentGradeSummary($conn, $student_id, $class_code) {
                 'finals_percentage' => 0,
                 'term_percentage' => 0,
                 'term_grade' => 0,
-                'grade_status' => $row['grade_status'] ?? 'pending',
+                'grade_status' => 'pending',
                 'term_grade_hidden' => true,
                 'message' => 'Grades are not yet released'
             ];
