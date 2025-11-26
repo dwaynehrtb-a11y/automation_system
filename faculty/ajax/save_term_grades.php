@@ -265,32 +265,30 @@ function getGradeStatuses($conn, $faculty_id) {
         $stmt->bind_param("s", $class_code);
         $stmt->execute();
         $result = $stmt->get_result();
-        
-        // Use GradesModel for decryption
+
+        // Use GradesModel for decryption - faculty should always see decrypted grades
         $gradesModel = new GradesModel($conn);
-        
+
         $statuses = [];
         $termGrades = [];  // Store computed term grades from database
         while ($row = $result->fetch_assoc()) {
             $statuses[$row['student_id']] = $row['grade_status'];
-            
-            // Decrypt values if they are encrypted
-            if (!empty($row['is_encrypted'])) {
-                try {
-                    // Use GradesModel's decryptFieldsPublic method to decrypt the row
-                    $decryptedRow = $gradesModel->decryptFieldsPublic($row);
-                    if ($decryptedRow) {
-                        $row = $decryptedRow;
-                        error_log("Successfully decrypted grades for student {$row['student_id']}");
-                    } else {
-                        error_log("decryptFieldsPublic returned null for student {$row['student_id']}");
-                    }
-                } catch (Exception $e) {
-                    error_log('Error decrypting grades for student ' . $row['student_id'] . ': ' . $e->getMessage());
-                    // Continue with encrypted values if decryption fails
+
+            // Always decrypt for faculty viewing their own class
+            try {
+                $decryptedRow = $gradesModel->decryptFieldsPublic($row);
+                if ($decryptedRow) {
+                    $row = $decryptedRow;
+                    error_log("Successfully decrypted grades for student {$row['student_id']}");
+                } else {
+                    error_log("decryptFieldsPublic returned null for student {$row['student_id']}, using original values");
+                    // Continue with original values if decryption returns null
                 }
+            } catch (Exception $e) {
+                error_log('Error decrypting grades for student ' . $row['student_id'] . ': ' . $e->getMessage());
+                // Continue with original values if decryption fails
             }
-            
+
             // Include stored term percentages for faculty summary display
             $termGrades[$row['student_id']] = [
                 'midterm_percentage' => floatval(str_replace('%', '', $row['midterm_percentage'] ?? '0')),

@@ -545,7 +545,7 @@ function renderTable() {
                             fd.append('class_code', FGS.currentClassCode);
                             fd.append('csrf_token', window.csrfToken || APP.csrfToken);
 
-                            const res = await fetch('/ajax/update_grade.php', { method: 'POST', body: fd });
+                            const res = await fetch(APP.apiPath.replace('/faculty/ajax/', '/ajax/') + 'update_grade.php', { method: 'POST', body: fd });
                             const data = await res.json();
                             if (data.success) {
                                 console.log(`    ✅ Database corrected: ${student.student_id} column ${col.id} = ${correctedRawVal.toFixed(2)}`);
@@ -727,8 +727,30 @@ async function switchToMidtermSummary() {
         console.log('Loaded stored term grades:', FGS.storedTermGrades);
     }
     
+    // Ensure components are loaded
+    if (!FGS.allComponents || FGS.allComponents.length === 0) {
+        console.log('Loading components for midterm summary...');
+        await loadComponents(FGS.currentClassCode, 'midterm');
+        console.log('Loaded components:', FGS.allComponents);
+    }
+    
     // Get components for midterm
     const midtermComponents = FGS.allComponents?.filter(c => c.term_type === 'midterm') || [];
+    
+    // Ensure grades are loaded for midterm components
+    console.log('Loading grades for midterm components...');
+    for (const comp of midtermComponents) {
+        if (comp.columns && comp.columns.length > 0) {
+            try {
+                const compGrades = await loadGradesForComponent(comp.id);
+                Object.assign(FGS.grades, compGrades);
+                console.log(`Loaded grades for component ${comp.component_name}:`, compGrades);
+            } catch (e) {
+                console.error(`Error loading grades for component ${comp.id}:`, e);
+            }
+        }
+    }
+    console.log('All midterm grades loaded:', FGS.grades);
     
     // Calculate midterm percentage for each student
     let html = `
@@ -759,29 +781,41 @@ async function switchToMidtermSummary() {
         const storedGrade = FGS.storedTermGrades?.[student.student_id];
         let midtermPct;
         
-        if (storedGrade && (storedGrade.midterm_percentage !== undefined && storedGrade.midterm_percentage !== null && storedGrade.midterm_percentage >= 0)) {
-            // Use stored midterm percentage from database
+        // Always calculate fresh midterm percentage for accuracy
+        let totalWeightedScore = 0;
+        let totalWeight = 0;
+        
+        midtermComponents.forEach(comp => {
+            const columns = comp.columns || [];
+            let compScore = 0;
+            let compMax = 0;
+            
+            columns.forEach(col => {
+                const key = `${student.student_id}_${col.id}`;
+                const gradeObj = FGS.grades[key] || {};
+                const score = parseFloat(gradeObj.score) || 0;
+                if (score >= 0) {  // Include 0 scores in calculation
+                    compScore += score;
+                    compMax += parseFloat(col.max_score);
+                }
+            });
+            
+            if (compMax > 0) {
+                const compPct = (compScore / compMax) * 100;
+                const weighted = compPct * (parseFloat(comp.percentage) / 100);
+                totalWeightedScore += weighted;
+                totalWeight += parseFloat(comp.percentage);
+            }
+        });
+        
+        midtermPct = totalWeight > 0 ? totalWeightedScore : 0;
+        
+        // Only use stored value if calculation gives 0 and stored value exists and is reasonable
+        if (midtermPct === 0 && storedGrade && storedGrade.midterm_percentage > 0) {
             midtermPct = storedGrade.midterm_percentage;
             console.log(`Using stored midterm percentage for ${student.student_id}: ${midtermPct}%`);
         } else {
-            // Calculate midterm percentage from all midterm components
-            let totalScore = 0, totalMax = 0;
-            
-            midtermComponents.forEach(comp => {
-                const columns = comp.columns || [];
-                columns.forEach(col => {
-                    const key = `${student.student_id}_${col.id}`;
-                    const gradeObj = FGS.grades[key] || {};
-                    const score = parseFloat(gradeObj.score) || 0;
-                    if (score > 0) {
-                        totalScore += score;
-                        totalMax += parseFloat(col.max_score);
-                    }
-                });
-            });
-            
-            midtermPct = totalMax > 0 ? (totalScore / totalMax) * 100 : 0;
-            console.log(`Calculated midterm percentage for ${student.student_id}: ${midtermPct}% (stored: ${storedGrade?.midterm_percentage})`);
+            console.log(`Calculated midterm percentage for ${student.student_id}: ${midtermPct}%`);
         }
         
         const midtermGrade = toGrade(midtermPct);
@@ -1874,18 +1908,19 @@ async function renderSummary() {
             const storedGrade = FGS.storedTermGrades?.[student.student_id];
             
             let midtermPct, finalsPct, termPct;
-            if (storedGrade && (storedGrade.term_percentage > 0 || storedGrade.midterm_percentage > 0 || storedGrade.finals_percentage > 0)) {
-                // Use stored database values for accurate display
+            // Always calculate fresh grades for faculty to ensure they see real values
+            midtermPct = calculateTermGrade(student.student_id, midtermData);
+            finalsPct = calculateTermGrade(student.student_id, finalsData);
+            termPct = (midtermPct * (FGS.midtermWeight / 100)) + (finalsPct * (FGS.finalsWeight / 100));
+            
+            // Only use stored values if calculation gives 0 and stored values exist and are reasonable
+            if (termPct === 0 && storedGrade && (storedGrade.term_percentage > 0 || storedGrade.midterm_percentage > 0 || storedGrade.finals_percentage > 0)) {
                 midtermPct = storedGrade.midterm_percentage;
                 finalsPct = storedGrade.finals_percentage;
                 termPct = storedGrade.term_percentage;
                 console.log(`Using stored grades for ${student.student_id}: Mid=${midtermPct}%, Fin=${finalsPct}%, Term=${termPct}%`);
             } else {
-                // Recalculate only if no stored values exist
-                midtermPct = calculateTermGrade(student.student_id, midtermData);
-                finalsPct = calculateTermGrade(student.student_id, finalsData);
-                termPct = (midtermPct * (FGS.midtermWeight / 100)) + (finalsPct * (FGS.finalsWeight / 100));
-                console.log(`Recalculated grades for ${student.student_id}: Mid=${midtermPct}%, Fin=${finalsPct}%, Term=${termPct}%`);
+                console.log(`Using calculated grades for ${student.student_id}: Mid=${midtermPct}%, Fin=${finalsPct}%, Term=${termPct}%`);
             }
             
             const midtermGrade = toGrade(midtermPct);
@@ -1894,7 +1929,15 @@ async function renderSummary() {
             
             // Determine status based on term percentage (60% and above = passed, below 60% = failed)
             // Faculty can manually override by changing status to 'incomplete' if they give special exam/removals
-            let gradeStatus = statusesData[student.student_id] || (termPct >= 60 ? 'passed' : 'failed');
+            let gradeStatus = statusesData[student.student_id];
+            if (!gradeStatus) {
+                // If no grades in midterm AND finals, show as pending instead of failed
+                if (midtermPct === 0 && finalsPct === 0) {
+                    gradeStatus = 'pending';
+                } else {
+                    gradeStatus = termPct >= 60 ? 'passed' : 'failed';
+                }
+            }
             // Hard correction: never allow 'passed' below 60% unless manually frozen (will be handled by server flags later)
             if (gradeStatus === 'passed' && termPct < 60) {
                 gradeStatus = (termPct < 57 ? 'failed' : 'incomplete');
@@ -1904,14 +1947,16 @@ const statusColors = {
     'passed': '#10b981',
     'failed': '#ef4444',
     'incomplete': '#f59e0b',
-    'dropped': '#6b7280'
+    'dropped': '#6b7280',
+    'pending': '#9ca3af'
 };
 
 const statusLabels = {
     'passed': 'Passed',
     'failed': 'Failed',
     'incomplete': 'INC',
-    'dropped': 'DRP'
+    'dropped': 'DRP',
+    'pending': 'Pending'
 };
 
 html += `
@@ -2565,7 +2610,7 @@ async function saveRawScore(inputEl) {
         if (typeof raw === 'string' && raw.includes('%')) {
             console.debug(`DEBUG: Input contains '%' before sending for ${studentId}_${columnId} -> '${raw}'`);
         }
-        const res = await fetch('/ajax/update_grade.php', { method:'POST', body: fd });
+        const res = await fetch(APP.apiPath.replace('/faculty/ajax/', '/ajax/') + 'update_grade.php', { method:'POST', body: fd });
         if (!res.ok) {
             console.error(`💾 HTTP Error: ${res.status}`);
             return;
@@ -3440,7 +3485,7 @@ async function markComponentStatus(event, studentId, columnId, status) {
     fd.append('csrf_token', window.csrfToken || APP.csrfToken);
     
     try {
-        const response = await fetch('/ajax/update_grade.php', {
+        const response = await fetch(APP.apiPath.replace('/faculty/ajax/', '/ajax/') + 'update_grade.php', {
             method: 'POST',
             body: fd
         });
