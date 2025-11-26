@@ -200,27 +200,35 @@ if (!isset($_SESSION['csrf_token'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NU Academic System - Login</title>
     <link rel="icon" type="image/png" href="/assets/images/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../admin/assets/css/login.css?v=<?= time() ?>">
 </head>
 <body>
     <div class="login-wrapper">
         <div class="login-container">        
+            <div class="login-left">
+                <div class="welcome-content">
+                    <div class="logo-large">
+                        <img src="../assets/images/nu_logo.png" alt="NU Logo">
+                    </div>
+                    <h2>Welcome to NU Academic System</h2>
+                    <p>Access your academic portal securely and efficiently. Manage grades, view reports, and stay connected with your academic journey.</p>
+                    <div class="instructions">
+                        <h3>Login Instructions:</h3>
+                        <p><strong>All Users:</strong> Enter your ID and Password</p>
+                        <p><strong>Students:</strong> Use Student ID</p>
+                        <p><strong>Faculty/Admin:</strong> Use Employee ID</p>
+                        <p style="margin-top: 0.5rem; color: white; font-size: 0.875rem;">
+                            📧 Check your email for your temporary password
+                        </p>
+                    </div>
+                </div>
+            </div>
             <div class="login-right"> 
-                <div class="login-header"> 
-                    <div class="logo"><img src="../assets/images/nu_logo.png" alt="NU Logo" style="max-width: 100px; height: auto;"></div> 
-                    <h1>NU Academic System</h1> 
-                    <p class="subtitle">Sign in to your account</p> 
-                </div>  
-
-                <div class="instructions"> 
-                    <h3>Login Instructions:</h3> 
-                    <p><strong>All Users:</strong> Enter your ID and Password</p> 
-                    <p><strong>Students:</strong> Use Student ID</p> 
-                    <p><strong>Faculty/Admin:</strong> Use Employee ID</p>
-                    <p style="margin-top: 0.5rem; color: #6b7280; font-size: 0.875rem;">
-                        📧 Check your email for your temporary password
-                    </p>
-                </div>  
+                <div class="login-form-header">
+                    <h1>Sign In</h1>
+                    <p>Please enter your credentials to access your account</p>
+                </div>
 
                 <?php if (isset($_SESSION['login_attempts']) && count($_SESSION['login_attempts']) >= 3): ?> 
                 <div class="security-info">     
@@ -270,7 +278,7 @@ if (!isset($_SESSION['csrf_token'])) {
                             <input type="password" name="password" id="password" placeholder="Enter your password" required         
                                    autocomplete="current-password">     
                             <button type="button" class="password-toggle" onclick="togglePassword('password')">         
-                                <span id="password-toggle-text">Show</span>     
+                                <i class="fas fa-eye" id="password-toggle-icon"></i>
                             </button> 
                         </div> 
                     </div>  
@@ -309,14 +317,14 @@ if (!isset($_SESSION['csrf_token'])) {
 
     function togglePassword(fieldId) {
         const passwordField = document.getElementById(fieldId);
-        const toggleText = document.getElementById(fieldId + '-toggle-text');
+        const toggleIcon = document.getElementById(fieldId + '-toggle-icon');
 
         if (passwordField.type === 'password') {
             passwordField.type = 'text';
-            toggleText.textContent = 'Hide';
+            toggleIcon.className = 'fas fa-eye-slash';
         } else {
             passwordField.type = 'password';
-            toggleText.textContent = 'Show';
+            toggleIcon.className = 'fas fa-eye';
         }
     }
 

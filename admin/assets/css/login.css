@@ -44,7 +44,7 @@
   --line-height: 1.5;
   
   /* Layout */
-  --container-width: 500px;
+  --container-width: 1400px;
   --spacing: 1.5rem;
 }
 
@@ -87,9 +87,13 @@ body {
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-xl);
   width: 100%;
+  max-width: 1200px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.1);
   animation: slideUp 0.3s ease-out;
+  display: flex;
+  min-height: 400px;
+  margin: 0 auto;
 }
 
 .login-container::before {
@@ -102,8 +106,107 @@ body {
   background: linear-gradient(90deg, var(--primary) 0%, #3b82f6 50%, var(--primary) 100%);
 }
 
+.login-left {
+  flex: 1;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  position: relative;
+}
+
+.login-left::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('/auth/assets/images/nu-lipa-background.jpg') no-repeat center center;
+  background-size: cover;
+  opacity: 0.1;
+  z-index: 0;
+}
+
+.welcome-content {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.logo-large {
+  margin-bottom: 1.5rem;
+}
+
+.logo-large img {
+  width: 100px;
+  height: auto;
+}
+
+.welcome-content h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--white);
+}
+
+.welcome-content p {
+  font-size: 0.75rem;
+  line-height: 1.4;
+  margin-bottom: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.welcome-content .instructions {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-left: 3px solid rgba(255, 255, 255, 0.5);
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+}
+
+.welcome-content .instructions h3 {
+  color: var(--white);
+  margin-bottom: 0.5rem;
+  font-size: 0.75rem;
+}
+
+.welcome-content .instructions p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.7rem;
+  margin-bottom: 0.25rem;
+  line-height: 1.3;
+}
+
+.welcome-content .instructions strong {
+  color: var(--white);
+}
+
 .login-right {
-  padding: 2.5rem;
+  flex: 1;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-form-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.login-form-header h1 {
+  color: var(--gray-900);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.login-form-header p {
+  color: var(--gray-600);
+  font-size: 0.75rem;
 }
 
 /* Header */
@@ -143,7 +246,7 @@ h1 {
 
 /* Form */
 .form-group {
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.875rem;
 }
 
 label {
@@ -218,11 +321,10 @@ select option:focus {
   border: none;
   cursor: pointer;
   color: var(--gray-500);
-  font-size: 0.75rem;
+  font-size: 1rem;
   padding: 0.25rem;
   border-radius: var(--radius);
   transition: var(--transition-fast);
-  font-weight: 500;
 }
 
 .password-toggle:hover {
@@ -250,7 +352,7 @@ select option:focus {
 /* Buttons */
 .btn {
   width: 100%;
-  padding: 0.875rem 1.5rem;
+  padding: 0.75rem 1.5rem;
   background: var(--primary);
   color: var(--white);
   border: none;
@@ -261,7 +363,7 @@ select option:focus {
   cursor: pointer;
   transition: var(--transition);
   box-shadow: var(--shadow-sm);
-  margin-top: 0.5rem;
+  margin-top: 0.25rem;
 }
 
 .btn:hover {
@@ -411,17 +513,40 @@ select option:focus {
 }
 
 /* Responsive */
+@media (max-width: 768px) {
+  .login-container {
+    flex-direction: column;
+    min-height: auto;
+  }
+  
+  .login-left {
+    padding: 1rem;
+  }
+  
+  .welcome-content h2 {
+    font-size: 1.125rem;
+  }
+  
+  .login-right {
+    padding: 1rem;
+  }
+}
+
 @media (max-width: 640px) {
   body {
     padding: 0.5rem;
   }
   
   .login-right {
-    padding: 1.5rem;
+    padding: 1rem;
   }
   
   h1 {
-    font-size: 1.375rem;
+    font-size: 1.25rem;
+  }
+  
+  .login-form-header h1 {
+    font-size: 1.25rem;
   }
   
   .logo {
@@ -431,21 +556,19 @@ select option:focus {
   }
   
   .instructions {
-    padding: 0.875rem;
+    padding: 0.75rem;
   }
-}
-
-@media (max-width: 480px) {
-  .login-right {
-    padding: 1.25rem;
+  
+  .welcome-content h2 {
+    font-size: 1rem;
+  }
+  
+  .welcome-content p {
+    font-size: 0.7rem;
   }
   
   .form-group {
     margin-bottom: 1rem;
-  }
-  
-  h1 {
-    font-size: 1.25rem;
   }
 }
 
