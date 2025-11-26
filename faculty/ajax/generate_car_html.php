@@ -156,31 +156,54 @@ try {
         $stmt->close(); 
     }
 
-    // INC / DROPPED Students
+    // INC / DROPPED Students - Use stored status like PDF version
     $incStudents = [];
-    $stmt = $conn->prepare("SELECT s.student_id, s.last_name, s.first_name, tg.grade_status, tg.lacking_requirements FROM class_enrollments ce JOIN student s ON ce.student_id=s.student_id JOIN grade_term tg ON tg.class_code=ce.class_code AND tg.student_id=s.student_id WHERE ce.class_code=? AND ce.status='enrolled' AND tg.grade_status IN ('incomplete','dropped') ORDER BY s.last_name, s.first_name");
-    if ($stmt) {
-        $stmt->bind_param("s", $class_code);
-        $stmt->execute();
-        $res = $stmt->get_result();
-        while($row = $res->fetch_assoc()) {
-            $lastName = trim($row['last_name'] ?? '');
-            $firstName = trim($row['first_name'] ?? '');
+    $incQuery = "
+        SELECT s.student_id, CONCAT(s.last_name, ', ', s.first_name) as name, 
+               MAX(tg.grade_status) as grade_status, 
+               GROUP_CONCAT(DISTINCT CASE WHEN tg.lacking_requirements IS NOT NULL AND tg.lacking_requirements != '' THEN tg.lacking_requirements ELSE NULL END SEPARATOR '; ') as lacking_requirements
+        FROM class_enrollments ce
+        JOIN student s ON ce.student_id = s.student_id
+        JOIN grade_term tg ON tg.class_code = ce.class_code AND tg.student_id = s.student_id
+        WHERE ce.class_code = ?
+        AND ce.status = 'enrolled'
+        AND tg.grade_status IN ('incomplete', 'dropped')
+        GROUP BY s.student_id, s.last_name, s.first_name
+        ORDER BY s.last_name, s.first_name
+    ";
+    $incStmt = $conn->prepare($incQuery);
+    if ($incStmt) {
+        $incStmt->bind_param("s", $class_code);
+        $incStmt->execute();
+        $incResult = $incStmt->get_result();
+        while ($row = $incResult->fetch_assoc()) {
             // Decrypt names
-            try {
-                if (!empty($lastName)) {
-                    $lastName = Encryption::decrypt($lastName);
+            $nameParts = explode(', ', $row['name']);
+            if (count($nameParts) == 2) {
+                $lastName = trim($nameParts[0]);
+                $firstName = trim($nameParts[1]);
+                try {
+                    if (!empty($lastName)) {
+                        $lastName = Encryption::decrypt($lastName);
+                    }
+                    if (!empty($firstName)) {
+                        $firstName = Encryption::decrypt($firstName);
+                    }
+                } catch (Exception $e) {
+                    // If decryption fails, use as-is
                 }
-                if (!empty($firstName)) {
-                    $firstName = Encryption::decrypt($firstName);
-                }
-            } catch (Exception $e) {
-                // If decryption fails, use as-is
+                $row['name'] = $firstName . ', ' . $lastName;
             }
-            $row['name'] = $firstName . ', ' . $lastName;
+            
+            // Clean up lacking requirements - remove extra semicolons and spaces
+            if (!empty($row['lacking_requirements'])) {
+                $row['lacking_requirements'] = trim($row['lacking_requirements'], '; ');
+                $row['lacking_requirements'] = preg_replace('/;\s*;+/', ';', $row['lacking_requirements']);
+            }
+            
             $incStudents[] = $row;
         }
-        $stmt->close();
+        $incStmt->close();
     }
 
     // Build Grade Distribution Table
@@ -246,19 +269,20 @@ try {
         $coDesc = htmlspecialchars($co['co_description']);
         $coDesc = preg_replace('/^\d+\.\s*/', '', $coDesc);
         $matching = array_filter($coPerf, function($p) use ($coNum) { return $p['co_number'] == $coNum; });
-        if (count($matching) > 0) {
-            $assessments = array_column($matching, 'assessment_name');
-            $targets = array_column($matching, 'performance_target');
-            $successRates = array_column($matching, 'success_rate');
-            $avgSuccess = count($successRates) > 0 ? array_sum($successRates) / count($successRates) : 0;
-            
-            $coPerfRows .= '<tr>';
-            $coPerfRows .= '<td style="border:1px solid #000;padding:4px;text-align:center">CO' . $coNum . '</td>';
-            $coPerfRows .= '<td style="border:1px solid #000;padding:4px">' . $coDesc . '</td>';
-            $coPerfRows .= '<td style="border:1px solid #000;padding:4px;text-align:center">' . (count($targets) > 0 ? $targets[0] : 60) . '%</td>';
-            $coPerfRows .= '<td style="border:1px solid #000;padding:4px;text-align:center">' . round($avgSuccess) . '%(' . ($matching[0]['students_met_target'] ?? 0) . ')</td>';
-            $coPerfRows .= '</tr>';
-        }
+
+        // Always include CO, even if no performance data
+        $assessments = array_column($matching, 'assessment_name');
+        $targets = array_column($matching, 'performance_target');
+        $successRates = array_column($matching, 'success_rate');
+        $avgSuccess = count($successRates) > 0 ? array_sum($successRates) / count($successRates) : 0;
+        $studentsMet = count($matching) > 0 ? ($matching[0]['students_met_target'] ?? 0) : 0;
+
+        $coPerfRows .= '<tr>';
+        $coPerfRows .= '<td style="border:1px solid #000;padding:4px;text-align:center">CO' . $coNum . '</td>';
+        $coPerfRows .= '<td style="border:1px solid #000;padding:4px">' . $coDesc . '</td>';
+        $coPerfRows .= '<td style="border:1px solid #000;padding:4px;text-align:center">' . (count($targets) > 0 ? $targets[0] : 60) . '%</td>';
+        $coPerfRows .= '<td style="border:1px solid #000;padding:4px;text-align:center">' . (count($matching) > 0 ? round($avgSuccess) . '%(' . $studentsMet . ')' : 'N/A(0)') . '</td>';
+        $coPerfRows .= '</tr>';
     }
 
     // INC/Dropped Students for Page 2
@@ -266,7 +290,7 @@ try {
     foreach ($incStudents as $s) {
         $status = ucfirst($s['grade_status']);
         $lacking = $s['lacking_requirements'] ?? ($status === 'Dropped' ? 'Officially Dropped' : '');
-        $incStudentRows .= '<tr><td style="border:1px solid #000;padding:4px">' . htmlspecialchars($s['name']) . '</td><td style="border:1px solid #000;padding:4px">' . htmlspecialchars($lacking) . '</td></tr>';
+        $incStudentRows .= '<tr><td style="border:1px solid #000;padding:4px">' . htmlspecialchars($s['name']) . '</td><td style="border:1px solid #000;padding:4px;text-align:center">' . $status . '</td><td style="border:1px solid #000;padding:4px" colspan="2">' . htmlspecialchars($lacking) . '</td></tr>';
     }
 
     // Intervention count
@@ -368,8 +392,8 @@ try {
     $html .= '<table><tr><td class="gray-header" colspan="4">COURSE LEARNING OUTCOMES ASSESSMENT</td></tr>'
         . '<tr><td class="gray-header">COURSE<br>OUTCOME</td><td class="gray-header">SUMMATIVE ASSESSMENT</td><td class="gray-header">PERFORMANCE TARGET</td><td class="gray-header">SUCCESS RATE<br>(in % and enclose the number in ( ))</td></tr>'
         . $coPerfRows 
-        . '<tr><td class="gray-header" colspan="4">List of Students with INC</td></tr>'
-        . '<tr><td class="gray-header">Name</td><td class="gray-header" colspan="3">Lacking Requirements</td></tr>'
+        . '<tr><td class="gray-header" colspan="4">List of Students with INC/DRP</td></tr>'
+        . '<tr><td class="gray-header">Name</td><td class="gray-header">Status</td><td class="gray-header" colspan="2">Lacking Requirements</td></tr>'
         . ($incStudentRows ? $incStudentRows : '<tr><td colspan="4" style="text-align:center">None</td></tr>')
         . '<tr><td class="gray-header" colspan="4">Teaching Strategies Employed <span style="font-weight:normal">(List and give a brief description of each teaching strategy employed in class)</span></td></tr>'
         . '<tr><td colspan="4" style="padding:10px;min-height:80px">' . nl2br(htmlspecialchars($metadata['teaching_strategies'] ?? '')) . '</td></tr>'

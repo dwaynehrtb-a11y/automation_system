@@ -20,10 +20,81 @@ const FGS = {
     finalsWeight: 60.0,
     termLimit: 40.0,
     usedPercentage: 0,
-    remainingPercentage: 40.0
+    remainingPercentage: 40.0,
+    // Pagination
+    currentPage: 1,
+    itemsPerPage: 10
 };
 
-// ---- Missing helper implementations (added to resolve ReferenceError) ----
+// Pagination
+function renderPaginationControls(totalItems, containerId) {
+    const totalPages = Math.ceil(totalItems / FGS.itemsPerPage);
+    if (totalPages <= 1) return '';
+
+    let html = '<div class="fgs-pagination" style="display:flex; justify-content:flex-end; align-items:center; gap:8px; margin:20px 0; padding:12px;">';
+    
+    // Previous button
+    const prevDisabled = FGS.currentPage <= 1;
+    html += `<button onclick="changePage(${FGS.currentPage - 1})" ${prevDisabled ? 'disabled' : ''} style="padding:8px 12px; border:1px solid #d1d5db; border-radius:6px; background:${prevDisabled ? '#f3f4f6' : '#fff'}; color:${prevDisabled ? '#9ca3af' : '#374151'}; cursor:${prevDisabled ? 'not-allowed' : 'pointer'}; font-size:14px;"><i class="fas fa-chevron-left"></i> Previous</button>`;
+
+    // Page numbers
+    const startPage = Math.max(1, FGS.currentPage - 2);
+    const endPage = Math.min(totalPages, FGS.currentPage + 2);
+    
+    if (startPage > 1) {
+        html += `<button onclick="changePage(1)" style="padding:8px 12px; border:1px solid #d1d5db; border-radius:6px; background:#fff; color:#374151; cursor:pointer; font-size:14px;">1</button>`;
+        if (startPage > 2) {
+            html += '<span style="padding:8px 4px; color:#6b7280;">...</span>';
+        }
+    }
+    
+    for (let i = startPage; i <= endPage; i++) {
+        const isActive = i === FGS.currentPage;
+        html += `<button onclick="changePage(${i})" ${isActive ? 'class="active"' : ''} style="padding:8px 12px; border:1px solid ${isActive ? '#3b82f6' : '#d1d5db'}; border-radius:6px; background:${isActive ? '#3b82f6' : '#fff'}; color:${isActive ? '#fff' : '#374151'}; cursor:pointer; font-size:14px; font-weight:${isActive ? '600' : 'normal'};">${i}</button>`;
+    }
+    
+    if (endPage < totalPages) {
+        if (endPage < totalPages - 1) {
+            html += '<span style="padding:8px 4px; color:#6b7280;">...</span>';
+        }
+        html += `<button onclick="changePage(${totalPages})" style="padding:8px 12px; border:1px solid #d1d5db; border-radius:6px; background:#fff; color:#374151; cursor:pointer; font-size:14px;">${totalPages}</button>`;
+    }
+
+    // Next button
+    const nextDisabled = FGS.currentPage >= totalPages;
+    html += `<button onclick="changePage(${FGS.currentPage + 1})" ${nextDisabled ? 'disabled' : ''} style="padding:8px 12px; border:1px solid #d1d5db; border-radius:6px; background:${nextDisabled ? '#f3f4f6' : '#fff'}; color:${nextDisabled ? '#9ca3af' : '#374151'}; cursor:${nextDisabled ? 'not-allowed' : 'pointer'}; font-size:14px;">Next <i class="fas fa-chevron-right"></i></button>`;
+
+    html += '</div>';
+    return html;
+}
+
+function changePage(pageNum) {
+    const totalPages = Math.ceil(FGS.students.length / FGS.itemsPerPage);
+    if (pageNum < 1 || pageNum > totalPages) return;
+    
+    FGS.currentPage = pageNum;
+    
+    // Re-render current view
+    if (FGS.currentComponentId === null && FGS.currentTermType === 'midterm') {
+        // Midterm summary view
+        switchToMidtermSummary();
+    } else if (FGS.currentComponentId === null) {
+        // Full summary view
+        renderSummary();
+    } else {
+        // Component grading view
+        renderTable();
+    }
+}
+
+function getPaginatedStudents() {
+    const startIndex = (FGS.currentPage - 1) * FGS.itemsPerPage;
+    const endIndex = startIndex + FGS.itemsPerPage;
+    return FGS.students.slice(startIndex, endIndex);
+}
+
+// Expose functions
+window.changePage = changePage;
 async function loadWeights(classCode) {
     const fd = new FormData();
     fd.append('action','get_term_weights');
@@ -164,7 +235,7 @@ function renderUI() {
             // Add MIDTERM SUMMARY card at the beginning (only for midterm tab)
             if (FGS.currentTermType === 'midterm') {
                 const summaryActive = FGS.currentComponentId === null;
-                html += `<div class="fgs-component-card${summaryActive?' active':''}" onclick="switchToMidtermSummary().catch(console.error)">\n                    <div style="font-weight:700; font-size:14px; margin-bottom:4px; display:flex; align-items:center; gap:6px;">\n                        <i class="fas fa-chart-line"></i> Midterm Summary\n                    </div>\n                    <div style="font-size:11px; opacity:.85; margin-bottom:0;">Class overview & status</div>\n                </div>`;
+                html += `<div class="fgs-component-card${summaryActive?' active':''}" onclick="switchToMidtermSummaryView().catch(console.error)">\n                    <div style="font-weight:700; font-size:14px; margin-bottom:4px; display:flex; align-items:center; gap:6px;">\n                        <i class="fas fa-chart-line"></i> Midterm Summary\n                    </div>\n                    <div style="font-size:11px; opacity:.85; margin-bottom:0;">Class overview & status</div>\n                </div>`;
             }
             
             FGS.components.forEach(c => {
@@ -223,6 +294,7 @@ function componentColor(name) {
 async function initGrading(classCode) {
     console.log('Init grading:', classCode);
     FGS.currentClassCode = classCode;
+    FGS.currentPage = 1;  // Reset to first page when initializing
     if (typeof showLoading === 'function') showLoading();
     try {
         await loadWeights(classCode);
@@ -266,7 +338,8 @@ async function renderSummary() {
         const statusColors = { passed: '#10b981', failed: '#ef4444', incomplete: '#f59e0b', dropped: '#6b7280' };
         const statusLabels = { passed: 'Passed', failed: 'Failed', incomplete: 'INC', dropped: 'DRP' };
         let html = `<div class="fgs-summary-container"><div class="fgs-summary-header"><h3 class="fgs-summary-title">Grade Summary</h3><p class="fgs-summary-subtitle">Midterm ${data.midterm_weight}% | Finals ${data.finals_weight}%</p></div><div class="fgs-summary-scroll"><table class="fgs-summary-table"><thead><tr><th>Student</th><th>Midterm %</th><th>Finals %</th><th>Term %</th><th>Discrete</th><th>Status</th><th>Freeze</th></tr></thead><tbody>`;
-        FGS.students.forEach(stu => {
+        const paginatedStudents = getPaginatedStudents();
+        paginatedStudents.forEach(stu => {
             const r = rowsByStudent[stu.student_id] || {};
             const mid = r.midterm_percentage ?? '0.00';
             const fin = r.finals_percentage ?? '0.00';
@@ -282,7 +355,12 @@ async function renderSummary() {
             const freezeBadge = frozen ? `<span class=\"fgs-freeze-badge\" title=\"Manual Freeze Active\"><i class=\"fas fa-snowflake\"></i></span>` : '';
             html += `<tr><td><div class=\"fgs-student-cell\"><div class=\"fgs-student-avatar\">${stu.name.charAt(0)}${freezeBadge}</div><div><div class=\"fgs-student-name\">${stu.name}${frozen?'<span class=\\"fgs-inline-freeze-label\\" aria-label=\\"Frozen\\" title=\\"Frozen\\"><i class=\\"fas fa-lock\\"></i></span>':''}</div><div class=\"fgs-student-id\">${stu.student_id}</div></div></div></td><td class=\"midterm-col\">${mid}%</td><td class=\"finals-col\">${fin}%</td><td class=\"term-col\">${term}%</td><td class=\"grade-col\"><div class=\"fgs-summary-grade-badge\" style=\"background:${gradeColor(parseFloat(grade)||0)};\">${grade}</div></td><td><span class=\"fgs-status-badge\" data-status=\"${status}\" style=\"background:${statusColors[status]||'#6b7280'}\">${statusLabels[status]||status}</span></td><td><button class=\"btn btn-sm\" style=\"background:${frozen?'#6b7280':'var(--nu-navy)'};color:#fff;\" onclick=\"toggleManualFreeze('${stu.student_id}', ${frozen});\">${frozen?'Unfreeze':'Freeze'}</button></td></tr>`;
         });
-        html += '</tbody></table></div></div>';
+        html += '</tbody></table></div>';
+        
+        // Add pagination controls
+        html += renderPaginationControls(FGS.students.length, 'summary-grades-container');
+        
+        html += '</div>';
         container.innerHTML = html;
     } catch (e) {
         container.innerHTML = `<div class=\"fgs-error-state\"><i class=\"fas fa-exclamation-circle fgs-error-icon\"></i><h3 class=\"fgs-error-title\">Error</h3><p class=\"fgs-error-message\">${e.message}</p></div>`;
@@ -474,9 +552,11 @@ function renderTable() {
     const helperBanner = `<div style="margin-bottom:8px;padding:10px;border-radius:8px;background:#f1f5f9;color:#0f172a;font-size:13px;border:1px solid #e6eef8;">` +
         `<strong style="margin-right:8px;">Note:</strong> Enter <strong>raw scores only</strong> (e.g. <code>8</code> for a /10 item). Do <em>not</em> include a percent sign (%). The <strong>TOTAL %</strong> column shows the computed percentage.</div>`;
     
-    FGS.students.forEach((student, idx) => {
-        if (idx === 0) {
-            console.log(`\n🎨 ====== RENDERING STUDENT #${idx}: ${student.student_id} ======`);
+    const paginatedStudents = getPaginatedStudents();
+    paginatedStudents.forEach((student, idx) => {
+        const globalIdx = (FGS.currentPage - 1) * FGS.itemsPerPage + idx;
+        if (globalIdx === 0) {
+            console.log(`\n🎨 ====== RENDERING STUDENT #${globalIdx}: ${student.student_id} ======`);
         }
         html += `<tr>`;
         html += `<td class="student-col" style="background:#ffffff; position:sticky; left:0; box-shadow: 4px 0 6px -4px rgba(0,0,0,0.05); z-index:5; padding:12px 8px;"><div class="fgs-student-cell"><div class="fgs-student-avatar" style="width:40px; height:40px; font-weight:700; min-width:40px;">${student.name.charAt(0).toUpperCase()}</div><div><div class="fgs-student-name" style="font-weight:700; color:#111; font-size:14px;">${student.name}</div><div class="fgs-student-id" style="font-size:12px; color:#666;">${student.student_id}</div></div></div></td>`;
@@ -609,12 +689,16 @@ function renderTable() {
         html += `<td style="text-align:center; background:linear-gradient(180deg,#fffdf6 0%,#fff9e7 100%); font-weight:700; padding:12px 10px; color:#7a4e00; font-size:14px;">${totalPct.toFixed(1)}%</td>`;
         html += `</tr>`;
         
-        if (idx === 0) {
+        if (globalIdx === 0) {
             console.log(`🎨 ====== END STUDENT RENDER ======\n`);
         }
     });
     
     html += `</tbody></table></div>`;
+    
+    // Add pagination controls
+    html += renderPaginationControls(FGS.students.length, containerId);
+    
     html += `</div>`;
     
     // Add action buttons footer AFTER the container closes
@@ -776,7 +860,8 @@ async function switchToMidtermSummary() {
                     </thead>
                     <tbody>`;
     
-    FGS.students.forEach(student => {
+    const paginatedStudents = getPaginatedStudents();
+    paginatedStudents.forEach(student => {
         // Use stored midterm percentage if available, otherwise calculate from components
         const storedGrade = FGS.storedTermGrades?.[student.student_id];
         let midtermPct;
@@ -820,8 +905,50 @@ async function switchToMidtermSummary() {
         
         const midtermGrade = toGrade(midtermPct);
         
-        // Get current status
-        const studentStatus = FGS.gradeStatuses?.[student.student_id] || 'pending';
+        // Calculate finals percentage to determine status correctly
+        let finalsPct = 0;
+        const finalsComponents = FGS.allComponents?.filter(c => c.term_type === 'finals') || [];
+        
+        let totalFinalsWeightedScore = 0;
+        let totalFinalsWeight = 0;
+        
+        finalsComponents.forEach(comp => {
+            const columns = comp.columns || [];
+            let compScore = 0;
+            let compMax = 0;
+            
+            columns.forEach(col => {
+                const key = `${student.student_id}_${col.id}`;
+                const gradeObj = FGS.grades[key] || {};
+                const score = parseFloat(gradeObj.score) || 0;
+                if (score >= 0) {
+                    compScore += score;
+                    compMax += parseFloat(col.max_score);
+                }
+            });
+            
+            if (compMax > 0) {
+                const compPct = (compScore / compMax) * 100;
+                const weighted = compPct * (parseFloat(comp.percentage) / 100);
+                totalFinalsWeightedScore += weighted;
+                totalFinalsWeight += parseFloat(comp.percentage);
+            }
+        });
+        
+        finalsPct = totalFinalsWeight > 0 ? totalFinalsWeightedScore : 0;
+        
+        // Determine status based on midterm grade
+        let studentStatus;
+        const passingGrades = [1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0];
+        
+        if (midtermGrade === 0.0) {
+            studentStatus = 'failed';
+        } else if (passingGrades.includes(midtermGrade)) {
+            studentStatus = 'passed';
+        } else {
+            // For any other grade values, use stored status or default to pending
+            studentStatus = FGS.gradeStatuses?.[student.student_id] || 'pending';
+        }
         const statusColors = {
             'passed': '#10b981',
             'failed': '#ef4444',
@@ -867,7 +994,12 @@ async function switchToMidtermSummary() {
             </tr>`;
     });
     
-    html += `</tbody></table></div></div>`;
+    html += `</tbody></table></div>`;
+    
+    // Add pagination controls
+    html += renderPaginationControls(FGS.students.length, containerId);
+    
+    html += `</div>`;
     
     container.innerHTML = html;
     console.log('✓ Midterm Summary rendered');
@@ -1930,15 +2062,20 @@ async function renderSummary() {
             // Determine status based on term percentage (60% and above = passed, below 60% = failed)
             // Faculty can manually override by changing status to 'incomplete' if they give special exam/removals
             let gradeStatus = statusesData[student.student_id];
-            if (!gradeStatus) {
-                // If no grades in midterm AND finals, show as pending instead of failed
+            
+            // If finals haven't been graded yet (0.0%), always show as pending regardless of stored status
+            if (finalsPct === 0.0) {
+                gradeStatus = 'pending';
+            } else if (!gradeStatus) {
+                // No stored status, calculate based on grades
                 if (midtermPct === 0 && finalsPct === 0) {
                     gradeStatus = 'pending';
                 } else {
                     gradeStatus = termPct >= 60 ? 'passed' : 'failed';
                 }
             }
-            // Hard correction: never allow 'passed' below 60% unless manually frozen (will be handled by server flags later)
+            
+            // Hard correction: never allow 'passed' below 60% unless manually frozen
             if (gradeStatus === 'passed' && termPct < 60) {
                 gradeStatus = (termPct < 57 ? 'failed' : 'incomplete');
             }
@@ -3233,6 +3370,7 @@ window.initGrading = initGrading;
 // Switch component and reload grading UI
 function switchComponent(componentId) {
     FGS.currentComponentId = componentId;
+    FGS.currentPage = 1;  // Reset to first page when switching components
     // Load grades for this component before rendering
     loadGrades(FGS.currentClassCode, componentId).then(() => {
         renderUI();
@@ -3242,6 +3380,7 @@ function switchComponent(componentId) {
 // Switch term (midterm/finals) and reload components
 function switchTerm(termType) {
     FGS.currentTermType = termType;
+    FGS.currentPage = 1;  // Reset to first page when switching terms
     loadComponents(FGS.currentClassCode, termType).then(() => {
         if (FGS.components.length > 0) {
             FGS.currentComponentId = FGS.components[0].id;
@@ -3537,3 +3676,9 @@ async function markComponentStatus(event, studentId, columnId, status) {
 
 // Bulk flexible grade upload removed per requirements. Placeholder kept to avoid reference errors.
 window.initBulkFlexibleUpload = function(){};
+
+// Function to switch to midterm summary view with page reset
+window.switchToMidtermSummaryView = function() {
+    FGS.currentPage = 1;
+    switchToMidtermSummary();
+};

@@ -24393,3 +24393,1431 @@ Stack trace:
 [26-Nov-2025 16:01:43 Europe/Berlin] Database connection error: Database connection failed: php_network_getaddresses: getaddrinfo failed: No such host is known. 
 [26-Nov-2025 16:01:43 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:01:43 ===
 [26-Nov-2025 16:01:43 Europe/Berlin] Database connection error: Database connection failed: php_network_getaddresses: getaddrinfo failed: No such host is known. 
+[26-Nov-2025 16:05:57 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:05:57 ===
+[26-Nov-2025 16:05:57 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:05:57 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CTAPROJ1_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764169557626"}
+[26-Nov-2025 16:05:57 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:05:57 Europe/Berlin] Role: student
+[26-Nov-2025 16:05:57 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:05:57 Europe/Berlin] Getting summary for class: 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:05:57 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CTAPROJ1_INF223 =====
+[26-Nov-2025 16:05:57 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:05:57 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:05:57 Europe/Berlin] Grade display: midterm_pct=58.33%, midterm_grade=0
+[26-Nov-2025 16:05:57 Europe/Berlin] Grade display: finals_pct=90%, finals_grade=3.5
+[26-Nov-2025 16:05:57 Europe/Berlin] Grade display: term_pct=77.33%, term_grade=2
+[26-Nov-2025 16:05:57 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:05:57 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:05:57 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:05:57 ===
+[26-Nov-2025 16:05:57 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:05:57 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764169557625"}
+[26-Nov-2025 16:05:57 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:05:57 Europe/Berlin] Role: student
+[26-Nov-2025 16:05:57 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:05:57 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:05:57 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CCPRGG1L_INF223 =====
+[26-Nov-2025 16:05:57 Europe/Berlin] Grade record found. is_encrypted = 1
+[26-Nov-2025 16:05:57 Europe/Berlin] Grade hidden: is_encrypted = 1 for 2022-171253, 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:05:57 Europe/Berlin] RETURNING HIDDEN GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:05:57 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:05:57 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:05:57 ===
+[26-Nov-2025 16:05:57 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:05:57 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"26_T3_CCOMPORG_INF221","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764169557624"}
+[26-Nov-2025 16:05:57 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:05:57 Europe/Berlin] Role: student
+[26-Nov-2025 16:05:57 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:05:57 Europe/Berlin] Getting summary for class: 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:05:57 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 26_T3_CCOMPORG_INF221 =====
+[26-Nov-2025 16:05:57 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:05:57 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:05:57 Europe/Berlin] Grade display: midterm_pct=92%, midterm_grade=3.5
+[26-Nov-2025 16:05:57 Europe/Berlin] Grade display: finals_pct=70%, finals_grade=1.5
+[26-Nov-2025 16:05:57 Europe/Berlin] Grade display: term_pct=78.8%, term_grade=2.5
+[26-Nov-2025 16:05:57 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:05:57 Europe/Berlin] Success: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:06:58 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:06:58 ===
+[26-Nov-2025 16:06:58 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:06:58 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764169618629"}
+[26-Nov-2025 16:06:58 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:06:58 Europe/Berlin] Role: student
+[26-Nov-2025 16:06:58 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:06:58 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:06:58 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CCPRGG1L_INF223 =====
+[26-Nov-2025 16:06:58 Europe/Berlin] Grade record found. is_encrypted = 1
+[26-Nov-2025 16:06:58 Europe/Berlin] Grade hidden: is_encrypted = 1 for 2022-171253, 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:06:58 Europe/Berlin] RETURNING HIDDEN GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:06:58 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:06:58 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:06:58 ===
+[26-Nov-2025 16:06:58 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:06:58 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"26_T3_CCOMPORG_INF221","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764169618628"}
+[26-Nov-2025 16:06:58 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:06:58 Europe/Berlin] Role: student
+[26-Nov-2025 16:06:58 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:06:58 Europe/Berlin] Getting summary for class: 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:06:58 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 26_T3_CCOMPORG_INF221 =====
+[26-Nov-2025 16:06:58 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:06:58 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:06:58 Europe/Berlin] Grade display: midterm_pct=92%, midterm_grade=3.5
+[26-Nov-2025 16:06:58 Europe/Berlin] Grade display: finals_pct=70%, finals_grade=1.5
+[26-Nov-2025 16:06:58 Europe/Berlin] Grade display: term_pct=78.8%, term_grade=2.5
+[26-Nov-2025 16:06:58 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:06:58 Europe/Berlin] Success: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:06:58 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:06:58 ===
+[26-Nov-2025 16:06:58 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:06:58 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CTAPROJ1_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764169618629"}
+[26-Nov-2025 16:06:58 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:06:58 Europe/Berlin] Role: student
+[26-Nov-2025 16:06:58 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:06:58 Europe/Berlin] Getting summary for class: 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:06:58 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CTAPROJ1_INF223 =====
+[26-Nov-2025 16:06:58 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:06:58 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:06:58 Europe/Berlin] Grade display: midterm_pct=58.33%, midterm_grade=0
+[26-Nov-2025 16:06:58 Europe/Berlin] Grade display: finals_pct=90%, finals_grade=3.5
+[26-Nov-2025 16:06:58 Europe/Berlin] Grade display: term_pct=77.33%, term_grade=2
+[26-Nov-2025 16:06:58 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:06:58 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:07:59 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:07:59 ===
+[26-Nov-2025 16:07:59 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:07:59 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"26_T3_CCOMPORG_INF221","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764169679621"}
+[26-Nov-2025 16:07:59 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:07:59 Europe/Berlin] Role: student
+[26-Nov-2025 16:07:59 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:07:59 Europe/Berlin] Getting summary for class: 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:07:59 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 26_T3_CCOMPORG_INF221 =====
+[26-Nov-2025 16:07:59 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:07:59 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:07:59 Europe/Berlin] Grade display: midterm_pct=92%, midterm_grade=3.5
+[26-Nov-2025 16:07:59 Europe/Berlin] Grade display: finals_pct=70%, finals_grade=1.5
+[26-Nov-2025 16:07:59 Europe/Berlin] Grade display: term_pct=78.8%, term_grade=2.5
+[26-Nov-2025 16:07:59 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:07:59 Europe/Berlin] Success: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:07:59 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:07:59 ===
+[26-Nov-2025 16:07:59 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:07:59 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764169679622"}
+[26-Nov-2025 16:07:59 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:07:59 Europe/Berlin] Role: student
+[26-Nov-2025 16:07:59 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:07:59 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:07:59 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CCPRGG1L_INF223 =====
+[26-Nov-2025 16:07:59 Europe/Berlin] Grade record found. is_encrypted = 1
+[26-Nov-2025 16:07:59 Europe/Berlin] Grade hidden: is_encrypted = 1 for 2022-171253, 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:07:59 Europe/Berlin] RETURNING HIDDEN GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:07:59 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:07:59 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:07:59 ===
+[26-Nov-2025 16:07:59 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:07:59 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CTAPROJ1_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764169679622"}
+[26-Nov-2025 16:07:59 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:07:59 Europe/Berlin] Role: student
+[26-Nov-2025 16:07:59 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:07:59 Europe/Berlin] Getting summary for class: 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:07:59 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CTAPROJ1_INF223 =====
+[26-Nov-2025 16:07:59 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:07:59 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:07:59 Europe/Berlin] Grade display: midterm_pct=58.33%, midterm_grade=0
+[26-Nov-2025 16:07:59 Europe/Berlin] Grade display: finals_pct=90%, finals_grade=3.5
+[26-Nov-2025 16:07:59 Europe/Berlin] Grade display: term_pct=77.33%, term_grade=2
+[26-Nov-2025 16:07:59 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:07:59 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:09:00 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:09:00 ===
+[26-Nov-2025 16:09:00 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:09:00 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"26_T3_CCOMPORG_INF221","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764169740629"}
+[26-Nov-2025 16:09:00 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:09:00 Europe/Berlin] Role: student
+[26-Nov-2025 16:09:00 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:09:00 Europe/Berlin] Getting summary for class: 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:09:00 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 26_T3_CCOMPORG_INF221 =====
+[26-Nov-2025 16:09:00 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:09:00 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:09:00 Europe/Berlin] Grade display: midterm_pct=92%, midterm_grade=3.5
+[26-Nov-2025 16:09:00 Europe/Berlin] Grade display: finals_pct=70%, finals_grade=1.5
+[26-Nov-2025 16:09:00 Europe/Berlin] Grade display: term_pct=78.8%, term_grade=2.5
+[26-Nov-2025 16:09:00 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:09:00 Europe/Berlin] Success: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:09:00 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:09:00 ===
+[26-Nov-2025 16:09:00 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:09:00 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764169740629"}
+[26-Nov-2025 16:09:00 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:09:00 Europe/Berlin] Role: student
+[26-Nov-2025 16:09:00 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:09:00 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:09:00 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CCPRGG1L_INF223 =====
+[26-Nov-2025 16:09:00 Europe/Berlin] Grade record found. is_encrypted = 1
+[26-Nov-2025 16:09:00 Europe/Berlin] Grade hidden: is_encrypted = 1 for 2022-171253, 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:09:00 Europe/Berlin] RETURNING HIDDEN GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:09:00 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:09:00 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:09:00 ===
+[26-Nov-2025 16:09:00 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:09:00 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CTAPROJ1_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764169740630"}
+[26-Nov-2025 16:09:00 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:09:00 Europe/Berlin] Role: student
+[26-Nov-2025 16:09:00 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:09:00 Europe/Berlin] Getting summary for class: 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:09:00 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CTAPROJ1_INF223 =====
+[26-Nov-2025 16:09:00 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:09:00 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:09:00 Europe/Berlin] Grade display: midterm_pct=58.33%, midterm_grade=0
+[26-Nov-2025 16:09:00 Europe/Berlin] Grade display: finals_pct=90%, finals_grade=3.5
+[26-Nov-2025 16:09:00 Europe/Berlin] Grade display: term_pct=77.33%, term_grade=2
+[26-Nov-2025 16:09:00 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:09:00 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:10:01 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:10:01 ===
+[26-Nov-2025 16:10:01 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:10:01 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"26_T3_CCOMPORG_INF221","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764169801624"}
+[26-Nov-2025 16:10:01 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:10:01 Europe/Berlin] Role: student
+[26-Nov-2025 16:10:01 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:10:01 Europe/Berlin] Getting summary for class: 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:10:01 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 26_T3_CCOMPORG_INF221 =====
+[26-Nov-2025 16:10:01 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:10:01 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:10:01 Europe/Berlin] Grade display: midterm_pct=92%, midterm_grade=3.5
+[26-Nov-2025 16:10:01 Europe/Berlin] Grade display: finals_pct=70%, finals_grade=1.5
+[26-Nov-2025 16:10:01 Europe/Berlin] Grade display: term_pct=78.8%, term_grade=2.5
+[26-Nov-2025 16:10:01 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:10:01 Europe/Berlin] Success: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:10:01 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:10:01 ===
+[26-Nov-2025 16:10:01 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:10:01 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764169801624"}
+[26-Nov-2025 16:10:01 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:10:01 Europe/Berlin] Role: student
+[26-Nov-2025 16:10:01 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:10:01 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:10:01 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CCPRGG1L_INF223 =====
+[26-Nov-2025 16:10:01 Europe/Berlin] Grade record found. is_encrypted = 1
+[26-Nov-2025 16:10:01 Europe/Berlin] Grade hidden: is_encrypted = 1 for 2022-171253, 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:10:01 Europe/Berlin] RETURNING HIDDEN GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:10:01 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:10:01 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:10:01 ===
+[26-Nov-2025 16:10:01 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:10:01 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CTAPROJ1_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764169801625"}
+[26-Nov-2025 16:10:01 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:10:01 Europe/Berlin] Role: student
+[26-Nov-2025 16:10:01 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:10:01 Europe/Berlin] Getting summary for class: 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:10:01 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CTAPROJ1_INF223 =====
+[26-Nov-2025 16:10:01 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:10:01 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:10:01 Europe/Berlin] Grade display: midterm_pct=58.33%, midterm_grade=0
+[26-Nov-2025 16:10:01 Europe/Berlin] Grade display: finals_pct=90%, finals_grade=3.5
+[26-Nov-2025 16:10:01 Europe/Berlin] Grade display: term_pct=77.33%, term_grade=2
+[26-Nov-2025 16:10:01 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:10:01 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:11:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:11:02 ===
+[26-Nov-2025 16:11:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:11:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"26_T3_CCOMPORG_INF221","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764169862628"}
+[26-Nov-2025 16:11:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:11:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:11:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:11:02 Europe/Berlin] Getting summary for class: 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:11:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 26_T3_CCOMPORG_INF221 =====
+[26-Nov-2025 16:11:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:11:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:11:02 Europe/Berlin] Grade display: midterm_pct=92%, midterm_grade=3.5
+[26-Nov-2025 16:11:02 Europe/Berlin] Grade display: finals_pct=70%, finals_grade=1.5
+[26-Nov-2025 16:11:02 Europe/Berlin] Grade display: term_pct=78.8%, term_grade=2.5
+[26-Nov-2025 16:11:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:11:02 Europe/Berlin] Success: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:11:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:11:02 ===
+[26-Nov-2025 16:11:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:11:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CTAPROJ1_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764169862630"}
+[26-Nov-2025 16:11:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:11:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:11:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:11:02 Europe/Berlin] Getting summary for class: 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:11:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CTAPROJ1_INF223 =====
+[26-Nov-2025 16:11:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:11:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:11:02 Europe/Berlin] Grade display: midterm_pct=58.33%, midterm_grade=0
+[26-Nov-2025 16:11:02 Europe/Berlin] Grade display: finals_pct=90%, finals_grade=3.5
+[26-Nov-2025 16:11:02 Europe/Berlin] Grade display: term_pct=77.33%, term_grade=2
+[26-Nov-2025 16:11:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:11:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:11:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:11:02 ===
+[26-Nov-2025 16:11:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:11:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764169862629"}
+[26-Nov-2025 16:11:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:11:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:11:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:11:02 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:11:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CCPRGG1L_INF223 =====
+[26-Nov-2025 16:11:02 Europe/Berlin] Grade record found. is_encrypted = 1
+[26-Nov-2025 16:11:02 Europe/Berlin] Grade hidden: is_encrypted = 1 for 2022-171253, 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:11:02 Europe/Berlin] RETURNING HIDDEN GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:11:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:12:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:12:02 ===
+[26-Nov-2025 16:12:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:12:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"26_T3_CCOMPORG_INF221","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764169922627"}
+[26-Nov-2025 16:12:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:12:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:12:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:12:02 Europe/Berlin] Getting summary for class: 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:12:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 26_T3_CCOMPORG_INF221 =====
+[26-Nov-2025 16:12:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:12:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:12:02 Europe/Berlin] Grade display: midterm_pct=92%, midterm_grade=3.5
+[26-Nov-2025 16:12:02 Europe/Berlin] Grade display: finals_pct=70%, finals_grade=1.5
+[26-Nov-2025 16:12:02 Europe/Berlin] Grade display: term_pct=78.8%, term_grade=2.5
+[26-Nov-2025 16:12:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:12:02 Europe/Berlin] Success: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:12:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:12:02 ===
+[26-Nov-2025 16:12:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:12:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764169922628"}
+[26-Nov-2025 16:12:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:12:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:12:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:12:02 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:12:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CCPRGG1L_INF223 =====
+[26-Nov-2025 16:12:02 Europe/Berlin] Grade record found. is_encrypted = 1
+[26-Nov-2025 16:12:02 Europe/Berlin] Grade hidden: is_encrypted = 1 for 2022-171253, 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:12:02 Europe/Berlin] RETURNING HIDDEN GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:12:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:12:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:12:02 ===
+[26-Nov-2025 16:12:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:12:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CTAPROJ1_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764169922628"}
+[26-Nov-2025 16:12:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:12:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:12:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:12:02 Europe/Berlin] Getting summary for class: 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:12:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CTAPROJ1_INF223 =====
+[26-Nov-2025 16:12:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:12:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:12:02 Europe/Berlin] Grade display: midterm_pct=58.33%, midterm_grade=0
+[26-Nov-2025 16:12:02 Europe/Berlin] Grade display: finals_pct=90%, finals_grade=3.5
+[26-Nov-2025 16:12:02 Europe/Berlin] Grade display: term_pct=77.33%, term_grade=2
+[26-Nov-2025 16:12:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:12:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:13:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:13:02 ===
+[26-Nov-2025 16:13:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:13:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764169982629"}
+[26-Nov-2025 16:13:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:13:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:13:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:13:02 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:13:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CCPRGG1L_INF223 =====
+[26-Nov-2025 16:13:02 Europe/Berlin] Grade record found. is_encrypted = 1
+[26-Nov-2025 16:13:02 Europe/Berlin] Grade hidden: is_encrypted = 1 for 2022-171253, 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:13:02 Europe/Berlin] RETURNING HIDDEN GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:13:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:13:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:13:02 ===
+[26-Nov-2025 16:13:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:13:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"26_T3_CCOMPORG_INF221","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764169982629"}
+[26-Nov-2025 16:13:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:13:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:13:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:13:02 Europe/Berlin] Getting summary for class: 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:13:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 26_T3_CCOMPORG_INF221 =====
+[26-Nov-2025 16:13:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:13:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:13:02 Europe/Berlin] Grade display: midterm_pct=92%, midterm_grade=3.5
+[26-Nov-2025 16:13:02 Europe/Berlin] Grade display: finals_pct=70%, finals_grade=1.5
+[26-Nov-2025 16:13:02 Europe/Berlin] Grade display: term_pct=78.8%, term_grade=2.5
+[26-Nov-2025 16:13:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:13:02 Europe/Berlin] Success: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:13:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:13:02 ===
+[26-Nov-2025 16:13:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:13:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CTAPROJ1_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764169982630"}
+[26-Nov-2025 16:13:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:13:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:13:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:13:02 Europe/Berlin] Getting summary for class: 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:13:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CTAPROJ1_INF223 =====
+[26-Nov-2025 16:13:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:13:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:13:02 Europe/Berlin] Grade display: midterm_pct=58.33%, midterm_grade=0
+[26-Nov-2025 16:13:02 Europe/Berlin] Grade display: finals_pct=90%, finals_grade=3.5
+[26-Nov-2025 16:13:02 Europe/Berlin] Grade display: term_pct=77.33%, term_grade=2
+[26-Nov-2025 16:13:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:13:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:13:26 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:13:26 ===
+[26-Nov-2025 16:13:26 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:13:26 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"26_T3_CCOMPORG_INF221","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170006179"}
+[26-Nov-2025 16:13:26 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:13:26 Europe/Berlin] Role: student
+[26-Nov-2025 16:13:26 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:13:26 Europe/Berlin] Getting summary for class: 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:13:26 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 26_T3_CCOMPORG_INF221 =====
+[26-Nov-2025 16:13:26 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:13:26 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:13:26 Europe/Berlin] Grade display: midterm_pct=92%, midterm_grade=3.5
+[26-Nov-2025 16:13:26 Europe/Berlin] Grade display: finals_pct=70%, finals_grade=1.5
+[26-Nov-2025 16:13:26 Europe/Berlin] Grade display: term_pct=78.8%, term_grade=2.5
+[26-Nov-2025 16:13:26 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:13:26 Europe/Berlin] Success: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:13:26 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:13:26 ===
+[26-Nov-2025 16:13:26 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:13:26 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170006180"}
+[26-Nov-2025 16:13:26 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:13:26 Europe/Berlin] Role: student
+[26-Nov-2025 16:13:26 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:13:26 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:13:26 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CCPRGG1L_INF223 =====
+[26-Nov-2025 16:13:26 Europe/Berlin] Grade record found. is_encrypted = 1
+[26-Nov-2025 16:13:26 Europe/Berlin] Grade hidden: is_encrypted = 1 for 2022-171253, 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:13:26 Europe/Berlin] RETURNING HIDDEN GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:13:26 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:13:26 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:13:26 ===
+[26-Nov-2025 16:13:26 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:13:26 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CTAPROJ1_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170006180"}
+[26-Nov-2025 16:13:26 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:13:26 Europe/Berlin] Role: student
+[26-Nov-2025 16:13:26 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:13:26 Europe/Berlin] Getting summary for class: 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:13:26 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CTAPROJ1_INF223 =====
+[26-Nov-2025 16:13:26 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:13:26 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:13:26 Europe/Berlin] Grade display: midterm_pct=58.33%, midterm_grade=0
+[26-Nov-2025 16:13:26 Europe/Berlin] Grade display: finals_pct=90%, finals_grade=3.5
+[26-Nov-2025 16:13:26 Europe/Berlin] Grade display: term_pct=77.33%, term_grade=2
+[26-Nov-2025 16:13:26 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:13:26 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:13:33 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:13:33 ===
+[26-Nov-2025 16:13:33 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:13:33 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170013634"}
+[26-Nov-2025 16:13:33 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:13:33 Europe/Berlin] Role: student
+[26-Nov-2025 16:13:33 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:13:33 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:13:33 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CCPRGG1L_INF223 =====
+[26-Nov-2025 16:13:33 Europe/Berlin] Grade record found. is_encrypted = 1
+[26-Nov-2025 16:13:33 Europe/Berlin] Grade hidden: is_encrypted = 1 for 2022-171253, 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:13:33 Europe/Berlin] RETURNING HIDDEN GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:13:33 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:13:33 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:13:33 ===
+[26-Nov-2025 16:13:33 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:13:33 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CTAPROJ1_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170013634"}
+[26-Nov-2025 16:13:33 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:13:33 Europe/Berlin] Role: student
+[26-Nov-2025 16:13:33 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:13:33 Europe/Berlin] Getting summary for class: 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:13:33 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CTAPROJ1_INF223 =====
+[26-Nov-2025 16:13:33 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:13:33 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:13:33 Europe/Berlin] Grade display: midterm_pct=58.33%, midterm_grade=0
+[26-Nov-2025 16:13:33 Europe/Berlin] Grade display: finals_pct=90%, finals_grade=3.5
+[26-Nov-2025 16:13:33 Europe/Berlin] Grade display: term_pct=77.33%, term_grade=2
+[26-Nov-2025 16:13:33 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:13:33 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:13:33 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:13:33 ===
+[26-Nov-2025 16:13:33 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:13:33 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"26_T3_CCOMPORG_INF221","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170013633"}
+[26-Nov-2025 16:13:33 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:13:33 Europe/Berlin] Role: student
+[26-Nov-2025 16:13:33 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:13:33 Europe/Berlin] Getting summary for class: 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:13:33 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 26_T3_CCOMPORG_INF221 =====
+[26-Nov-2025 16:13:33 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:13:33 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:13:33 Europe/Berlin] Grade display: midterm_pct=92%, midterm_grade=3.5
+[26-Nov-2025 16:13:33 Europe/Berlin] Grade display: finals_pct=70%, finals_grade=1.5
+[26-Nov-2025 16:13:33 Europe/Berlin] Grade display: term_pct=78.8%, term_grade=2.5
+[26-Nov-2025 16:13:33 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:13:33 Europe/Berlin] Success: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:13:43 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:13:43 ===
+[26-Nov-2025 16:13:43 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:13:43 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"26_T3_CCOMPORG_INF221","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170023620"}
+[26-Nov-2025 16:13:43 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:13:43 Europe/Berlin] Role: student
+[26-Nov-2025 16:13:43 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:13:43 Europe/Berlin] Getting summary for class: 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:13:43 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 26_T3_CCOMPORG_INF221 =====
+[26-Nov-2025 16:13:43 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:13:43 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:13:43 Europe/Berlin] Grade display: midterm_pct=92%, midterm_grade=3.5
+[26-Nov-2025 16:13:43 Europe/Berlin] Grade display: finals_pct=70%, finals_grade=1.5
+[26-Nov-2025 16:13:43 Europe/Berlin] Grade display: term_pct=78.8%, term_grade=2.5
+[26-Nov-2025 16:13:43 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:13:43 Europe/Berlin] Success: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:13:43 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:13:43 ===
+[26-Nov-2025 16:13:43 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:13:43 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170023621"}
+[26-Nov-2025 16:13:43 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:13:43 Europe/Berlin] Role: student
+[26-Nov-2025 16:13:43 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:13:43 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:13:43 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CCPRGG1L_INF223 =====
+[26-Nov-2025 16:13:43 Europe/Berlin] Grade record found. is_encrypted = 1
+[26-Nov-2025 16:13:43 Europe/Berlin] Grade hidden: is_encrypted = 1 for 2022-171253, 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:13:43 Europe/Berlin] RETURNING HIDDEN GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:13:43 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:13:43 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:13:43 ===
+[26-Nov-2025 16:13:43 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:13:43 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CTAPROJ1_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170023621"}
+[26-Nov-2025 16:13:43 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:13:43 Europe/Berlin] Role: student
+[26-Nov-2025 16:13:43 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:13:43 Europe/Berlin] Getting summary for class: 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:13:43 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CTAPROJ1_INF223 =====
+[26-Nov-2025 16:13:43 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:13:43 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:13:43 Europe/Berlin] Grade display: midterm_pct=58.33%, midterm_grade=0
+[26-Nov-2025 16:13:43 Europe/Berlin] Grade display: finals_pct=90%, finals_grade=3.5
+[26-Nov-2025 16:13:43 Europe/Berlin] Grade display: term_pct=77.33%, term_grade=2
+[26-Nov-2025 16:13:43 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:13:43 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:13:53 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:13:53 ===
+[26-Nov-2025 16:13:53 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:13:53 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"26_T3_CCOMPORG_INF221","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170033621"}
+[26-Nov-2025 16:13:53 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:13:53 Europe/Berlin] Role: student
+[26-Nov-2025 16:13:53 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:13:53 Europe/Berlin] Getting summary for class: 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:13:53 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 26_T3_CCOMPORG_INF221 =====
+[26-Nov-2025 16:13:53 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:13:53 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:13:53 Europe/Berlin] Grade display: midterm_pct=92%, midterm_grade=3.5
+[26-Nov-2025 16:13:53 Europe/Berlin] Grade display: finals_pct=70%, finals_grade=1.5
+[26-Nov-2025 16:13:53 Europe/Berlin] Grade display: term_pct=78.8%, term_grade=2.5
+[26-Nov-2025 16:13:53 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:13:53 Europe/Berlin] Success: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:13:53 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:13:53 ===
+[26-Nov-2025 16:13:53 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:13:53 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170033621"}
+[26-Nov-2025 16:13:53 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:13:53 Europe/Berlin] Role: student
+[26-Nov-2025 16:13:53 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:13:53 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:13:53 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CCPRGG1L_INF223 =====
+[26-Nov-2025 16:13:53 Europe/Berlin] Grade record found. is_encrypted = 1
+[26-Nov-2025 16:13:53 Europe/Berlin] Grade hidden: is_encrypted = 1 for 2022-171253, 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:13:53 Europe/Berlin] RETURNING HIDDEN GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:13:53 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:13:53 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:13:53 ===
+[26-Nov-2025 16:13:53 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:13:53 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CTAPROJ1_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170033621"}
+[26-Nov-2025 16:13:53 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:13:53 Europe/Berlin] Role: student
+[26-Nov-2025 16:13:53 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:13:53 Europe/Berlin] Getting summary for class: 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:13:53 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CTAPROJ1_INF223 =====
+[26-Nov-2025 16:13:53 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:13:53 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:13:53 Europe/Berlin] Grade display: midterm_pct=58.33%, midterm_grade=0
+[26-Nov-2025 16:13:53 Europe/Berlin] Grade display: finals_pct=90%, finals_grade=3.5
+[26-Nov-2025 16:13:53 Europe/Berlin] Grade display: term_pct=77.33%, term_grade=2
+[26-Nov-2025 16:13:53 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:13:53 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:14:03 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:14:03 ===
+[26-Nov-2025 16:14:03 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:14:03 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"26_T3_CCOMPORG_INF221","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170043626"}
+[26-Nov-2025 16:14:03 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:14:03 Europe/Berlin] Role: student
+[26-Nov-2025 16:14:03 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:14:03 Europe/Berlin] Getting summary for class: 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:14:03 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 26_T3_CCOMPORG_INF221 =====
+[26-Nov-2025 16:14:03 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:14:03 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:14:03 Europe/Berlin] Grade display: midterm_pct=92%, midterm_grade=3.5
+[26-Nov-2025 16:14:03 Europe/Berlin] Grade display: finals_pct=70%, finals_grade=1.5
+[26-Nov-2025 16:14:03 Europe/Berlin] Grade display: term_pct=78.8%, term_grade=2.5
+[26-Nov-2025 16:14:03 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:14:03 Europe/Berlin] Success: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:14:03 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:14:03 ===
+[26-Nov-2025 16:14:03 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:14:03 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170043627"}
+[26-Nov-2025 16:14:03 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:14:03 Europe/Berlin] Role: student
+[26-Nov-2025 16:14:03 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:14:03 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:14:03 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CCPRGG1L_INF223 =====
+[26-Nov-2025 16:14:03 Europe/Berlin] Grade record found. is_encrypted = 1
+[26-Nov-2025 16:14:03 Europe/Berlin] Grade hidden: is_encrypted = 1 for 2022-171253, 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:14:03 Europe/Berlin] RETURNING HIDDEN GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:14:03 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:14:03 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:14:03 ===
+[26-Nov-2025 16:14:03 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:14:03 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CTAPROJ1_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170043627"}
+[26-Nov-2025 16:14:03 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:14:03 Europe/Berlin] Role: student
+[26-Nov-2025 16:14:03 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:14:03 Europe/Berlin] Getting summary for class: 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:14:03 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CTAPROJ1_INF223 =====
+[26-Nov-2025 16:14:03 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:14:03 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:14:03 Europe/Berlin] Grade display: midterm_pct=58.33%, midterm_grade=0
+[26-Nov-2025 16:14:03 Europe/Berlin] Grade display: finals_pct=90%, finals_grade=3.5
+[26-Nov-2025 16:14:03 Europe/Berlin] Grade display: term_pct=77.33%, term_grade=2
+[26-Nov-2025 16:14:03 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:14:03 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:14:13 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:14:13 ===
+[26-Nov-2025 16:14:13 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:14:13 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"26_T3_CCOMPORG_INF221","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170053620"}
+[26-Nov-2025 16:14:13 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:14:13 Europe/Berlin] Role: student
+[26-Nov-2025 16:14:13 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:14:13 Europe/Berlin] Getting summary for class: 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:14:13 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 26_T3_CCOMPORG_INF221 =====
+[26-Nov-2025 16:14:13 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:14:13 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:14:13 Europe/Berlin] Grade display: midterm_pct=92%, midterm_grade=3.5
+[26-Nov-2025 16:14:13 Europe/Berlin] Grade display: finals_pct=70%, finals_grade=1.5
+[26-Nov-2025 16:14:13 Europe/Berlin] Grade display: term_pct=78.8%, term_grade=2.5
+[26-Nov-2025 16:14:13 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:14:13 Europe/Berlin] Success: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:14:13 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:14:13 ===
+[26-Nov-2025 16:14:13 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:14:13 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170053620"}
+[26-Nov-2025 16:14:13 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:14:13 Europe/Berlin] Role: student
+[26-Nov-2025 16:14:13 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:14:13 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:14:13 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CCPRGG1L_INF223 =====
+[26-Nov-2025 16:14:13 Europe/Berlin] Grade record found. is_encrypted = 1
+[26-Nov-2025 16:14:13 Europe/Berlin] Grade hidden: is_encrypted = 1 for 2022-171253, 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:14:13 Europe/Berlin] RETURNING HIDDEN GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:14:13 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:14:13 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:14:13 ===
+[26-Nov-2025 16:14:13 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:14:13 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CTAPROJ1_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170053621"}
+[26-Nov-2025 16:14:13 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:14:13 Europe/Berlin] Role: student
+[26-Nov-2025 16:14:13 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:14:13 Europe/Berlin] Getting summary for class: 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:14:13 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CTAPROJ1_INF223 =====
+[26-Nov-2025 16:14:13 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:14:13 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:14:13 Europe/Berlin] Grade display: midterm_pct=58.33%, midterm_grade=0
+[26-Nov-2025 16:14:13 Europe/Berlin] Grade display: finals_pct=90%, finals_grade=3.5
+[26-Nov-2025 16:14:13 Europe/Berlin] Grade display: term_pct=77.33%, term_grade=2
+[26-Nov-2025 16:14:13 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:14:13 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:14:23 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:14:23 ===
+[26-Nov-2025 16:14:23 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:14:23 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170063625"}
+[26-Nov-2025 16:14:23 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:14:23 Europe/Berlin] Role: student
+[26-Nov-2025 16:14:23 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:14:23 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:14:23 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CCPRGG1L_INF223 =====
+[26-Nov-2025 16:14:23 Europe/Berlin] Grade record found. is_encrypted = 1
+[26-Nov-2025 16:14:23 Europe/Berlin] Grade hidden: is_encrypted = 1 for 2022-171253, 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:14:23 Europe/Berlin] RETURNING HIDDEN GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:14:23 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:14:23 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:14:23 ===
+[26-Nov-2025 16:14:23 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:14:23 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"26_T3_CCOMPORG_INF221","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170063624"}
+[26-Nov-2025 16:14:23 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:14:23 Europe/Berlin] Role: student
+[26-Nov-2025 16:14:23 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:14:23 Europe/Berlin] Getting summary for class: 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:14:23 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 26_T3_CCOMPORG_INF221 =====
+[26-Nov-2025 16:14:23 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:14:23 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:14:23 Europe/Berlin] Grade display: midterm_pct=92%, midterm_grade=3.5
+[26-Nov-2025 16:14:23 Europe/Berlin] Grade display: finals_pct=70%, finals_grade=1.5
+[26-Nov-2025 16:14:23 Europe/Berlin] Grade display: term_pct=78.8%, term_grade=2.5
+[26-Nov-2025 16:14:23 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:14:23 Europe/Berlin] Success: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:14:23 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:14:23 ===
+[26-Nov-2025 16:14:23 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:14:23 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CTAPROJ1_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170063625"}
+[26-Nov-2025 16:14:23 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:14:23 Europe/Berlin] Role: student
+[26-Nov-2025 16:14:23 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:14:23 Europe/Berlin] Getting summary for class: 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:14:23 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CTAPROJ1_INF223 =====
+[26-Nov-2025 16:14:23 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:14:23 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:14:23 Europe/Berlin] Grade display: midterm_pct=58.33%, midterm_grade=0
+[26-Nov-2025 16:14:23 Europe/Berlin] Grade display: finals_pct=90%, finals_grade=3.5
+[26-Nov-2025 16:14:23 Europe/Berlin] Grade display: term_pct=77.33%, term_grade=2
+[26-Nov-2025 16:14:23 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:14:23 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:15:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:15:02 ===
+[26-Nov-2025 16:15:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:15:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170102624"}
+[26-Nov-2025 16:15:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:15:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:15:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:15:02 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:15:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CCPRGG1L_INF223 =====
+[26-Nov-2025 16:15:02 Europe/Berlin] Grade record found. is_encrypted = 1
+[26-Nov-2025 16:15:02 Europe/Berlin] Grade hidden: is_encrypted = 1 for 2022-171253, 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:15:02 Europe/Berlin] RETURNING HIDDEN GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:15:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:15:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:15:02 ===
+[26-Nov-2025 16:15:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:15:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"26_T3_CCOMPORG_INF221","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170102624"}
+[26-Nov-2025 16:15:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:15:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:15:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:15:02 Europe/Berlin] Getting summary for class: 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:15:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 26_T3_CCOMPORG_INF221 =====
+[26-Nov-2025 16:15:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:15:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:15:02 Europe/Berlin] Grade display: midterm_pct=92%, midterm_grade=3.5
+[26-Nov-2025 16:15:02 Europe/Berlin] Grade display: finals_pct=70%, finals_grade=1.5
+[26-Nov-2025 16:15:02 Europe/Berlin] Grade display: term_pct=78.8%, term_grade=2.5
+[26-Nov-2025 16:15:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:15:02 Europe/Berlin] Success: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:15:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:15:02 ===
+[26-Nov-2025 16:15:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:15:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CTAPROJ1_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170102625"}
+[26-Nov-2025 16:15:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:15:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:15:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:15:02 Europe/Berlin] Getting summary for class: 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:15:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CTAPROJ1_INF223 =====
+[26-Nov-2025 16:15:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:15:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:15:02 Europe/Berlin] Grade display: midterm_pct=58.33%, midterm_grade=0
+[26-Nov-2025 16:15:02 Europe/Berlin] Grade display: finals_pct=90%, finals_grade=3.5
+[26-Nov-2025 16:15:02 Europe/Berlin] Grade display: term_pct=77.33%, term_grade=2
+[26-Nov-2025 16:15:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:15:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:16:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:16:02 ===
+[26-Nov-2025 16:16:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:16:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"26_T3_CCOMPORG_INF221","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170162627"}
+[26-Nov-2025 16:16:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:16:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:16:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:16:02 Europe/Berlin] Getting summary for class: 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:16:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 26_T3_CCOMPORG_INF221 =====
+[26-Nov-2025 16:16:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:16:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:16:02 Europe/Berlin] Grade display: midterm_pct=92%, midterm_grade=3.5
+[26-Nov-2025 16:16:02 Europe/Berlin] Grade display: finals_pct=70%, finals_grade=1.5
+[26-Nov-2025 16:16:02 Europe/Berlin] Grade display: term_pct=78.8%, term_grade=2.5
+[26-Nov-2025 16:16:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:16:02 Europe/Berlin] Success: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:16:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:16:02 ===
+[26-Nov-2025 16:16:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:16:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170162628"}
+[26-Nov-2025 16:16:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:16:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:16:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:16:02 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:16:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CCPRGG1L_INF223 =====
+[26-Nov-2025 16:16:02 Europe/Berlin] Grade record found. is_encrypted = 1
+[26-Nov-2025 16:16:02 Europe/Berlin] Grade hidden: is_encrypted = 1 for 2022-171253, 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:16:02 Europe/Berlin] RETURNING HIDDEN GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:16:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:16:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:16:02 ===
+[26-Nov-2025 16:16:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:16:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CTAPROJ1_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170162628"}
+[26-Nov-2025 16:16:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:16:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:16:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:16:02 Europe/Berlin] Getting summary for class: 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:16:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CTAPROJ1_INF223 =====
+[26-Nov-2025 16:16:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:16:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:16:02 Europe/Berlin] Grade display: midterm_pct=58.33%, midterm_grade=0
+[26-Nov-2025 16:16:02 Europe/Berlin] Grade display: finals_pct=90%, finals_grade=3.5
+[26-Nov-2025 16:16:02 Europe/Berlin] Grade display: term_pct=77.33%, term_grade=2
+[26-Nov-2025 16:16:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:16:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:17:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:17:02 ===
+[26-Nov-2025 16:17:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:17:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170222622"}
+[26-Nov-2025 16:17:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:17:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:17:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:17:02 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:17:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CCPRGG1L_INF223 =====
+[26-Nov-2025 16:17:02 Europe/Berlin] Grade record found. is_encrypted = 1
+[26-Nov-2025 16:17:02 Europe/Berlin] Grade hidden: is_encrypted = 1 for 2022-171253, 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:17:02 Europe/Berlin] RETURNING HIDDEN GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:17:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:17:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:17:02 ===
+[26-Nov-2025 16:17:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:17:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"26_T3_CCOMPORG_INF221","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170222621"}
+[26-Nov-2025 16:17:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:17:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:17:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:17:02 Europe/Berlin] Getting summary for class: 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:17:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 26_T3_CCOMPORG_INF221 =====
+[26-Nov-2025 16:17:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:17:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:17:02 Europe/Berlin] Grade display: midterm_pct=92%, midterm_grade=3.5
+[26-Nov-2025 16:17:02 Europe/Berlin] Grade display: finals_pct=70%, finals_grade=1.5
+[26-Nov-2025 16:17:02 Europe/Berlin] Grade display: term_pct=78.8%, term_grade=2.5
+[26-Nov-2025 16:17:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:17:02 Europe/Berlin] Success: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:17:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:17:02 ===
+[26-Nov-2025 16:17:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:17:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CTAPROJ1_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170222622"}
+[26-Nov-2025 16:17:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:17:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:17:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:17:02 Europe/Berlin] Getting summary for class: 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:17:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CTAPROJ1_INF223 =====
+[26-Nov-2025 16:17:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:17:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:17:02 Europe/Berlin] Grade display: midterm_pct=58.33%, midterm_grade=0
+[26-Nov-2025 16:17:02 Europe/Berlin] Grade display: finals_pct=90%, finals_grade=3.5
+[26-Nov-2025 16:17:02 Europe/Berlin] Grade display: term_pct=77.33%, term_grade=2
+[26-Nov-2025 16:17:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:17:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:18:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:18:02 ===
+[26-Nov-2025 16:18:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:18:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"26_T3_CCOMPORG_INF221","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170282622"}
+[26-Nov-2025 16:18:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:18:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:18:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:18:02 Europe/Berlin] Getting summary for class: 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:18:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 26_T3_CCOMPORG_INF221 =====
+[26-Nov-2025 16:18:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:18:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:18:02 Europe/Berlin] Grade display: midterm_pct=92%, midterm_grade=3.5
+[26-Nov-2025 16:18:02 Europe/Berlin] Grade display: finals_pct=70%, finals_grade=1.5
+[26-Nov-2025 16:18:02 Europe/Berlin] Grade display: term_pct=78.8%, term_grade=2.5
+[26-Nov-2025 16:18:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:18:02 Europe/Berlin] Success: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:18:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:18:02 ===
+[26-Nov-2025 16:18:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:18:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170282622"}
+[26-Nov-2025 16:18:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:18:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:18:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:18:02 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:18:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CCPRGG1L_INF223 =====
+[26-Nov-2025 16:18:02 Europe/Berlin] Grade record found. is_encrypted = 1
+[26-Nov-2025 16:18:02 Europe/Berlin] Grade hidden: is_encrypted = 1 for 2022-171253, 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:18:02 Europe/Berlin] RETURNING HIDDEN GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:18:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:18:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:18:02 ===
+[26-Nov-2025 16:18:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:18:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CTAPROJ1_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170282623"}
+[26-Nov-2025 16:18:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:18:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:18:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:18:02 Europe/Berlin] Getting summary for class: 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:18:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CTAPROJ1_INF223 =====
+[26-Nov-2025 16:18:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:18:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:18:02 Europe/Berlin] Grade display: midterm_pct=58.33%, midterm_grade=0
+[26-Nov-2025 16:18:02 Europe/Berlin] Grade display: finals_pct=90%, finals_grade=3.5
+[26-Nov-2025 16:18:02 Europe/Berlin] Grade display: term_pct=77.33%, term_grade=2
+[26-Nov-2025 16:18:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:18:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:19:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:19:02 ===
+[26-Nov-2025 16:19:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:19:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170342621"}
+[26-Nov-2025 16:19:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:19:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:19:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:19:02 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:19:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CCPRGG1L_INF223 =====
+[26-Nov-2025 16:19:02 Europe/Berlin] Grade record found. is_encrypted = 1
+[26-Nov-2025 16:19:02 Europe/Berlin] Grade hidden: is_encrypted = 1 for 2022-171253, 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:19:02 Europe/Berlin] RETURNING HIDDEN GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:19:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:19:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:19:02 ===
+[26-Nov-2025 16:19:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:19:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"26_T3_CCOMPORG_INF221","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170342620"}
+[26-Nov-2025 16:19:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:19:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:19:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:19:02 Europe/Berlin] Getting summary for class: 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:19:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 26_T3_CCOMPORG_INF221 =====
+[26-Nov-2025 16:19:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:19:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:19:02 Europe/Berlin] Grade display: midterm_pct=92%, midterm_grade=3.5
+[26-Nov-2025 16:19:02 Europe/Berlin] Grade display: finals_pct=70%, finals_grade=1.5
+[26-Nov-2025 16:19:02 Europe/Berlin] Grade display: term_pct=78.8%, term_grade=2.5
+[26-Nov-2025 16:19:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:19:02 Europe/Berlin] Success: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:19:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:19:02 ===
+[26-Nov-2025 16:19:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:19:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CTAPROJ1_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170342622"}
+[26-Nov-2025 16:19:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:19:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:19:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:19:02 Europe/Berlin] Getting summary for class: 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:19:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CTAPROJ1_INF223 =====
+[26-Nov-2025 16:19:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:19:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:19:02 Europe/Berlin] Grade display: midterm_pct=58.33%, midterm_grade=0
+[26-Nov-2025 16:19:02 Europe/Berlin] Grade display: finals_pct=90%, finals_grade=3.5
+[26-Nov-2025 16:19:02 Europe/Berlin] Grade display: term_pct=77.33%, term_grade=2
+[26-Nov-2025 16:19:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:19:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:20:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:20:02 ===
+[26-Nov-2025 16:20:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:20:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"26_T3_CCOMPORG_INF221","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170402630"}
+[26-Nov-2025 16:20:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:20:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:20:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:20:02 Europe/Berlin] Getting summary for class: 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:20:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 26_T3_CCOMPORG_INF221 =====
+[26-Nov-2025 16:20:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:20:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:20:02 Europe/Berlin] Grade display: midterm_pct=92%, midterm_grade=3.5
+[26-Nov-2025 16:20:02 Europe/Berlin] Grade display: finals_pct=70%, finals_grade=1.5
+[26-Nov-2025 16:20:02 Europe/Berlin] Grade display: term_pct=78.8%, term_grade=2.5
+[26-Nov-2025 16:20:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:20:02 Europe/Berlin] Success: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:20:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:20:02 ===
+[26-Nov-2025 16:20:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:20:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170402631"}
+[26-Nov-2025 16:20:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:20:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:20:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:20:02 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:20:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CCPRGG1L_INF223 =====
+[26-Nov-2025 16:20:02 Europe/Berlin] Grade record found. is_encrypted = 1
+[26-Nov-2025 16:20:02 Europe/Berlin] Grade hidden: is_encrypted = 1 for 2022-171253, 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:20:02 Europe/Berlin] RETURNING HIDDEN GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:20:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:20:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:20:02 ===
+[26-Nov-2025 16:20:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:20:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CTAPROJ1_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170402631"}
+[26-Nov-2025 16:20:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:20:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:20:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:20:02 Europe/Berlin] Getting summary for class: 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:20:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CTAPROJ1_INF223 =====
+[26-Nov-2025 16:20:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:20:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:20:02 Europe/Berlin] Grade display: midterm_pct=58.33%, midterm_grade=0
+[26-Nov-2025 16:20:02 Europe/Berlin] Grade display: finals_pct=90%, finals_grade=3.5
+[26-Nov-2025 16:20:02 Europe/Berlin] Grade display: term_pct=77.33%, term_grade=2
+[26-Nov-2025 16:20:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:20:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:21:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:21:02 ===
+[26-Nov-2025 16:21:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:21:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CTAPROJ1_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170462620"}
+[26-Nov-2025 16:21:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:21:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:21:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:21:02 Europe/Berlin] Getting summary for class: 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:21:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CTAPROJ1_INF223 =====
+[26-Nov-2025 16:21:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:21:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:21:02 Europe/Berlin] Grade display: midterm_pct=58.33%, midterm_grade=0
+[26-Nov-2025 16:21:02 Europe/Berlin] Grade display: finals_pct=90%, finals_grade=3.5
+[26-Nov-2025 16:21:02 Europe/Berlin] Grade display: term_pct=77.33%, term_grade=2
+[26-Nov-2025 16:21:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:21:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:21:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:21:02 ===
+[26-Nov-2025 16:21:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:21:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"26_T3_CCOMPORG_INF221","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170462619"}
+[26-Nov-2025 16:21:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:21:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:21:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:21:02 Europe/Berlin] Getting summary for class: 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:21:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 26_T3_CCOMPORG_INF221 =====
+[26-Nov-2025 16:21:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:21:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:21:02 Europe/Berlin] Grade display: midterm_pct=92%, midterm_grade=3.5
+[26-Nov-2025 16:21:02 Europe/Berlin] Grade display: finals_pct=70%, finals_grade=1.5
+[26-Nov-2025 16:21:02 Europe/Berlin] Grade display: term_pct=78.8%, term_grade=2.5
+[26-Nov-2025 16:21:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:21:02 Europe/Berlin] Success: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:21:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:21:02 ===
+[26-Nov-2025 16:21:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:21:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170462620"}
+[26-Nov-2025 16:21:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:21:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:21:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:21:02 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:21:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CCPRGG1L_INF223 =====
+[26-Nov-2025 16:21:02 Europe/Berlin] Grade record found. is_encrypted = 1
+[26-Nov-2025 16:21:02 Europe/Berlin] Grade hidden: is_encrypted = 1 for 2022-171253, 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:21:02 Europe/Berlin] RETURNING HIDDEN GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:21:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:22:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:22:02 ===
+[26-Nov-2025 16:22:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:22:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170522629"}
+[26-Nov-2025 16:22:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:22:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:22:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:22:02 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:22:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CCPRGG1L_INF223 =====
+[26-Nov-2025 16:22:02 Europe/Berlin] Grade record found. is_encrypted = 1
+[26-Nov-2025 16:22:02 Europe/Berlin] Grade hidden: is_encrypted = 1 for 2022-171253, 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:22:02 Europe/Berlin] RETURNING HIDDEN GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:22:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:22:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:22:02 ===
+[26-Nov-2025 16:22:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:22:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"26_T3_CCOMPORG_INF221","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170522628"}
+[26-Nov-2025 16:22:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:22:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:22:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:22:02 Europe/Berlin] Getting summary for class: 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:22:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 26_T3_CCOMPORG_INF221 =====
+[26-Nov-2025 16:22:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:22:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:22:02 Europe/Berlin] Grade display: midterm_pct=92%, midterm_grade=3.5
+[26-Nov-2025 16:22:02 Europe/Berlin] Grade display: finals_pct=70%, finals_grade=1.5
+[26-Nov-2025 16:22:02 Europe/Berlin] Grade display: term_pct=78.8%, term_grade=2.5
+[26-Nov-2025 16:22:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:22:02 Europe/Berlin] Success: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:22:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:22:02 ===
+[26-Nov-2025 16:22:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:22:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CTAPROJ1_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170522629"}
+[26-Nov-2025 16:22:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:22:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:22:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:22:02 Europe/Berlin] Getting summary for class: 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:22:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CTAPROJ1_INF223 =====
+[26-Nov-2025 16:22:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:22:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:22:02 Europe/Berlin] Grade display: midterm_pct=58.33%, midterm_grade=0
+[26-Nov-2025 16:22:02 Europe/Berlin] Grade display: finals_pct=90%, finals_grade=3.5
+[26-Nov-2025 16:22:02 Europe/Berlin] Grade display: term_pct=77.33%, term_grade=2
+[26-Nov-2025 16:22:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:22:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:23:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:23:02 ===
+[26-Nov-2025 16:23:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:23:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"26_T3_CCOMPORG_INF221","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170582629"}
+[26-Nov-2025 16:23:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:23:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:23:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:23:02 Europe/Berlin] Getting summary for class: 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:23:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 26_T3_CCOMPORG_INF221 =====
+[26-Nov-2025 16:23:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:23:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:23:02 Europe/Berlin] Grade display: midterm_pct=92%, midterm_grade=3.5
+[26-Nov-2025 16:23:02 Europe/Berlin] Grade display: finals_pct=70%, finals_grade=1.5
+[26-Nov-2025 16:23:02 Europe/Berlin] Grade display: term_pct=78.8%, term_grade=2.5
+[26-Nov-2025 16:23:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:23:02 Europe/Berlin] Success: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:23:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:23:02 ===
+[26-Nov-2025 16:23:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:23:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170582629"}
+[26-Nov-2025 16:23:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:23:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:23:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:23:02 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:23:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CCPRGG1L_INF223 =====
+[26-Nov-2025 16:23:02 Europe/Berlin] Grade record found. is_encrypted = 1
+[26-Nov-2025 16:23:02 Europe/Berlin] Grade hidden: is_encrypted = 1 for 2022-171253, 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:23:02 Europe/Berlin] RETURNING HIDDEN GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:23:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:23:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:23:02 ===
+[26-Nov-2025 16:23:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:23:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CTAPROJ1_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170582630"}
+[26-Nov-2025 16:23:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:23:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:23:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:23:02 Europe/Berlin] Getting summary for class: 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:23:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CTAPROJ1_INF223 =====
+[26-Nov-2025 16:23:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:23:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:23:02 Europe/Berlin] Grade display: midterm_pct=58.33%, midterm_grade=0
+[26-Nov-2025 16:23:02 Europe/Berlin] Grade display: finals_pct=90%, finals_grade=3.5
+[26-Nov-2025 16:23:02 Europe/Berlin] Grade display: term_pct=77.33%, term_grade=2
+[26-Nov-2025 16:23:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:23:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:24:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:24:02 ===
+[26-Nov-2025 16:24:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:24:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"26_T3_CCOMPORG_INF221","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170642631"}
+[26-Nov-2025 16:24:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:24:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:24:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:24:02 Europe/Berlin] Getting summary for class: 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:24:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 26_T3_CCOMPORG_INF221 =====
+[26-Nov-2025 16:24:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:24:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:24:02 Europe/Berlin] Grade display: midterm_pct=92%, midterm_grade=3.5
+[26-Nov-2025 16:24:02 Europe/Berlin] Grade display: finals_pct=70%, finals_grade=1.5
+[26-Nov-2025 16:24:02 Europe/Berlin] Grade display: term_pct=78.8%, term_grade=2.5
+[26-Nov-2025 16:24:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:24:02 Europe/Berlin] Success: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:24:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:24:02 ===
+[26-Nov-2025 16:24:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:24:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170642632"}
+[26-Nov-2025 16:24:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:24:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:24:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:24:02 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:24:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CCPRGG1L_INF223 =====
+[26-Nov-2025 16:24:02 Europe/Berlin] Grade record found. is_encrypted = 1
+[26-Nov-2025 16:24:02 Europe/Berlin] Grade hidden: is_encrypted = 1 for 2022-171253, 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:24:02 Europe/Berlin] RETURNING HIDDEN GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:24:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:24:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:24:02 ===
+[26-Nov-2025 16:24:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:24:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CTAPROJ1_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170642633"}
+[26-Nov-2025 16:24:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:24:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:24:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:24:02 Europe/Berlin] Getting summary for class: 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:24:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CTAPROJ1_INF223 =====
+[26-Nov-2025 16:24:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:24:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:24:02 Europe/Berlin] Grade display: midterm_pct=58.33%, midterm_grade=0
+[26-Nov-2025 16:24:02 Europe/Berlin] Grade display: finals_pct=90%, finals_grade=3.5
+[26-Nov-2025 16:24:02 Europe/Berlin] Grade display: term_pct=77.33%, term_grade=2
+[26-Nov-2025 16:24:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:24:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:25:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:25:02 ===
+[26-Nov-2025 16:25:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:25:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"26_T3_CCOMPORG_INF221","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170702622"}
+[26-Nov-2025 16:25:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:25:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:25:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:25:02 Europe/Berlin] Getting summary for class: 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:25:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 26_T3_CCOMPORG_INF221 =====
+[26-Nov-2025 16:25:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:25:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:25:02 Europe/Berlin] Grade display: midterm_pct=92%, midterm_grade=3.5
+[26-Nov-2025 16:25:02 Europe/Berlin] Grade display: finals_pct=70%, finals_grade=1.5
+[26-Nov-2025 16:25:02 Europe/Berlin] Grade display: term_pct=78.8%, term_grade=2.5
+[26-Nov-2025 16:25:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:25:02 Europe/Berlin] Success: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:25:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:25:02 ===
+[26-Nov-2025 16:25:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:25:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170702622"}
+[26-Nov-2025 16:25:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:25:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:25:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:25:02 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:25:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CCPRGG1L_INF223 =====
+[26-Nov-2025 16:25:02 Europe/Berlin] Grade record found. is_encrypted = 1
+[26-Nov-2025 16:25:02 Europe/Berlin] Grade hidden: is_encrypted = 1 for 2022-171253, 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:25:02 Europe/Berlin] RETURNING HIDDEN GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:25:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:25:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:25:02 ===
+[26-Nov-2025 16:25:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:25:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CTAPROJ1_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170702623"}
+[26-Nov-2025 16:25:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:25:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:25:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:25:02 Europe/Berlin] Getting summary for class: 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:25:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CTAPROJ1_INF223 =====
+[26-Nov-2025 16:25:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:25:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:25:02 Europe/Berlin] Grade display: midterm_pct=58.33%, midterm_grade=0
+[26-Nov-2025 16:25:02 Europe/Berlin] Grade display: finals_pct=90%, finals_grade=3.5
+[26-Nov-2025 16:25:02 Europe/Berlin] Grade display: term_pct=77.33%, term_grade=2
+[26-Nov-2025 16:25:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:25:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:26:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:26:02 ===
+[26-Nov-2025 16:26:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:26:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170762621"}
+[26-Nov-2025 16:26:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:26:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:26:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:26:02 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:26:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CCPRGG1L_INF223 =====
+[26-Nov-2025 16:26:02 Europe/Berlin] Grade record found. is_encrypted = 1
+[26-Nov-2025 16:26:02 Europe/Berlin] Grade hidden: is_encrypted = 1 for 2022-171253, 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:26:02 Europe/Berlin] RETURNING HIDDEN GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:26:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:26:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:26:02 ===
+[26-Nov-2025 16:26:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:26:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"26_T3_CCOMPORG_INF221","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170762620"}
+[26-Nov-2025 16:26:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:26:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:26:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:26:02 Europe/Berlin] Getting summary for class: 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:26:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 26_T3_CCOMPORG_INF221 =====
+[26-Nov-2025 16:26:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:26:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:26:02 Europe/Berlin] Grade display: midterm_pct=92%, midterm_grade=3.5
+[26-Nov-2025 16:26:02 Europe/Berlin] Grade display: finals_pct=70%, finals_grade=1.5
+[26-Nov-2025 16:26:02 Europe/Berlin] Grade display: term_pct=78.8%, term_grade=2.5
+[26-Nov-2025 16:26:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:26:02 Europe/Berlin] Success: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:26:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:26:02 ===
+[26-Nov-2025 16:26:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:26:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CTAPROJ1_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170762621"}
+[26-Nov-2025 16:26:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:26:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:26:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:26:02 Europe/Berlin] Getting summary for class: 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:26:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CTAPROJ1_INF223 =====
+[26-Nov-2025 16:26:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:26:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:26:02 Europe/Berlin] Grade display: midterm_pct=58.33%, midterm_grade=0
+[26-Nov-2025 16:26:02 Europe/Berlin] Grade display: finals_pct=90%, finals_grade=3.5
+[26-Nov-2025 16:26:02 Europe/Berlin] Grade display: term_pct=77.33%, term_grade=2
+[26-Nov-2025 16:26:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:26:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:27:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:27:02 ===
+[26-Nov-2025 16:27:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:27:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"26_T3_CCOMPORG_INF221","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170822627"}
+[26-Nov-2025 16:27:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:27:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:27:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:27:02 Europe/Berlin] Getting summary for class: 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:27:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 26_T3_CCOMPORG_INF221 =====
+[26-Nov-2025 16:27:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:27:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:27:02 Europe/Berlin] Grade display: midterm_pct=92%, midterm_grade=3.5
+[26-Nov-2025 16:27:02 Europe/Berlin] Grade display: finals_pct=70%, finals_grade=1.5
+[26-Nov-2025 16:27:02 Europe/Berlin] Grade display: term_pct=78.8%, term_grade=2.5
+[26-Nov-2025 16:27:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:27:02 Europe/Berlin] Success: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:27:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:27:02 ===
+[26-Nov-2025 16:27:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:27:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170822628"}
+[26-Nov-2025 16:27:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:27:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:27:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:27:02 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:27:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CCPRGG1L_INF223 =====
+[26-Nov-2025 16:27:02 Europe/Berlin] Grade record found. is_encrypted = 1
+[26-Nov-2025 16:27:02 Europe/Berlin] Grade hidden: is_encrypted = 1 for 2022-171253, 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:27:02 Europe/Berlin] RETURNING HIDDEN GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:27:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:27:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:27:02 ===
+[26-Nov-2025 16:27:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:27:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CTAPROJ1_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170822628"}
+[26-Nov-2025 16:27:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:27:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:27:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:27:02 Europe/Berlin] Getting summary for class: 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:27:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CTAPROJ1_INF223 =====
+[26-Nov-2025 16:27:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:27:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:27:02 Europe/Berlin] Grade display: midterm_pct=58.33%, midterm_grade=0
+[26-Nov-2025 16:27:02 Europe/Berlin] Grade display: finals_pct=90%, finals_grade=3.5
+[26-Nov-2025 16:27:02 Europe/Berlin] Grade display: term_pct=77.33%, term_grade=2
+[26-Nov-2025 16:27:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:27:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:28:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:28:02 ===
+[26-Nov-2025 16:28:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:28:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170882622"}
+[26-Nov-2025 16:28:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:28:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:28:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:28:02 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:28:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CCPRGG1L_INF223 =====
+[26-Nov-2025 16:28:02 Europe/Berlin] Grade record found. is_encrypted = 1
+[26-Nov-2025 16:28:02 Europe/Berlin] Grade hidden: is_encrypted = 1 for 2022-171253, 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:28:02 Europe/Berlin] RETURNING HIDDEN GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:28:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:28:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:28:02 ===
+[26-Nov-2025 16:28:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:28:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"26_T3_CCOMPORG_INF221","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170882622"}
+[26-Nov-2025 16:28:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:28:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:28:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:28:02 Europe/Berlin] Getting summary for class: 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:28:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 26_T3_CCOMPORG_INF221 =====
+[26-Nov-2025 16:28:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:28:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:28:02 Europe/Berlin] Grade display: midterm_pct=92%, midterm_grade=3.5
+[26-Nov-2025 16:28:02 Europe/Berlin] Grade display: finals_pct=70%, finals_grade=1.5
+[26-Nov-2025 16:28:02 Europe/Berlin] Grade display: term_pct=78.8%, term_grade=2.5
+[26-Nov-2025 16:28:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:28:02 Europe/Berlin] Success: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:28:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:28:02 ===
+[26-Nov-2025 16:28:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:28:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CTAPROJ1_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170882622"}
+[26-Nov-2025 16:28:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:28:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:28:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:28:02 Europe/Berlin] Getting summary for class: 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:28:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CTAPROJ1_INF223 =====
+[26-Nov-2025 16:28:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:28:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:28:02 Europe/Berlin] Grade display: midterm_pct=58.33%, midterm_grade=0
+[26-Nov-2025 16:28:02 Europe/Berlin] Grade display: finals_pct=90%, finals_grade=3.5
+[26-Nov-2025 16:28:02 Europe/Berlin] Grade display: term_pct=77.33%, term_grade=2
+[26-Nov-2025 16:28:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:28:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:29:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:29:02 ===
+[26-Nov-2025 16:29:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:29:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170942633"}
+[26-Nov-2025 16:29:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:29:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:29:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:29:02 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:29:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CCPRGG1L_INF223 =====
+[26-Nov-2025 16:29:02 Europe/Berlin] Grade record found. is_encrypted = 1
+[26-Nov-2025 16:29:02 Europe/Berlin] Grade hidden: is_encrypted = 1 for 2022-171253, 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:29:02 Europe/Berlin] RETURNING HIDDEN GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:29:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:29:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:29:02 ===
+[26-Nov-2025 16:29:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:29:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"26_T3_CCOMPORG_INF221","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170942633"}
+[26-Nov-2025 16:29:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:29:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:29:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:29:02 Europe/Berlin] Getting summary for class: 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:29:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 26_T3_CCOMPORG_INF221 =====
+[26-Nov-2025 16:29:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:29:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:29:02 Europe/Berlin] Grade display: midterm_pct=92%, midterm_grade=3.5
+[26-Nov-2025 16:29:02 Europe/Berlin] Grade display: finals_pct=70%, finals_grade=1.5
+[26-Nov-2025 16:29:02 Europe/Berlin] Grade display: term_pct=78.8%, term_grade=2.5
+[26-Nov-2025 16:29:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:29:02 Europe/Berlin] Success: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:29:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:29:02 ===
+[26-Nov-2025 16:29:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:29:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CTAPROJ1_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764170942634"}
+[26-Nov-2025 16:29:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:29:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:29:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:29:02 Europe/Berlin] Getting summary for class: 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:29:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CTAPROJ1_INF223 =====
+[26-Nov-2025 16:29:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:29:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:29:02 Europe/Berlin] Grade display: midterm_pct=58.33%, midterm_grade=0
+[26-Nov-2025 16:29:02 Europe/Berlin] Grade display: finals_pct=90%, finals_grade=3.5
+[26-Nov-2025 16:29:02 Europe/Berlin] Grade display: term_pct=77.33%, term_grade=2
+[26-Nov-2025 16:29:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:29:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:30:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:30:02 ===
+[26-Nov-2025 16:30:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:30:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"26_T3_CCOMPORG_INF221","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764171002625"}
+[26-Nov-2025 16:30:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:30:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:30:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:30:02 Europe/Berlin] Getting summary for class: 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:30:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 26_T3_CCOMPORG_INF221 =====
+[26-Nov-2025 16:30:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:30:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:30:02 Europe/Berlin] Grade display: midterm_pct=92%, midterm_grade=3.5
+[26-Nov-2025 16:30:02 Europe/Berlin] Grade display: finals_pct=70%, finals_grade=1.5
+[26-Nov-2025 16:30:02 Europe/Berlin] Grade display: term_pct=78.8%, term_grade=2.5
+[26-Nov-2025 16:30:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:30:02 Europe/Berlin] Success: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:30:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:30:02 ===
+[26-Nov-2025 16:30:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:30:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764171002626"}
+[26-Nov-2025 16:30:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:30:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:30:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:30:02 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:30:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CCPRGG1L_INF223 =====
+[26-Nov-2025 16:30:02 Europe/Berlin] Grade record found. is_encrypted = 1
+[26-Nov-2025 16:30:02 Europe/Berlin] Grade hidden: is_encrypted = 1 for 2022-171253, 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:30:02 Europe/Berlin] RETURNING HIDDEN GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:30:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:30:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:30:02 ===
+[26-Nov-2025 16:30:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:30:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CTAPROJ1_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764171002626"}
+[26-Nov-2025 16:30:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:30:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:30:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:30:02 Europe/Berlin] Getting summary for class: 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:30:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CTAPROJ1_INF223 =====
+[26-Nov-2025 16:30:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:30:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:30:02 Europe/Berlin] Grade display: midterm_pct=58.33%, midterm_grade=0
+[26-Nov-2025 16:30:02 Europe/Berlin] Grade display: finals_pct=90%, finals_grade=3.5
+[26-Nov-2025 16:30:02 Europe/Berlin] Grade display: term_pct=77.33%, term_grade=2
+[26-Nov-2025 16:30:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:30:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:31:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:31:02 ===
+[26-Nov-2025 16:31:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:31:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764171062621"}
+[26-Nov-2025 16:31:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:31:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:31:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:31:02 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:31:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CCPRGG1L_INF223 =====
+[26-Nov-2025 16:31:02 Europe/Berlin] Grade record found. is_encrypted = 1
+[26-Nov-2025 16:31:02 Europe/Berlin] Grade hidden: is_encrypted = 1 for 2022-171253, 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:31:02 Europe/Berlin] RETURNING HIDDEN GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:31:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:31:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:31:02 ===
+[26-Nov-2025 16:31:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:31:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"26_T3_CCOMPORG_INF221","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764171062620"}
+[26-Nov-2025 16:31:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:31:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:31:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:31:02 Europe/Berlin] Getting summary for class: 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:31:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 26_T3_CCOMPORG_INF221 =====
+[26-Nov-2025 16:31:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:31:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:31:02 Europe/Berlin] Grade display: midterm_pct=92%, midterm_grade=3.5
+[26-Nov-2025 16:31:02 Europe/Berlin] Grade display: finals_pct=70%, finals_grade=1.5
+[26-Nov-2025 16:31:02 Europe/Berlin] Grade display: term_pct=78.8%, term_grade=2.5
+[26-Nov-2025 16:31:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:31:02 Europe/Berlin] Success: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:31:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:31:02 ===
+[26-Nov-2025 16:31:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:31:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CTAPROJ1_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764171062621"}
+[26-Nov-2025 16:31:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:31:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:31:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:31:02 Europe/Berlin] Getting summary for class: 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:31:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CTAPROJ1_INF223 =====
+[26-Nov-2025 16:31:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:31:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:31:02 Europe/Berlin] Grade display: midterm_pct=58.33%, midterm_grade=0
+[26-Nov-2025 16:31:02 Europe/Berlin] Grade display: finals_pct=90%, finals_grade=3.5
+[26-Nov-2025 16:31:02 Europe/Berlin] Grade display: term_pct=77.33%, term_grade=2
+[26-Nov-2025 16:31:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:31:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:32:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:32:02 ===
+[26-Nov-2025 16:32:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:32:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"26_T3_CCOMPORG_INF221","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764171122633"}
+[26-Nov-2025 16:32:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:32:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:32:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:32:02 Europe/Berlin] Getting summary for class: 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:32:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 26_T3_CCOMPORG_INF221 =====
+[26-Nov-2025 16:32:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:32:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:32:02 Europe/Berlin] Grade display: midterm_pct=92%, midterm_grade=3.5
+[26-Nov-2025 16:32:02 Europe/Berlin] Grade display: finals_pct=70%, finals_grade=1.5
+[26-Nov-2025 16:32:02 Europe/Berlin] Grade display: term_pct=78.8%, term_grade=2.5
+[26-Nov-2025 16:32:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:32:02 Europe/Berlin] Success: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:32:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:32:02 ===
+[26-Nov-2025 16:32:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:32:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764171122633"}
+[26-Nov-2025 16:32:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:32:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:32:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:32:02 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:32:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CCPRGG1L_INF223 =====
+[26-Nov-2025 16:32:02 Europe/Berlin] Grade record found. is_encrypted = 1
+[26-Nov-2025 16:32:02 Europe/Berlin] Grade hidden: is_encrypted = 1 for 2022-171253, 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:32:02 Europe/Berlin] RETURNING HIDDEN GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:32:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:32:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:32:02 ===
+[26-Nov-2025 16:32:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:32:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CTAPROJ1_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764171122634"}
+[26-Nov-2025 16:32:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:32:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:32:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:32:02 Europe/Berlin] Getting summary for class: 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:32:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CTAPROJ1_INF223 =====
+[26-Nov-2025 16:32:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:32:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:32:02 Europe/Berlin] Grade display: midterm_pct=58.33%, midterm_grade=0
+[26-Nov-2025 16:32:02 Europe/Berlin] Grade display: finals_pct=90%, finals_grade=3.5
+[26-Nov-2025 16:32:02 Europe/Berlin] Grade display: term_pct=77.33%, term_grade=2
+[26-Nov-2025 16:32:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:32:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:33:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:33:02 ===
+[26-Nov-2025 16:33:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:33:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"26_T3_CCOMPORG_INF221","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764171182621"}
+[26-Nov-2025 16:33:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:33:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:33:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:33:02 Europe/Berlin] Getting summary for class: 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:33:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 26_T3_CCOMPORG_INF221 =====
+[26-Nov-2025 16:33:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:33:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 26_T3_CCOMPORG_INF221
+[26-Nov-2025 16:33:02 Europe/Berlin] Grade display: midterm_pct=92%, midterm_grade=3.5
+[26-Nov-2025 16:33:02 Europe/Berlin] Grade display: finals_pct=70%, finals_grade=1.5
+[26-Nov-2025 16:33:02 Europe/Berlin] Grade display: term_pct=78.8%, term_grade=2.5
+[26-Nov-2025 16:33:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:33:02 Europe/Berlin] Success: {"success":true,"midterm_grade":3.5,"midterm_percentage":92,"finals_grade":1.5,"finals_percentage":70,"term_percentage":78.8,"term_grade":2.5,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:33:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:33:02 ===
+[26-Nov-2025 16:33:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:33:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CTAPROJ1_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764171182623"}
+[26-Nov-2025 16:33:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:33:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:33:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:33:02 Europe/Berlin] Getting summary for class: 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:33:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CTAPROJ1_INF223 =====
+[26-Nov-2025 16:33:02 Europe/Berlin] Grade record found. is_encrypted = 0
+[26-Nov-2025 16:33:02 Europe/Berlin] Grade visible: is_encrypted = 0 for 2022-171253, 25_T2_CTAPROJ1_INF223
+[26-Nov-2025 16:33:02 Europe/Berlin] Grade display: midterm_pct=58.33%, midterm_grade=0
+[26-Nov-2025 16:33:02 Europe/Berlin] Grade display: finals_pct=90%, finals_grade=3.5
+[26-Nov-2025 16:33:02 Europe/Berlin] Grade display: term_pct=77.33%, term_grade=2
+[26-Nov-2025 16:33:02 Europe/Berlin] RETURNING VISIBLE GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:33:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":58.33,"finals_grade":3.5,"finals_percentage":90,"term_percentage":77.33,"term_grade":2,"grade_status":"passed","term_grade_hidden":false,"message":"Grades have been released"}
+[26-Nov-2025 16:33:02 Europe/Berlin] === GET_GRADES.PHP STARTED at 2025-11-26 16:33:02 ===
+[26-Nov-2025 16:33:02 Europe/Berlin] Database and session files loaded
+[26-Nov-2025 16:33:02 Europe/Berlin] POST data: {"action":"get_student_grade_summary","class_code":"25_T2_CCPRGG1L_INF223","student_id":"2022-171253","csrf_token":"662c4a96dd892281f584b670bac6754720c9bf16ae858fbdf1b70c409bd9db2c","_t":"1764171182622"}
+[26-Nov-2025 16:33:02 Europe/Berlin] User ID: 2022-171253
+[26-Nov-2025 16:33:02 Europe/Berlin] Role: student
+[26-Nov-2025 16:33:02 Europe/Berlin] Student ID: 2022-171253
+[26-Nov-2025 16:33:02 Europe/Berlin] Getting summary for class: 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:33:02 Europe/Berlin] ===== getStudentGradeSummary CALLED for 2022-171253, 25_T2_CCPRGG1L_INF223 =====
+[26-Nov-2025 16:33:02 Europe/Berlin] Grade record found. is_encrypted = 1
+[26-Nov-2025 16:33:02 Europe/Berlin] Grade hidden: is_encrypted = 1 for 2022-171253, 25_T2_CCPRGG1L_INF223
+[26-Nov-2025 16:33:02 Europe/Berlin] RETURNING HIDDEN GRADES: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}
+[26-Nov-2025 16:33:02 Europe/Berlin] Success: {"success":true,"midterm_grade":0,"midterm_percentage":0,"finals_grade":0,"finals_percentage":0,"term_percentage":0,"term_grade":0,"grade_status":"pending","term_grade_hidden":true,"message":"Grades are not yet released"}

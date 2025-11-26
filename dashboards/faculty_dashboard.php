@@ -1308,7 +1308,28 @@ $error = $_GET['error'] ?? '';
     // Load initial notification preferences
     loadInitialPreferences();
     
+    // Restore active section from localStorage
+    const savedSection = localStorage.getItem('active_section');
+    if (savedSection && savedSection !== 'dashboard') {
+        setTimeout(() => {
+            if (window.showSection) {
+                window.showSection(savedSection);
+            }
+        }, 100); // Small delay to ensure scripts are loaded
+    }
+    
 });
+/**
+ * Override showSection to persist active section
+ */
+const originalShowSection = window.showSection;
+window.showSection = function(sectionId) {
+    if (originalShowSection) {
+        originalShowSection(sectionId);
+    }
+    localStorage.setItem('active_section', sectionId);
+};
+
 /**
  * Restore Last Selected Class (Persist after refresh)
  */
