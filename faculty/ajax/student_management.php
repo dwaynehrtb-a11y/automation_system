@@ -189,6 +189,30 @@ function getClassStudents($conn, $class_code, $faculty_id) {
     }
     $stmt->close();
     
+    // Check grade_term table for dropped/withdrawn students
+    if (!empty($studentIds)) {
+        $placeholders = str_repeat('?,', count($studentIds) - 1) . '?';
+        $gradeQuery = "
+            SELECT student_id, grade_status 
+            FROM grade_term 
+            WHERE class_code = ? AND student_id IN ($placeholders) AND grade_status IN ('dropped', 'withdrawn')
+        ";
+        
+        $stmt = $conn->prepare($gradeQuery);
+        if ($stmt) {
+            $params = array_merge([$class_code], $studentIds);
+            $stmt->bind_param(str_repeat('s', count($params)), ...$params);
+            $stmt->execute();
+            $gradeResult = $stmt->get_result();
+            
+            while ($gradeRow = $gradeResult->fetch_assoc()) {
+                // Override status if student is dropped/withdrawn in grade_term
+                $enrollmentData[$gradeRow['student_id']]['status'] = $gradeRow['grade_status'];
+            }
+            $stmt->close();
+        }
+    }
+    
     // Initialize encryption
     Encryption::init();
     
