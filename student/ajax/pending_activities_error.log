@@ -130,3 +130,101 @@
 [24-Nov-2025 12:28:28 Europe/Berlin] Proceeding with student_id: 2025-276819
 [24-Nov-2025 12:28:28 Europe/Berlin] Executing query for student_id: 2025-276819
 [24-Nov-2025 12:28:28 Europe/Berlin] Successfully retrieved 0 pending activities
+[30-Nov-2025 15:48:22 Europe/Berlin] === GET_PENDING_ACTIVITIES.PHP STARTED at 2025-11-30 15:48:22 ===
+[30-Nov-2025 15:48:22 Europe/Berlin] Session user_id: 2022-171253
+[30-Nov-2025 15:48:22 Europe/Berlin] Session role: student
+[30-Nov-2025 15:48:22 Europe/Berlin] Session student_id: 2022-171253
+[30-Nov-2025 15:48:22 Europe/Berlin] Proceeding with student_id: 2022-171253
+[30-Nov-2025 15:48:22 Europe/Berlin] Executing query for student_id: 2022-171253
+[30-Nov-2025 15:48:22 Europe/Berlin] Successfully retrieved 1 pending activities
+[30-Nov-2025 15:48:25 Europe/Berlin] === GET_PENDING_ACTIVITIES.PHP STARTED at 2025-11-30 15:48:25 ===
+[30-Nov-2025 15:48:25 Europe/Berlin] Session user_id: 2022-171253
+[30-Nov-2025 15:48:25 Europe/Berlin] Session role: student
+[30-Nov-2025 15:48:25 Europe/Berlin] Session student_id: 2022-171253
+[30-Nov-2025 15:48:25 Europe/Berlin] Proceeding with student_id: 2022-171253
+[30-Nov-2025 15:48:25 Europe/Berlin] Executing query for student_id: 2022-171253
+[30-Nov-2025 15:48:25 Europe/Berlin] Successfully retrieved 1 pending activities
+[30-Nov-2025 15:48:28 Europe/Berlin] === GET_PENDING_ACTIVITIES.PHP STARTED at 2025-11-30 15:48:28 ===
+[30-Nov-2025 15:48:28 Europe/Berlin] Session user_id: 2022-171253
+[30-Nov-2025 15:48:28 Europe/Berlin] Session role: student
+[30-Nov-2025 15:48:28 Europe/Berlin] Session student_id: 2022-171253
+[30-Nov-2025 15:48:28 Europe/Berlin] Proceeding with student_id: 2022-171253
+[30-Nov-2025 15:48:28 Europe/Berlin] Executing query for student_id: 2022-171253
+[30-Nov-2025 15:48:28 Europe/Berlin] Successfully retrieved 1 pending activities
+[30-Nov-2025 15:51:33 Europe/Berlin] === GET_PENDING_ACTIVITIES.PHP STARTED at 2025-11-30 15:51:33 ===
+[30-Nov-2025 15:51:33 Europe/Berlin] Session user_id: 2022-171253
+[30-Nov-2025 15:51:33 Europe/Berlin] Session role: student
+[30-Nov-2025 15:51:33 Europe/Berlin] Session student_id: 2022-171253
+[30-Nov-2025 15:51:33 Europe/Berlin] Proceeding with student_id: 2022-171253
+[30-Nov-2025 15:51:33 Europe/Berlin] Executing query for student_id: 2022-171253
+[30-Nov-2025 15:51:33 Europe/Berlin] Successfully retrieved 1 pending activities
+[30-Nov-2025 15:51:36 Europe/Berlin] === GET_PENDING_ACTIVITIES.PHP STARTED at 2025-11-30 15:51:36 ===
+[30-Nov-2025 15:51:36 Europe/Berlin] Session user_id: 2022-171253
+[30-Nov-2025 15:51:36 Europe/Berlin] Session role: student
+[30-Nov-2025 15:51:36 Europe/Berlin] Session student_id: 2022-171253
+[30-Nov-2025 15:51:36 Europe/Berlin] Proceeding with student_id: 2022-171253
+[30-Nov-2025 15:51:36 Europe/Berlin] Executing query for student_id: 2022-171253
+[30-Nov-2025 15:51:36 Europe/Berlin] Successfully retrieved 1 pending activities
+[30-Nov-2025 15:52:59 Europe/Berlin] === GET_PENDING_ACTIVITIES.PHP STARTED at 2025-11-30 15:52:59 ===
+[30-Nov-2025 15:52:59 Europe/Berlin] Session user_id: 2022-171253
+[30-Nov-2025 15:52:59 Europe/Berlin] Session role: student
+[30-Nov-2025 15:52:59 Europe/Berlin] Session student_id: 2022-171253
+[30-Nov-2025 15:52:59 Europe/Berlin] Proceeding with student_id: 2022-171253
+[30-Nov-2025 15:52:59 Europe/Berlin] Executing query for student_id: 2022-171253
+[30-Nov-2025 15:52:59 Europe/Berlin] Successfully retrieved 1 pending activities
+[30-Nov-2025 15:53:03 Europe/Berlin] === GET_PENDING_ACTIVITIES.PHP STARTED at 2025-11-30 15:53:03 ===
+[30-Nov-2025 15:53:03 Europe/Berlin] Session user_id: 2022-171253
+[30-Nov-2025 15:53:03 Europe/Berlin] Session role: student
+[30-Nov-2025 15:53:03 Europe/Berlin] Session student_id: 2022-171253
+[30-Nov-2025 15:53:03 Europe/Berlin] Proceeding with student_id: 2022-171253
+[30-Nov-2025 15:53:03 Europe/Berlin] Executing query for student_id: 2022-171253
+[30-Nov-2025 15:53:03 Europe/Berlin] Successfully retrieved 1 pending activities
+[30-Nov-2025 15:57:59 Europe/Berlin] === GET_PENDING_ACTIVITIES.PHP STARTED at 2025-11-30 15:57:59 ===
+[30-Nov-2025 15:57:59 Europe/Berlin] Session user_id: 2022-171253
+[30-Nov-2025 15:57:59 Europe/Berlin] Session role: student
+[30-Nov-2025 15:57:59 Europe/Berlin] Session student_id: 2022-171253
+[30-Nov-2025 15:57:59 Europe/Berlin] Proceeding with student_id: 2022-171253
+[30-Nov-2025 15:57:59 Europe/Berlin] Executing query for student_id: 2022-171253
+[30-Nov-2025 15:57:59 Europe/Berlin] Successfully retrieved 1 pending activities
+[30-Nov-2025 15:58:28 Europe/Berlin] === GET_PENDING_ACTIVITIES.PHP STARTED at 2025-11-30 15:58:28 ===
+[30-Nov-2025 15:58:28 Europe/Berlin] Session user_id: 2022-171253
+[30-Nov-2025 15:58:28 Europe/Berlin] Session role: student
+[30-Nov-2025 15:58:28 Europe/Berlin] Session student_id: 2022-171253
+[30-Nov-2025 15:58:28 Europe/Berlin] Proceeding with student_id: 2022-171253
+[30-Nov-2025 15:58:29 Europe/Berlin] Executing query for student_id: 2022-171253
+[30-Nov-2025 15:58:29 Europe/Berlin] Successfully retrieved 1 pending activities
+[30-Nov-2025 16:01:23 Europe/Berlin] === GET_PENDING_ACTIVITIES.PHP STARTED at 2025-11-30 16:01:23 ===
+[30-Nov-2025 16:01:23 Europe/Berlin] Session user_id: 2022-171253
+[30-Nov-2025 16:01:23 Europe/Berlin] Session role: student
+[30-Nov-2025 16:01:23 Europe/Berlin] Session student_id: 2022-171253
+[30-Nov-2025 16:01:23 Europe/Berlin] Proceeding with student_id: 2022-171253
+[30-Nov-2025 16:01:23 Europe/Berlin] Executing query for student_id: 2022-171253
+[30-Nov-2025 16:01:23 Europe/Berlin] Successfully retrieved 1 pending activities
+[30-Nov-2025 16:02:47 Europe/Berlin] === GET_PENDING_ACTIVITIES.PHP STARTED at 2025-11-30 16:02:47 ===
+[30-Nov-2025 16:02:47 Europe/Berlin] Session user_id: 2022-171253
+[30-Nov-2025 16:02:47 Europe/Berlin] Session role: student
+[30-Nov-2025 16:02:47 Europe/Berlin] Session student_id: 2022-171253
+[30-Nov-2025 16:02:47 Europe/Berlin] Proceeding with student_id: 2022-171253
+[30-Nov-2025 16:02:47 Europe/Berlin] Executing query for student_id: 2022-171253
+[30-Nov-2025 16:02:47 Europe/Berlin] Successfully retrieved 1 pending activities
+[30-Nov-2025 18:17:17 Europe/Berlin] === GET_PENDING_ACTIVITIES.PHP STARTED at 2025-11-30 18:17:17 ===
+[30-Nov-2025 18:17:17 Europe/Berlin] Session user_id: 2022-171253
+[30-Nov-2025 18:17:17 Europe/Berlin] Session role: student
+[30-Nov-2025 18:17:17 Europe/Berlin] Session student_id: 2022-171253
+[30-Nov-2025 18:17:17 Europe/Berlin] Proceeding with student_id: 2022-171253
+[30-Nov-2025 18:17:17 Europe/Berlin] Executing query for student_id: 2022-171253
+[30-Nov-2025 18:17:17 Europe/Berlin] Successfully retrieved 1 pending activities
+[30-Nov-2025 18:17:31 Europe/Berlin] === GET_PENDING_ACTIVITIES.PHP STARTED at 2025-11-30 18:17:31 ===
+[30-Nov-2025 18:17:31 Europe/Berlin] Session user_id: 2022-171253
+[30-Nov-2025 18:17:31 Europe/Berlin] Session role: student
+[30-Nov-2025 18:17:31 Europe/Berlin] Session student_id: 2022-171253
+[30-Nov-2025 18:17:31 Europe/Berlin] Proceeding with student_id: 2022-171253
+[30-Nov-2025 18:17:31 Europe/Berlin] Executing query for student_id: 2022-171253
+[30-Nov-2025 18:17:31 Europe/Berlin] Successfully retrieved 1 pending activities
+[30-Nov-2025 18:17:42 Europe/Berlin] === GET_PENDING_ACTIVITIES.PHP STARTED at 2025-11-30 18:17:42 ===
+[30-Nov-2025 18:17:42 Europe/Berlin] Session user_id: 2022-171253
+[30-Nov-2025 18:17:42 Europe/Berlin] Session role: student
+[30-Nov-2025 18:17:42 Europe/Berlin] Session student_id: 2022-171253
+[30-Nov-2025 18:17:42 Europe/Berlin] Proceeding with student_id: 2022-171253
+[30-Nov-2025 18:17:42 Europe/Berlin] Executing query for student_id: 2022-171253
+[30-Nov-2025 18:17:42 Europe/Berlin] Successfully retrieved 1 pending activities

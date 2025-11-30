@@ -143,10 +143,17 @@ function renderGradePreview(element, data) {
     const termPercentage = data.term_percentage || 0;
     const grade_status = data.grade_status || 'pending';
     
+    // Display '-' for hidden grades (when value is 0)
+    const midtermPercentageDisplay = midtermPercentage > 0 ? `${parseFloat(midtermPercentage).toFixed(2)}%` : '-';
+    const midtermGradeDisplay = midtermGrade > 0 ? midtermGrade.toFixed(1) : '-';
+    const finalsPercentageDisplay = finalsPercentage > 0 ? `${parseFloat(finalsPercentage).toFixed(2)}%` : '-';
+    const finalsGradeDisplay = finalsGrade > 0 ? finalsGrade.toFixed(1) : '-';
+    const termPercentageDisplay = termPercentage > 0 ? `${parseFloat(termPercentage).toFixed(2)}%` : '-';
+    const termGradeDisplay = termGrade > 0 ? termGrade.toFixed(1) : '-';
+    
     // Determine what to display in term grade box based on status
-    let termGradeDisplay = termGrade.toFixed(1);
-    let badgeColor = '#D4AF37'; // Default gold
     let badgeText = termGradeDisplay; // Default to numeric grade
+    let badgeColor = '#D4AF37'; // Default gold
     
     // If status is failed, incomplete, or dropped, show that instead of the numeric grade
     if (grade_status === 'failed') {
@@ -173,20 +180,20 @@ function renderGradePreview(element, data) {
             <div class="grade-item" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 120px;">
                 <div style="font-size: 11px; color: #6b7280; font-weight: 600; margin-bottom: 0.75rem; letter-spacing: 0.5px;">MIDTERM</div>
                 <div style="font-size: 13px; color: #9ca3af; font-weight: 500; margin-bottom: 0.5rem;">(40%)</div>
-                <div class="midterm-percentage" style="font-size: 16px; font-weight: 700; color: #003082; margin-bottom: 0.25rem;">${parseFloat(midtermPercentage).toFixed(2)}%</div>
-                <div class="midterm-grade" style="font-size: 13px; font-weight: 600; color: #6b7280;">${midtermGrade.toFixed(1)}</div>
+                <div class="midterm-percentage" style="font-size: 16px; font-weight: 700; color: #003082; margin-bottom: 0.25rem;">${midtermPercentageDisplay}</div>
+                <div class="midterm-grade" style="font-size: 13px; font-weight: 600; color: #6b7280;">${midtermGradeDisplay}</div>
             </div>
             <div class="grade-item" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 120px;">
                 <div style="font-size: 11px; color: #6b7280; font-weight: 600; margin-bottom: 0.75rem; letter-spacing: 0.5px;">FINALS</div>
                 <div style="font-size: 13px; color: #9ca3af; font-weight: 500; margin-bottom: 0.5rem;">(60%)</div>
-                <div class="finals-percentage" style="font-size: 16px; font-weight: 700; color: #003082; margin-bottom: 0.25rem;">${parseFloat(finalsPercentage).toFixed(2)}%</div>
-                <div class="finals-grade" style="font-size: 13px; font-weight: 600; color: #6b7280;">${finalsGrade.toFixed(1)}</div>
+                <div class="finals-percentage" style="font-size: 16px; font-weight: 700; color: #003082; margin-bottom: 0.25rem;">${finalsPercentageDisplay}</div>
+                <div class="finals-grade" style="font-size: 13px; font-weight: 600; color: #6b7280;">${finalsGradeDisplay}</div>
             </div>
             <div class="grade-item" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 120px;">
                 <div style="font-size: 11px; color: #6b7280; font-weight: 600; margin-bottom: 0.75rem; letter-spacing: 0.5px;">TERM GRADE</div>
                 <div class="term-grade-status" style="font-size: 13px; color: ${badgeColor}; font-weight: 700; margin-bottom: 0.5rem;">${badgeText}</div>
-                <div class="term-grade-percentage" style="font-size: 16px; font-weight: 700; color: #003082; margin-bottom: 0.25rem;">${parseFloat(termPercentage).toFixed(2)}%</div>
-                <div class="term-grade-value" style="font-size: 13px; font-weight: 600; color: #6b7280;">${termGrade.toFixed(1)}</div>
+                <div class="term-grade-percentage" style="font-size: 16px; font-weight: 700; color: #003082; margin-bottom: 0.25rem;">${termPercentageDisplay}</div>
+                <div class="term-grade-value" style="font-size: 13px; font-weight: 600; color: #6b7280;">${termGradeDisplay}</div>
             </div>
         </div>
     `;

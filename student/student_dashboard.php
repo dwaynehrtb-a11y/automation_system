@@ -56,6 +56,46 @@ try {
     $student['full_name'] = $student['first_name'] . ' ' . $student['last_name'];
 }
 
+// Calculate Passed, Pending, GPA
+
+$passed = 0;
+$pending = 0;
+$gpa = 0;
+$total_gpa = 0;
+$gpa_count = 0;
+
+// Query one grade per enrolled class, only decrypted grades
+$grades_query = "SELECT gt.class_code, gt.term_grade, gt.grade_status, gt.is_encrypted, gt.finals_percentage FROM grade_term gt INNER JOIN class_enrollments ce ON gt.class_code = ce.class_code WHERE gt.student_id = ? AND ce.student_id = ? AND ce.status = 'enrolled' GROUP BY gt.class_code";
+$stmt_grades = $conn->prepare($grades_query);
+if ($stmt_grades) {
+    $stmt_grades->bind_param("ss", $student_id, $student_id);
+    $stmt_grades->execute();
+    $grades_result = $stmt_grades->get_result();
+    while ($row = $grades_result->fetch_assoc()) {
+        $grade = floatval($row['term_grade']);
+        $status = strtolower($row['grade_status'] ?? '');
+        $is_encrypted = intval($row['is_encrypted']);
+        $finals_percentage = isset($row['finals_percentage']) ? floatval($row['finals_percentage']) : null;
+        if ($is_encrypted === 0) {
+            if ($grade >= 1 && $grade <= 4) {
+                $passed++;
+                $total_gpa += $grade;
+                $gpa_count++;
+            }
+            // Count as pending if status is incomplete or finals grade is missing/zero
+            if ($status === 'incomplete' || $finals_percentage === null || $finals_percentage == 0) {
+                $pending++;
+            }
+        }
+    }
+    $stmt_grades->close();
+}
+if ($gpa_count > 0) {
+    $gpa = round($total_gpa / $gpa_count, 2);
+} else {
+    $gpa = '-';
+}
+
 // Get enrolled classes with grade information
 $classes_query = "
     SELECT DISTINCT
@@ -219,7 +259,7 @@ if (!isset($_SESSION['csrf_token'])) {
                         <i class="fas fa-check-circle"></i>
                     </div>
                     <div class="stat-content">
-                        <div class="stat-value" id="stat-passed">-</div>
+                            <div class="stat-value" id="stat-passed"><?= $passed ?></div>
                         <div class="stat-label">Passed</div>
                     </div>
                 </div>
@@ -229,7 +269,7 @@ if (!isset($_SESSION['csrf_token'])) {
                         <i class="fas fa-clock"></i>
                     </div>
                     <div class="stat-content">
-                        <div class="stat-value" id="stat-pending">-</div>
+                            <div class="stat-value" id="stat-pending"><?= $pending ?></div>
                         <div class="stat-label">Pending</div>
                     </div>
                 </div>
@@ -239,7 +279,7 @@ if (!isset($_SESSION['csrf_token'])) {
                         <i class="fas fa-chart-line"></i>
                     </div>
                     <div class="stat-content">
-                        <div class="stat-value" id="stat-gpa">-</div>
+                            <div class="stat-value" id="stat-gpa"><?= $gpa ?></div>
                         <div class="stat-label">GPA</div>
                     </div>
                 </div>

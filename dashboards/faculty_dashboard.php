@@ -674,7 +674,7 @@ $error = $_GET['error'] ?? '';
             <div style="display: flex; gap: 12px; flex-wrap: wrap;">
                 <!-- Single Toggle Button -->
                 <button id="toggleGradesBtn" style="background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #1e3a8a; border: none; padding: 12px 28px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.95em; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(251, 191, 36, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(251, 191, 36, 0.3)'">
-                    <i class="fas fa-eye-slash"></i> <span id="toggleBtnText">Hide Grades</span>
+                    <i class="fas fa-graduation-cap"></i> Release Grades
                 </button>
             </div>
         </div>
@@ -969,6 +969,44 @@ $error = $_GET['error'] ?? '';
         </div>
     </div>
 
+    <!-- Grade Release Modal -->
+    <div id="grade-release-modal" class="modal-backdrop" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-graduation-cap"></i> Release Grades</h3>
+                <button class="modal-close" onclick="closeGradeReleaseModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p style="text-align: center; margin-bottom: var(--space-6); color: var(--gray-600);">Choose what to do with grades:</p>
+                <div class="modal-footer-actions">
+                    <button id="release-midterm-btn" class="btn btn-primary btn-flex" onclick="releaseMidtermGrades()">
+                        <i class="fas fa-bookmark"></i>
+                        Release Midterm Grades
+                    </button>
+                    <button id="release-finals-btn" class="btn btn-success btn-flex" onclick="releaseFinalsGrades()">
+                        <i class="fas fa-graduation-cap"></i>
+                        Release Finals Grades
+                    </button>
+                </div>
+                <div style="margin: var(--space-4) 0; text-align: center;">
+                    <span style="color: var(--gray-400); font-size: 0.9em;">or</span>
+                </div>
+                <div class="modal-footer-actions">
+                    <button id="hide-grades-btn" class="btn btn-secondary btn-flex" onclick="hideGrades()">
+                        <i class="fas fa-eye-slash"></i>
+                        Hide All Grades
+                    </button>
+                </div>
+                <div style="margin-top: var(--space-6); padding: var(--space-4); background: var(--warning-50); border: 1px solid var(--warning-200); border-radius: var(--border-radius-lg); border-left: 4px solid var(--warning-400);">
+                    <i class="fas fa-exclamation-triangle" style="color: var(--warning-600); margin-right: var(--space-2);"></i>
+                    <strong style="color: var(--warning-800);">Important:</strong> Once released, grades cannot be hidden again. Make sure all grades are final before releasing.
+                </div>
+            </div>
+        </div>
+    </div>
+
    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <!-- NU Themed SweetAlert Mixin -->
@@ -1064,27 +1102,12 @@ $error = $_GET['error'] ?? '';
             })
             .then(data => {
                 const statusEl = document.getElementById('gradeEncryptionStatus');
-                const btnTextEl = document.getElementById('toggleBtnText');
-                const toggleBtn = document.getElementById('toggleGradesBtn');
                 
                 if (statusEl) {
                     if (data.success) {
                         const statusHidden = '<span style="color: #fbbf24;"> HIDDEN FROM STUDENTS</span>';
                         const statusVisible = '<span style="color: #10b981;"> VISIBLE TO STUDENTS</span>';
                         statusEl.innerHTML = data.is_encrypted ? statusHidden : statusVisible;
-                        
-                        // Update button text and icon based on current state
-                        if (btnTextEl && toggleBtn && toggleBtn.querySelector('i')) {
-                            if (data.is_encrypted) {
-                                // Grades are encrypted (hidden), so button should say "Show Grades"
-                                btnTextEl.innerText = 'Show Grades';
-                                toggleBtn.querySelector('i').className = 'fas fa-eye';
-                            } else {
-                                // Grades are decrypted (visible), so button should say "Hide Grades"
-                                btnTextEl.innerText = 'Hide Grades';
-                                toggleBtn.querySelector('i').className = 'fas fa-eye-slash';
-                            }
-                        }
                     } else {
                         statusEl.innerHTML = 'Error checking status';
                     }
@@ -1106,62 +1129,106 @@ $error = $_GET['error'] ?? '';
                     if (!currentSelectedClass) {
                         Swal.fire({
                             title: 'No Class Selected',
-                            html: 'Please select a class first to manage grade visibility.',
+                            html: 'Please select a class first to release grades.',
                             icon: 'warning',
                             confirmButtonColor: '#2563eb'
                         });
                         return;
                     }
 
-                    // Determine current state and perform opposite action
-                    const statusEl = document.getElementById('gradeEncryptionStatus');
-                    const currentStatus = statusEl ? statusEl.innerText : '';
-                    const isHidden = currentStatus.includes('HIDDEN');
-
-                    if (isHidden) {
-                        // Currently hidden, so show grades
-                        Swal.fire({
-                            title: 'Show Grades to Students?',
-                            html: '<strong> IMPORTANT:</strong><br>This will make ALL grades for this class VISIBLE to your students immediately.<br><br>Use this only when you\'re ready to release grades (e.g., after finals).',
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#10b981',
-                            cancelButtonColor: '#6c757d',
-                            confirmButtonText: 'Yes, Show Grades',
-                            cancelButtonText: 'Cancel'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                performGradeAction('decrypt_all');
-                            }
-                        });
-                    } else {
-                        // Currently visible, so hide grades
-                        Swal.fire({
-                            title: 'Hide Grades from Students?',
-                            html: '<strong>⚠️ CAUTION:</strong><br>This will make ALL grades for this class HIDDEN from your students.<br><br>Students will NOT be able to see their grades until you show them again.',
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#fbbf24',
-                            confirmButtonTextColor: '#1e3a8a',
-                            cancelButtonColor: '#6c757d',
-                            confirmButtonText: 'Yes, Hide Grades',
-                            cancelButtonText: 'Cancel'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                performGradeAction('encrypt_all');
-                            }
-                        });
-                    }
+                    // Show the grade release modal
+                    showGradeReleaseModal();
                 });
             }
         });
 
+        // Grade Release Modal Functions
+        function showGradeReleaseModal() {
+            const modal = document.getElementById('grade-release-modal');
+            if (modal) {
+                modal.style.display = 'flex';
+                // Add event listener to close modal when clicking outside
+                modal.onclick = function(event) {
+                    if (event.target === modal) {
+                        closeGradeReleaseModal();
+                    }
+                };
+            }
+        }
+
+        function closeGradeReleaseModal() {
+            const modal = document.getElementById('grade-release-modal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        function releaseMidtermGrades() {
+            Swal.fire({
+                title: 'Release Midterm Grades?',
+                html: 'This will make midterm grades visible to students. <strong>This action cannot be undone.</strong><br><br>Are you sure midterm grades are final?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#2563eb',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Yes, Release Midterm',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    closeGradeReleaseModal();
+                    performGradeAction('decrypt_midterm');
+                }
+            });
+        }
+
+        function releaseFinalsGrades() {
+            Swal.fire({
+                title: 'Release Finals Grades?',
+                html: 'This will make finals and term grades visible to students. <strong>Midterm grades will also be released if they exist.</strong><br><br>This action cannot be undone. Are you sure all grades are final?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#10b981',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Yes, Release All Grades',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    closeGradeReleaseModal();
+                    performGradeAction('decrypt_finals');
+                }
+            });
+        }
+
+        function hideGrades() {
+            Swal.fire({
+                title: 'Hide All Grades?',
+                html: 'This will hide all grades from students. Students will see dashes (-) instead of grade values.<br><br>You can release grades again later.',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#6c757d',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Yes, Hide Grades',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    closeGradeReleaseModal();
+                    performGradeAction('encrypt_all');
+                }
+            });
+        }
+
         function performGradeAction(action) {
             if (!currentSelectedClass) return;
 
+            let actionText = 'process grades';
+            if (action === 'decrypt_midterm') actionText = 'release midterm grades';
+            else if (action === 'decrypt_finals') actionText = 'release finals and midterm grades';
+            else if (action === 'decrypt_all') actionText = 'show grades';
+            else if (action === 'encrypt_all') actionText = 'hide grades';
+
             Swal.fire({
                 title: 'Processing...',
-                html: 'Please wait while we ' + (action === 'decrypt_all' ? 'show' : 'hide') + ' grades...',
+                html: 'Please wait while we ' + actionText + '...',
                 icon: 'info',
                 allowOutsideClick: false,
                 allowEscapeKey: false,
@@ -1183,24 +1250,6 @@ $error = $_GET['error'] ?? '';
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // Update button text and icon based on action
-                    const btnTextEl = document.getElementById('toggleBtnText');
-                    const toggleBtn = document.getElementById('toggleGradesBtn');
-                    
-                    if (action === 'decrypt_all') {
-                        // Grades are now shown (decrypted), so button should say "Hide Grades"
-                        if (btnTextEl) btnTextEl.innerText = 'Hide Grades';
-                        if (toggleBtn) {
-                            toggleBtn.querySelector('i').className = 'fas fa-eye-slash';
-                        }
-                    } else if (action === 'encrypt_all') {
-                        // Grades are now hidden (encrypted), so button should say "Show Grades"
-                        if (btnTextEl) btnTextEl.innerText = 'Show Grades';
-                        if (toggleBtn) {
-                            toggleBtn.querySelector('i').className = 'fas fa-eye';
-                        }
-                    }
-                    
                     Swal.fire({
                         title: 'Success!',
                         html: ' ' + data.message,
